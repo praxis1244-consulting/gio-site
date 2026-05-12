@@ -13,8 +13,6 @@ const matches = [
   { ts: "2025·05·15", stage: "VCL 25 LAS · STAGE 2", a: "OXEN", b: "Rebirth", res: "2-1" },
   { ts: "2025·04·02", stage: "VCL 25 LAS · STAGE 1", a: "OXEN", b: "Las Cabras", res: "2-0" },
   { ts: "2025·03·14", stage: "VCL 25 LAS · STAGE 1", a: "OXEN", b: "Leviatán Acad.", res: "2-1" },
-  { ts: "2024·10·13", stage: "RED BULL HG #5 · CHILE QF", a: "Lillas", b: "Freddyneta", res: "2-0" },
-  { ts: "2024·07·01", stage: "VCL 24 LAS ACE · SPLIT 2", a: "Skibidi Sigmas", b: "ONA", res: "2-0" },
 ];
 
 const steps = [
@@ -150,7 +148,7 @@ const faqs = [
 const marqueeItems = [
   "MOVISTAR OPTIX", "·", { em: "VCL 25" }, "·", "FURIOUS GAMING", "·", { em: "IGL" }, "·",
   "KRU ACADEMY", "·", { em: "SMOKER" }, "·", "RED BULL HG", "·", { em: "VCL 24 ACE" }, "·",
-  "OXEN", "·", "SKIBIDI SIGMAS", "·", "LILLAS WARRIORS", "·",
+  "OXEN", "·",
 ];
 
 export default function Home() {
