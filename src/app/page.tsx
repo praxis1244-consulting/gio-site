@@ -135,7 +135,7 @@ const faqs = [
   },
   {
     q: "¿Garantía real de subir de rango?",
-    a: "Sí, en el programa de 4 semanas. Si haces los drills, asistes a las 4 sesiones y sigues el plan, garantizo que subes mínimo 1 división. Si no, la siguiente va por mi cuenta.",
+    a: "Sí, en el programa de 4 semanas. Si haces los drills, asistes a las 4 sesiones y sigues el plan, garantizo que subes mínimo 1 división. Si no, seguimos trabajando juntos hasta que lo logres.",
   },
   {
     q: "¿Coachea solo Smokers / IGL?",
@@ -148,9 +148,9 @@ const faqs = [
 ];
 
 const marqueeItems = [
-  "OXEN", "·", { em: "VCL 25" }, "·", "FURIOUS GAMING", "·", { em: "RADIANT" }, "·",
-  "RED BULL HG", "·", { em: "IGL" }, "·", "SKIBIDI SIGMAS", "·", { em: "SMOKER" }, "·",
-  "LILLAS WARRIORS", "·", { em: "VCL 24 ACE" }, "·",
+  "MOVISTAR OPTIX", "·", { em: "VCL 25" }, "·", "FURIOUS GAMING", "·", { em: "IGL" }, "·",
+  "KRU ACADEMY", "·", { em: "SMOKER" }, "·", "RED BULL HG", "·", { em: "VCL 24 ACE" }, "·",
+  "OXEN", "·", "SKIBIDI SIGMAS", "·", "LILLAS WARRIORS", "·",
 ];
 
 export default function Home() {
@@ -179,7 +179,7 @@ export default function Home() {
               Es <em>método.</em>
             </h1>
             <p className="hero-b__sub">
-              Coaching 1v1 con <b>Gio</b> — ex-pro de la VCL LATAM Sur, Radiant, IGL Smoker. Te diagnostico los 3 leaks que te frenan, te doy un plan, y te acompaño hasta que subas. Para todos los ranks, en español.
+              Coaching 1v1 con <b>Gio</b> — ex-pro de la VCL LATAM Sur, Radiant, IGL Smoker. Te diagnostico los 3 leaks que te frenan, te doy un plan, y te acompaño hasta que subas. Para todos los ranks. Clases en <b>español, inglés y portugués</b>.
             </p>
             <div className="hero-b__ctas">
               <a className="btn btn-primary" href="#programa">Agendar diagnóstico →</a>
@@ -361,7 +361,7 @@ export default function Home() {
             <div className="guarantee__label">
               <span className="dot live pulse-dot" />
               <span className="val-lbl">
-                Garantía · Si no subes en 4 semanas siguiendo el plan, la siguiente sesión va por mi cuenta.
+                Garantía · Plan personalizado y acompañamiento semanal hasta que subas de rango.
               </span>
             </div>
             <a href="#" className="btn btn-wa">WhatsApp directo</a>
