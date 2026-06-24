@@ -35,10 +35,10 @@ export async function POST(request: Request) {
   const result = await resend.emails.send({
     from: FROM,
     to: email,
-    subject: "Smokes y flashes de un Radiant — GIO",
+    subject: "Tu guía gratis para subir de rango — Zero2Hero",
     html: `
       <div style="background:#050505;color:#ece4d8;font-family:'DM Sans',Arial,sans-serif;padding:40px;max-width:560px;margin:0 auto;">
-        <div style="font-family:'Tomorrow',sans-serif;font-weight:800;font-size:1.4rem;letter-spacing:0.32em;color:#ece4d8;">GIO<span style="color:#ff4655;font-style:italic;letter-spacing:-0.02em;padding-left:4px;">·VAL</span></div>
+        <div style="font-family:'Tomorrow',sans-serif;font-weight:800;font-size:1.4rem;letter-spacing:0.32em;color:#ece4d8;">ZERO2HERO<span style="color:#ff4655;font-style:italic;letter-spacing:-0.02em;padding-left:4px;">·GG</span></div>
         <h1 style="font-family:'Tomorrow',sans-serif;font-weight:300;font-size:2rem;letter-spacing:-0.04em;line-height:1.05;margin:32px 0 16px;">Listo. Aquí va tu guía.</h1>
         <p style="color:#9c958a;line-height:1.55;margin:0 0 16px;">PDF de 28 páginas con lineups exactos, timings y por qué funcionan en LATAM. Una página por mapa.</p>
         ${downloadLine}

@@ -15,6 +15,10 @@ const SELECTOR = [
   ".outro h2",
   ".outro__ctas",
   ".foot-b__inner",
+  ".coach-card",
+  ".offer-card",
+  ".feature",
+  ".community",
 ].join(", ");
 
 export function RevealRunner() {

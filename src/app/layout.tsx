@@ -37,14 +37,14 @@ const chakraPetch = Chakra_Petch({
 });
 
 export const metadata: Metadata = {
-  title: "GIO · Coaching Valorant LATAM",
+  title: "Zero2Hero · Coaching de Valorant",
   description:
-    "Coaching 1v1 con Gio — ex-pro VCL LATAM Sur, Radiant, IGL Smoker. Diagnóstico, plan y seguimiento hasta que subas de rango. Para todos los ranks, en español.",
-  metadataBase: new URL("https://gio.gg"),
+    "Zero2Hero.gg — una comunidad de coaches pro de Valorant. Sesiones 1v1 en vivo, cursos y membresía Discord con Gio, Adverso y más. De Zero a Hero, en español LATAM.",
+  metadataBase: new URL("https://zero2hero.gg"),
   openGraph: {
-    title: "GIO · Coaching Valorant LATAM",
+    title: "Zero2Hero · Coaching de Valorant",
     description:
-      "Tu próximo rank no es suerte. Es método. Coaching privado de Valorant con un ex-pro de la VCL LATAM Sur.",
+      "De Zero a Hero. Coaching de Valorant con coaches pro — 1v1 en vivo, cursos y comunidad Discord. Elige tu coach, elige tu offer.",
     locale: "es_CL",
     type: "website",
   },
