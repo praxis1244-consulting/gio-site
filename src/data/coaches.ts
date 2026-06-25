@@ -67,32 +67,30 @@ export const coaches: Coach[] = [
   {
     slug: "adverso",
     name: "Adverso",
-    handle: "@adverso",
-    // TODO: tagline real de Adverso
-    tagline: "Del scrim al ranked: piensa como un pro.",
-    // TODO: rol real de Adverso
-    role: "Duelist · Entry",
-    creds: "Ex-KRU",
-    // TODO: rank real de Adverso
+    handle: "@adversogg",
+    tagline: "El aim te sube a Diamante. La cabeza te sube a Radiant.",
+    role: "IGL · Iniciador",
+    creds: "Ex-Leviatán · VAL Champions 2022",
     rank: "Radiant",
-    // TODO: idiomas reales de Adverso
     langs: ["ES", "EN"],
     photo: "/coaches/adverso.jpg",
     cutout: "/coaches/adverso-card.png",
     heroCutout: "/coaches/adverso-hero.png",
-    // TODO: bio real de Adverso (rank, equipos, rol, idiomas, detalle ex-KRU)
-    bio: "Ex-jugador de KRU. Pasó por el circuito competitivo de LATAM como entry fragger y duelist. Su coaching va al hueso del aim, los timings de entrada y la lectura del mapa: cómo abrir rounds sin morir gratis y cómo traducir el nivel de scrim al ranked. (Bio placeholder — pendiente detalle real.)",
-    accentTeam: "KRU",
-    // TODO: stats reales de Adverso
+    bio: "Benjamín «Adverso» Poblete: IGL chileno con 6 años de carrera pro. Jugó VALORANT Champions 2022 y Masters Copenhague con Leviatán, y VCT Americas con KRÜ Esports. Como in-game leader su trabajo nunca fue el aim — era leer la ronda, manejar la info con Sova y Fade, y tomar la decisión correcta cuando el round se rompe. Eso es lo que te enseña: a pensar como un pro, no solo a apuntar como uno. Clases en español e inglés.",
+    accentTeam: "LEVIATÁN",
     stats: [
-      { lbl: "RANK · PEAK", value: "#—", accent: "Radiant", cap: "PLACEHOLDER" },
-      { lbl: "EXPERIENCIA", value: "—", accent: "+", cap: "AÑOS PRO · PLACEHOLDER" },
-      { lbl: "ALUMNOS", value: "—", cap: "PLACEHOLDER" },
-      { lbl: "VOD REVIEWED", value: "—", accent: "+", cap: "PLACEHOLDER" },
+      { lbl: "CARRERA PRO", value: "6", accent: "AÑOS", cap: "2020–2026 · IGL" },
+      { lbl: "VAL CHAMPIONS", value: "2022", cap: "ESTAMBUL · C/ LEVIATÁN" },
+      { lbl: "VCT AMERICAS", value: "2025", cap: "TIER 1 · C/ KRÜ" },
+      { lbl: "PREMIOS", value: "$51K", accent: "+", cap: "EN CARRERA PRO" },
     ],
-    // TODO: partidas reales de Adverso
-    matches: [],
-    socials: { twitch: "#", youtube: "#", x: "#" },
+    matches: [
+      { ts: "2022·06·26", stage: "VCT 22 LATAM · STAGE 2 (FINAL)", a: "Leviatán", b: "KRÜ", res: "3-0" },
+      { ts: "2024·06·26", stage: "VCL 24 LAS · SPLIT 2 (FINAL)", a: "All Knights", b: "9z Team", res: "3-1" },
+      { ts: "2022·07·18", stage: "MASTERS COPENHAGUE 2022", a: "Leviatán", b: "Fnatic", res: "1-2" },
+      { ts: "2022·09·11", stage: "VAL CHAMPIONS 2022 · ESTAMBUL", a: "Leviatán", b: "FunPlus Phoenix", res: "0-2" },
+    ],
+    socials: { twitch: "https://www.twitch.tv/adversogg", x: "https://x.com/adversogg" },
   },
 ];
 

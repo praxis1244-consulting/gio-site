@@ -48,7 +48,7 @@ export const testimonials: Testimonial[] = [
     coachSlug: "gio",
   },
   {
-    quote: "Con Adverso arreglé mis entradas. Dejé de morir gratis en el primer peek y empecé a tradearme bien con el equipo. Cambió mi forma de jugar duelist.",
+    quote: "Con Adverso dejé de jugar a ciegas. Me enseñó a leer la ronda, usar la info del equipo y tomar la decisión correcta en el mid-round. Empecé a ganar partidas pensando, no solo apuntando.",
     name: "JOAQUÍN · LIM",
     progress: "DIAMANTE II → ASCENDENTE III",
     delta: "+1 RANK",
@@ -98,7 +98,7 @@ export const faqs: Faq[] = [
   },
   {
     q: "¿Hay varios coaches? ¿Con cuál entreno?",
-    a: "Sí. Zero2Hero es un colectivo de coaches pro. Hoy somos Gio (ex-OXEN, IGL Smoker) y Adverso (ex-KRU, entry duelist). Eliges tu coach según el rol y el estilo que quieras trabajar — cada uno tiene su página con sus offers.",
+    a: "Sí. Zero2Hero es un colectivo de coaches pro. Hoy somos Gio (ex-OXEN, IGL/Smoker) y Adverso (ex-Leviatán y KRÜ, IGL/iniciador que jugó VALORANT Champions 2022). Eliges tu coach según el rol y el estilo que quieras trabajar — cada uno tiene su página con sus offers.",
   },
   {
     q: "¿Qué necesito para mi primera clase?",
