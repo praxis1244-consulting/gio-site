@@ -3,14 +3,12 @@ import type { Coach } from "@/data/coaches";
 export function CoachCard({ coach }: { coach: Coach }) {
   return (
     <a className="coach-card" href={`/coaches/${coach.slug}`}>
-      {/* Poster figure — TODO: swap to <img src={coach.photo} alt={coach.name} /> when real 4:5 photos are in. */}
       <div className="coach-card__poster">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img className="coach-card__img" src={coach.cutout} alt={`${coach.name} — coach de Valorant`} />
+        <div className="coach-card__shade" aria-hidden />
         <div className="coach-card__corner tl">● COACH</div>
         <div className="coach-card__corner tr">VAL · 2026</div>
-        <div className="coach-card__figure">
-          FOTO DE {coach.name.toUpperCase()}<br />
-          <span style={{ opacity: 0.6 }}>[ placeholder · 4:5 ]</span>
-        </div>
         <div className="coach-card__name">{coach.name}</div>
         <div className="coach-card__sub">{coach.rank} · {coach.role}</div>
       </div>

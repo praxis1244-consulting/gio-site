@@ -40,13 +40,11 @@ export default function Home() {
           ))}
         </div>
         <div className="hero-vs__inner">
-          {/* Cutout izquierdo — Gio. TODO: reemplazar .hero-vs__cutout-ph por
-              <img src={gio.photo} alt="Gio" className="hero-vs__cutout-img" /> cuando haya PNG recortado (fondo transparente). */}
+          {/* Cutout izquierdo — Gio (PNG fondo transparente). */}
           <figure className="hero-vs__coach hero-vs__coach--a">
             <div className="hero-vs__cutout" data-coach={gio.name.toUpperCase()}>
-              <span className="hero-vs__cutout-ph">
-                FOTO<br />{gio.name.toUpperCase()}
-              </span>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img className="hero-vs__cutout-img" src={gio.heroCutout} alt={`${gio.name} — coach de Valorant`} />
             </div>
             <figcaption className="hero-vs__coach-meta">
               <span className="hero-vs__coach-name">{gio.name}</span>
@@ -74,13 +72,11 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Cutout derecho — Adverso. TODO: reemplazar .hero-vs__cutout-ph por
-              <img src={adverso.photo} alt="Adverso" className="hero-vs__cutout-img" /> cuando haya PNG recortado. */}
+          {/* Cutout derecho — Adverso (PNG fondo transparente). */}
           <figure className="hero-vs__coach hero-vs__coach--b">
             <div className="hero-vs__cutout" data-coach={adverso.name.toUpperCase()}>
-              <span className="hero-vs__cutout-ph">
-                FOTO<br />{adverso.name.toUpperCase()}
-              </span>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img className="hero-vs__cutout-img" src={adverso.heroCutout} alt={`${adverso.name} — coach de Valorant`} />
             </div>
             <figcaption className="hero-vs__coach-meta">
               <span className="hero-vs__coach-name">{adverso.name}</span>

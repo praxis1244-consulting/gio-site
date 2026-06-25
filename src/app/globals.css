@@ -168,9 +168,15 @@ button { font: inherit; }
 .nav-b {
   display: flex; align-items: center; justify-content: space-between;
   padding: 22px 40px;
-  border-bottom: 1px solid var(--val-rule);
+  border-bottom: 1px solid transparent;
   position: sticky; top: 0; z-index: 30;
-  background: rgba(5, 5, 5, 0.85); backdrop-filter: blur(10px);
+  background: transparent;
+  transition: background 280ms ease, border-color 280ms ease, backdrop-filter 280ms ease;
+}
+.nav-b.is-scrolled {
+  border-bottom-color: var(--val-rule);
+  /* near-solid: the build strips backdrop-filter, so opacity alone must keep the nav readable */
+  background: rgba(5, 5, 5, 0.95); backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
 .nav-b .mark {
@@ -255,20 +261,17 @@ button { font: inherit; }
   color: rgba(236, 228, 216, 0.05);
   pointer-events: none; line-height: 1;
 }
-.poster__figure {
-  position: absolute; inset: 12% 12% 18%;
-  background:
-    radial-gradient(ellipse at 50% 25%, rgba(236,228,216,0.18) 0%, transparent 35%),
-    radial-gradient(ellipse at 50% 70%, rgba(255,70,85,0.18) 0%, transparent 50%);
-  border: 1px dashed var(--val-rule-hot);
-  display: grid; place-items: center;
-  color: var(--val-ink-faint);
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 0.66rem; letter-spacing: 0.32em; text-transform: uppercase;
-  text-align: center;
+.poster__img {
+  position: absolute; inset: 0; z-index: 0;
+  width: 100%; height: 100%;
+  object-fit: contain; object-position: top center;
+  filter: drop-shadow(0 22px 38px rgba(0,0,0,0.55)) saturate(0.98) brightness(1.04);
+}
+.poster__shade {
+  display: none;
 }
 .poster__corner {
-  position: absolute; padding: 14px 16px;
+  position: absolute; padding: 14px 16px; z-index: 2;
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 0.62rem; letter-spacing: 0.28em; text-transform: uppercase;
   color: var(--val-ink); display: flex; align-items: center; gap: 8px;
@@ -278,18 +281,11 @@ button { font: inherit; }
 .poster__corner.bl { bottom: 16px; left: 16px; color: var(--val-ink-dim); }
 .poster__corner.br { bottom: 16px; right: 16px; color: var(--val-red); }
 .poster__name {
-  position: absolute; bottom: 60px; left: 0; right: 0; text-align: center;
-  font-family: var(--font-display), sans-serif; font-weight: 800;
-  font-size: clamp(2.4rem, 4vw, 3.4rem); letter-spacing: 0.05em;
-  color: var(--val-ink);
-  text-shadow: 0 4px 24px rgba(0,0,0,0.6);
+  display: none;
 }
 .poster__name em { font-family: var(--font-accent), sans-serif; font-style: italic; font-weight: 600; color: var(--val-red); letter-spacing: -0.02em; }
 .poster__sub {
-  position: absolute; bottom: 36px; left: 0; right: 0; text-align: center;
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 0.7rem; letter-spacing: 0.36em; text-transform: uppercase;
-  color: var(--val-ink-dim);
+  display: none;
 }
 
 /* Marquee under hero */
@@ -526,6 +522,40 @@ button { font: inherit; }
   color: var(--val-green); margin-left: auto;
 }
 
+/* Proof wall — capturas reales de conversaciones con alumnos (masonry) */
+.proofwall { columns: 3; column-gap: 18px; }
+.proof {
+  display: block; break-inside: avoid; margin: 0 0 18px;
+  border: 1px solid var(--val-rule); background: var(--val-panel);
+  text-decoration: none; position: relative; overflow: hidden;
+  transition: border-color 220ms var(--ease-quint), transform 220ms var(--ease-quint);
+}
+.proof:hover { border-color: var(--val-rule-hot); transform: translateY(-3px); }
+.proof__tag {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+  padding: 13px 16px; border-bottom: 1px solid var(--val-rule);
+  border-left: 3px solid var(--val-green);
+}
+.proof__result {
+  font-family: var(--font-display), sans-serif; font-weight: 600; font-size: 0.82rem;
+  letter-spacing: 0.005em; line-height: 1.3; color: var(--val-green);
+}
+.proof__who {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.6rem; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--val-ink-faint); white-space: nowrap; flex: none;
+}
+.proof__img { display: block; width: 100%; height: auto; }
+/* "ampliar" hint on hover */
+.proof::after {
+  content: "AMPLIAR ↗"; position: absolute; bottom: 0; right: 0;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.58rem; letter-spacing: 0.16em; color: var(--val-ink);
+  background: rgba(5, 5, 5, 0.82); padding: 7px 11px;
+  opacity: 0; transition: opacity 200ms ease; pointer-events: none;
+}
+.proof:hover::after { opacity: 1; }
+
 /* Lead magnet — editorial */
 .lead-b {
   padding: 80px 56px;
@@ -710,6 +740,7 @@ html { interpolate-size: allow-keywords; }
   from { opacity: 0; transform: translate3d(0, 42px, 0) skewY(1.5deg); }
   to   { opacity: 1; transform: translate3d(0, 0, 0) skewY(0); }
 }
+@keyframes proof-fade { from { opacity: 0; } to { opacity: 1; } }
 @keyframes hud-slide-x {
   from { opacity: 0; transform: translate3d(-32px, 0, 0); }
   to   { opacity: 1; transform: translate3d(0, 0, 0); }
@@ -756,6 +787,7 @@ html { interpolate-size: allow-keywords; }
   .js-on .estep,
   .js-on .fight,
   .js-on .equote,
+  .js-on .proof,
   .js-on .lead-b,
   .js-on .faq-b details,
   .js-on .guarantee,
@@ -782,6 +814,11 @@ html { interpolate-size: allow-keywords; }
     animation-delay: calc(var(--i, 0) * 110ms);
   }
   .fight.headline.is-in { animation-duration: 920ms; }
+  /* proof cards live in a masonry column flow — fade only (no transform) so columns don't break */
+  .proof.is-in {
+    animation: proof-fade 680ms var(--ease-expo) forwards;
+    animation-delay: calc(var(--i, 0) * 65ms);
+  }
   .lead-b.is-in,
   .foot-b__inner.is-in {
     animation: hud-slide-up 880ms var(--ease-expo) forwards;
@@ -818,6 +855,7 @@ html { interpolate-size: allow-keywords; }
   .fights { grid-template-columns: 1fr; }
   .matchgrid { grid-template-columns: 1fr; }
   .equotes { grid-template-columns: 1fr; }
+  .proofwall { columns: 2; }
   .lead-b { grid-template-columns: 1fr; padding: 40px 24px; gap: 40px; }
   .lead-b__cover { transform: rotate(0); max-width: 360px; margin: 0 auto; }
   .ehead { grid-template-columns: 1fr; gap: 16px; }
@@ -860,7 +898,9 @@ html { interpolate-size: allow-keywords; }
   isolation: isolate;
   min-height: 86vh;
   display: flex; align-items: center;
-  padding: 88px 40px 84px;
+  /* slide the hero up behind the transparent nav so its aura/grid sits under it */
+  margin-top: calc(-1 * var(--nav-h, 86px));
+  padding: calc(88px + var(--nav-h, 86px)) 40px 84px;
   overflow: hidden;
   /* the "aura": warm red core rising from below (their fire, our red) + dark base */
   background:
@@ -935,9 +975,9 @@ html { interpolate-size: allow-keywords; }
   background:
     radial-gradient(ellipse 72% 36% at 50% 100%, rgba(255,70,85,0.42), transparent 72%),
     radial-gradient(ellipse 60% 72% at 50% 58%, rgba(255,70,85,0.10), transparent 72%);
-  /* fade the top & bottom so the figure emerges from the light instead of a hard box */
-  -webkit-mask: linear-gradient(180deg, transparent 0%, #000 16%, #000 80%, transparent 100%);
-          mask: linear-gradient(180deg, transparent 0%, #000 16%, #000 80%, transparent 100%);
+  /* fade the top so the figure emerges from the light; bottom fade is baked into the png */
+  -webkit-mask: linear-gradient(180deg, transparent 0%, #000 15%, #000 100%);
+          mask: linear-gradient(180deg, transparent 0%, #000 15%, #000 100%);
   filter: drop-shadow(0 26px 44px rgba(0,0,0,0.6));
 }
 /* giant faint coach name behind the figure (mirrors on each side) */
@@ -952,17 +992,8 @@ html { interpolate-size: allow-keywords; }
 .hero-vs__cutout-img {
   position: relative; z-index: 1; width: 100%; height: 100%;
   object-fit: contain; object-position: bottom;
+  filter: saturate(0.92) contrast(1.02);
 }
-.hero-vs__cutout-ph {
-  position: relative; z-index: 1;
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 0.6rem; letter-spacing: 0.28em; text-transform: uppercase;
-  color: var(--val-ink-faint); text-align: center; line-height: 1.9;
-  border: 1px dashed var(--val-rule-hot); padding: 12px 16px;
-  background: rgba(7, 8, 10, 0.45);
-}
-.hero-vs__cutout-ph::before { content: "[ "; color: var(--val-red); }
-.hero-vs__cutout-ph::after  { content: " ]"; color: var(--val-red); }
 .hero-vs__coach-meta {
   position: relative; z-index: 2; text-align: center; margin-top: -2px;
   display: flex; flex-direction: column; gap: 4px;
@@ -1064,20 +1095,20 @@ html { interpolate-size: allow-keywords; }
 }
 .coach-card__corner.tl { top: 10px; left: 12px; color: var(--val-red); }
 .coach-card__corner.tr { top: 10px; right: 12px; color: var(--val-ink-dim); }
-.coach-card__figure {
-  position: absolute; inset: 16% 18% 34%;
-  border: 1px dashed var(--val-rule-hot);
-  display: grid; place-items: center; text-align: center;
-  color: var(--val-ink-faint);
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 0.58rem; letter-spacing: 0.26em; text-transform: uppercase; line-height: 1.8;
-  background: radial-gradient(ellipse at 50% 30%, rgba(236,228,216,0.10) 0%, transparent 45%);
+.coach-card__img {
+  position: absolute; inset: 0; z-index: 0;
+  width: 100%; height: 100%;
+  object-fit: contain; object-position: top center;
+  filter: drop-shadow(0 18px 30px rgba(0,0,0,0.5)) saturate(0.98) brightness(1.04);
+}
+.coach-card__shade {
+  display: none;
 }
 .coach-card__name {
   position: absolute; bottom: 26px; left: 0; right: 0; text-align: center; z-index: 2;
   font-family: var(--font-display), sans-serif; font-weight: 800;
   font-size: clamp(1.6rem, 3vw, 2.2rem); letter-spacing: 0.03em;
-  color: var(--val-ink); text-shadow: 0 4px 24px rgba(0,0,0,0.6);
+  color: var(--val-ink); text-shadow: 0 5px 30px #000, 0 2px 10px #000;
 }
 .coach-card__sub {
   position: absolute; bottom: 12px; left: 0; right: 0; text-align: center; z-index: 2;
@@ -1297,7 +1328,7 @@ html { interpolate-size: allow-keywords; }
    ZERO2HERO · RESPONSIVE — mobile is the priority
    ===================================================================== */
 @media (max-width: 1000px) {
-  .hero-vs { padding: 40px 24px 48px; }
+  .hero-vs { padding: calc(40px + var(--nav-h, 70px)) 24px 48px; }
   /* collapse 3-col tale-of-the-tape: center first, posters side by side under it */
   .hero-vs__inner {
     grid-template-columns: 1fr 1fr;
@@ -1329,7 +1360,7 @@ html { interpolate-size: allow-keywords; }
   .discord-banner { padding: 8px 16px; gap: 8px; font-size: 0.6rem; letter-spacing: 0.12em; }
   .discord-banner span:not(.dot) { white-space: normal; }
 
-  .hero-vs { padding: 32px 18px 40px; }
+  .hero-vs { padding: calc(32px + var(--nav-h, 70px)) 18px 40px; }
   /* single column: headline, then cutouts stacked */
   .hero-vs__inner { grid-template-columns: 1fr; gap: 20px; }
   .hero-vs__coach { max-width: 300px; }
@@ -1343,6 +1374,8 @@ html { interpolate-size: allow-keywords; }
   }
   .match .ts { grid-column: 1 / -1; }
   .match .res { border-left: 0; padding-left: 0; text-align: right; }
+
+  .proofwall { columns: 1; }
 
   .offer-card { padding: 24px 22px; }
   .feature { padding: 28px 24px 32px; }

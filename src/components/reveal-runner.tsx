@@ -17,6 +17,7 @@ const SELECTOR = [
   ".foot-b__inner",
   ".coach-card",
   ".offer-card",
+  ".proof",
   ".feature",
   ".community",
 ].join(", ");

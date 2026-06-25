@@ -39,6 +39,16 @@ export default async function CoachPage({
 
   const offers = offersByCoach(slug);
 
+  // Sequential section numbers — sections appear conditionally per coach.
+  const hasMatches = (coach.matches?.length ?? 0) > 0;
+  const hasResults = (coach.results?.length ?? 0) > 0;
+  let sectionCount = 0;
+  const nextNum = () => String(++sectionCount).padStart(2, "0");
+  const dossierNum = nextNum();
+  const matchesNum = hasMatches ? nextNum() : null;
+  const resultsNum = hasResults ? nextNum() : null;
+  const offersNum = nextNum();
+
   return (
     <>
       <SiteNav />
@@ -74,17 +84,15 @@ export default async function CoachPage({
             </div>
           </div>
 
-          {/* Poster — TODO: reemplazar .poster__figure por <img src={coach.photo} alt={`${coach.name} · coach Valorant`} /> cuando haya foto. */}
           <div
             className="poster"
             style={{ "--poster-mark": `"${coach.name.toUpperCase()}"` } as CSSProperties}
           >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img className="poster__img" src={coach.cutout} alt={`${coach.name} — coach de Valorant`} />
+            <div className="poster__shade" aria-hidden />
             <div className="poster__corner tl">● COACH</div>
             <div className="poster__corner tr">VAL · 2026</div>
-            <div className="poster__figure">
-              FOTO DE {coach.name.toUpperCase()}<br />
-              <span style={{ opacity: 0.6 }}>[ placeholder · 4:5 ]</span>
-            </div>
             <div className="poster__name">
               {coach.name} · <em>{coach.role}</em>
             </div>
@@ -101,7 +109,7 @@ export default async function CoachPage({
       <section className="section coach-page__dossier" id="dossier">
         <div className="wrap">
           <div className="ehead">
-            <span className="num">01</span>
+            <span className="num">{dossierNum}</span>
             <div>
               <span className="lbl" style={{ color: "var(--val-red)" }}>
                 DOSSIER · {coach.accentTeam ?? coach.creds}
@@ -131,7 +139,7 @@ export default async function CoachPage({
         <section className="section coach-page__matches" style={{ paddingTop: 0 }}>
           <div className="wrap">
             <div className="ehead">
-              <span className="num">02</span>
+              <span className="num">{matchesNum}</span>
               <div>
                 <span className="lbl" style={{ color: "var(--val-red)" }}>
                   PARTIDAS · {coach.accentTeam ?? "COMPETITIVO"}
@@ -161,11 +169,57 @@ export default async function CoachPage({
         </section>
       ) : null}
 
+      {/* RESULTADOS · CONVERSACIONES REALES CON ALUMNOS */}
+      {coach.results && coach.results.length > 0 ? (
+        <section className="section coach-page__proof" id="resultados">
+          <div className="wrap">
+            <div className="ehead">
+              <span className="num">{resultsNum}</span>
+              <div>
+                <span className="lbl" style={{ color: "var(--val-red)" }}>
+                  RESULTADOS · ALUMNOS REALES
+                </span>
+                <h2>
+                  Lo que logran <em>sus alumnos.</em>
+                </h2>
+                <p className="lbl-side">
+                  Conversaciones reales, sin retoques. Del que recién sale de Platino al que llegó a Radiant.
+                </p>
+              </div>
+            </div>
+            <div className="proofwall">
+              {coach.results.map((r, i) => (
+                <a
+                  className="proof"
+                  key={r.img}
+                  href={r.img}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ "--i": i } as CSSProperties}
+                >
+                  <div className="proof__tag">
+                    <span className="proof__result">{r.result}</span>
+                    <span className="proof__who">{r.who}</span>
+                  </div>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    className="proof__img"
+                    src={r.img}
+                    alt={`Conversación con ${r.who}: ${r.result} — coaching de ${coach.name}`}
+                    loading="lazy"
+                  />
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
+
       {/* SUS OFFERS */}
       <section className="section coach-page__offers" id="offers">
         <div className="wrap">
           <div className="ehead">
-            <span className="num">{coach.matches && coach.matches.length > 0 ? "03" : "02"}</span>
+            <span className="num">{offersNum}</span>
             <div>
               <span className="lbl" style={{ color: "var(--val-red)" }}>
                 CATÁLOGO · {coach.name.toUpperCase()}
