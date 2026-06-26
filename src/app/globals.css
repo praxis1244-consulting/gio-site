@@ -1047,9 +1047,10 @@ html { interpolate-size: allow-keywords; }
   background:
     radial-gradient(ellipse 72% 36% at 50% 100%, rgba(255,70,85,0.42), transparent 72%),
     radial-gradient(ellipse 60% 72% at 50% 58%, rgba(255,70,85,0.10), transparent 72%);
-  /* fade the top so the figure emerges from the light (bottom fade lives on the img) */
-  -webkit-mask: linear-gradient(180deg, transparent 0%, #000 15%, #000 100%);
-          mask: linear-gradient(180deg, transparent 0%, #000 15%, #000 100%);
+  /* fade top (figure emerges from the light) AND bottom (floor glow dissolves into
+     the dark instead of cutting hard red→black at the container edge) */
+  -webkit-mask: linear-gradient(180deg, transparent 0%, #000 15%, #000 86%, transparent 100%);
+          mask: linear-gradient(180deg, transparent 0%, #000 15%, #000 86%, transparent 100%);
   filter: drop-shadow(0 26px 44px rgba(0,0,0,0.6));
 }
 /* giant faint coach name behind the figure (mirrors on each side) */
@@ -1596,6 +1597,20 @@ html { interpolate-size: allow-keywords; }
   /* the giant faint name behind would overflow a half-width card → drop it */
   .hero-vs__cutout::before { display: none; }
   .hero-vs__cutout { aspect-ratio: 3 / 4.2; }
+
+  /* drop the two coaches in between the headline and the subline. `center` becomes
+     display:contents so its children join the inner grid and can be reordered around
+     the coaches; row-gap 0 keeps the text rhythm (it lives in the element margins). */
+  .hero-vs__center { display: contents; }
+  .hero-vs__inner { row-gap: 0; column-gap: 16px; }
+  .hero-vs__kicker     { order: 1; grid-column: 1 / -1; justify-self: center; }
+  .hero-vs__descriptor { order: 2; grid-column: 1 / -1; }
+  .hero-vs__title      { order: 3; grid-column: 1 / -1; }
+  .hero-vs__coach--a   { order: 4; grid-column: 1; margin-top: 22px; }
+  .hero-vs__coach--b   { order: 5; grid-column: 2; margin-top: 22px; }
+  .hero-vs__sub        { order: 6; grid-column: 1 / -1; }
+  .hero-vs__micro      { order: 7; grid-column: 1 / -1; }
+  .hero-vs__ctas       { order: 8; grid-column: 1 / -1; }
 }
 
 @media (max-width: 560px) {
@@ -1604,7 +1619,7 @@ html { interpolate-size: allow-keywords; }
 
   .hero-vs { padding: calc(32px + var(--nav-h, 70px)) 18px 40px; }
   /* headline on top, the two coaches as VS cards below (no single-column collapse) */
-  .hero-vs__inner { gap: 14px; }
+  .hero-vs__inner { row-gap: 0; column-gap: 14px; }
   .hero-vs__coach { max-width: none; }
   .hero-vs__title { font-size: clamp(1.9rem, 8.6vw, 2.7rem); }
   .hero-vs__ctas { width: 100%; }
@@ -1766,7 +1781,7 @@ html { interpolate-size: allow-keywords; }
 @media (max-width: 560px) {
   /* two coaches side by side as VS cards — each fills its half */
   .hero-vs__coach { max-width: none; }
-  .hero-vs__inner { gap: 12px; }
+  .hero-vs__inner { row-gap: 0; column-gap: 12px; }
   .hero-vs__coach-name { font-size: clamp(1.25rem, 6.5vw, 1.6rem); }
 
   .nav-drawer__links a { font-size: 1.7rem; padding: 16px 4px; }
