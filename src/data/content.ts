@@ -98,7 +98,7 @@ export const faqs: Faq[] = [
   },
   {
     q: "¿Hay varios coaches? ¿Con cuál entreno?",
-    a: "Sí. Zero2Hero es un colectivo de coaches pro. Hoy somos Gio (ex-OXEN, IGL/Smoker) y Adverso (ex-Leviatán y KRÜ, IGL/iniciador que jugó VALORANT Champions 2022). Eliges tu coach según el rol y el estilo que quieras trabajar — cada uno tiene su página con sus offers.",
+    a: "Sí. Zero2Hero es un colectivo de coaches pro. Hoy somos Gio (IGL/Smoker, jugó la VCL LATAM Sur con OXEN, el equipo afiliado a KRÜ) y Adverso (ex-Leviatán y KRÜ, IGL/iniciador que jugó VALORANT Champions 2022). Eliges tu coach según el rol y el estilo que quieras trabajar — cada uno tiene su página con sus offers.",
   },
   {
     q: "¿Qué necesito para mi primera clase?",
