@@ -4,6 +4,9 @@ import { notFound } from "next/navigation";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { OfferCard } from "@/components/offer-card";
+import { CountUp } from "@/components/count-up";
+import { ProofGallery } from "@/components/proof-gallery";
+import { CalendlyInline } from "@/components/calendly-inline";
 import { coaches, getCoach } from "@/data/coaches";
 import { offersByCoach } from "@/data/offers";
 import { site } from "@/data/site";
@@ -40,14 +43,15 @@ export default async function CoachPage({
   const offers = offersByCoach(slug);
 
   // Sequential section numbers — sections appear conditionally per coach.
-  const hasMatches = (coach.matches?.length ?? 0) > 0;
+  const hasTeams = (coach.teams?.length ?? 0) > 0;
   const hasResults = (coach.results?.length ?? 0) > 0;
   let sectionCount = 0;
   const nextNum = () => String(++sectionCount).padStart(2, "0");
   const dossierNum = nextNum();
-  const matchesNum = hasMatches ? nextNum() : null;
+  const teamsNum = hasTeams ? nextNum() : null;
   const resultsNum = hasResults ? nextNum() : null;
   const offersNum = nextNum();
+  const agendaNum = coach.calendly ? nextNum() : null;
 
   return (
     <>
@@ -124,7 +128,7 @@ export default async function CoachPage({
               <div className="estat" key={s.lbl} style={{ "--i": i } as CSSProperties}>
                 <span className="lbl">{s.lbl}</span>
                 <div className="v">
-                  {s.value}
+                  <CountUp value={s.value} delay={i * 110} />
                   {s.accent ? <em>{s.accent}</em> : null}
                 </div>
                 <div className="cap">{s.cap}</div>
@@ -134,34 +138,27 @@ export default async function CoachPage({
         </div>
       </section>
 
-      {/* MATCH GRID (si hay partidas) */}
-      {coach.matches && coach.matches.length > 0 ? (
-        <section className="section coach-page__matches" style={{ paddingTop: 0 }}>
+      {/* MURO DE EQUIPOS (si hay carrera pro registrada) */}
+      {coach.teams && coach.teams.length > 0 ? (
+        <section className="section coach-page__teams" style={{ paddingTop: 0 }}>
           <div className="wrap">
             <div className="ehead">
-              <span className="num">{matchesNum}</span>
+              <span className="num">{teamsNum}</span>
               <div>
                 <span className="lbl" style={{ color: "var(--val-red)" }}>
-                  PARTIDAS · {coach.accentTeam ?? "COMPETITIVO"}
+                  EQUIPOS · CARRERA PRO
                 </span>
                 <h2>
-                  Las partidas <em>en las que estuvo arriba.</em>
+                  Por dónde pasó <em>su carrera.</em>
                 </h2>
               </div>
             </div>
-            <div className="matchgrid">
-              {coach.matches.map((m, i) => (
-                <div
-                  className="match"
-                  key={`${m.ts}-${m.a}-${m.b}`}
-                  style={{ "--i": i } as CSSProperties}
-                >
-                  <span className="ts">{m.ts}</span>
-                  <span className="ev">
-                    <span className="stage">{m.stage}</span>
-                    {m.a} <span className="vs">vs</span> {m.b}
-                  </span>
-                  <span className="res">{m.res}</span>
+            <div className="teamwall">
+              {coach.teams.map((t, i) => (
+                <div className="team" key={t.name} style={{ "--i": i } as CSSProperties}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img className="team__logo" src={t.logo} alt={`${t.name} — equipo de ${coach.name}`} loading="lazy" />
+                  <span className="team__name">{t.name}</span>
                 </div>
               ))}
             </div>
@@ -187,30 +184,7 @@ export default async function CoachPage({
                 </p>
               </div>
             </div>
-            <div className="proofwall">
-              {coach.results.map((r, i) => (
-                <a
-                  className="proof"
-                  key={r.img}
-                  href={r.img}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ "--i": i } as CSSProperties}
-                >
-                  <div className="proof__tag">
-                    <span className="proof__result">{r.result}</span>
-                    <span className="proof__who">{r.who}</span>
-                  </div>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    className="proof__img"
-                    src={r.img}
-                    alt={`Conversación con ${r.who}: ${r.result} — coaching de ${coach.name}`}
-                    loading="lazy"
-                  />
-                </a>
-              ))}
-            </div>
+            <ProofGallery results={coach.results} coachName={coach.name} />
           </div>
         </section>
       ) : null}
@@ -243,6 +217,29 @@ export default async function CoachPage({
         </div>
       </section>
 
+      {/* AGENDA · CALENDLY */}
+      {coach.calendly ? (
+        <section className="section coach-page__agenda" id="agenda" style={{ paddingTop: 0 }}>
+          <div className="wrap">
+            <div className="ehead">
+              <span className="num">{agendaNum}</span>
+              <div>
+                <span className="lbl" style={{ color: "var(--val-red)" }}>
+                  AGENDA · {coach.name.toUpperCase()}
+                </span>
+                <h2>
+                  Reserva tu clase <em>con {coach.name}.</em>
+                </h2>
+                <p className="lbl-side">
+                  Elige día y hora. Recibes el link de Google Meet al confirmar. Horario de Santiago.
+                </p>
+              </div>
+            </div>
+            <CalendlyInline url={coach.calendly} />
+          </div>
+        </section>
+      ) : null}
+
       {/* OUTRO · CTA FINAL */}
       <section className="outro">
         <h2>
@@ -257,7 +254,7 @@ export default async function CoachPage({
           >
             Unirse al Discord →
           </a>
-          <a className="btn btn-ghost" href="/#reservar">
+          <a className="btn btn-ghost" href={coach.calendly ? "#agenda" : "/#reservar"}>
             Agenda tu clase →
           </a>
         </div>

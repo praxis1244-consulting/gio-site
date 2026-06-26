@@ -1,5 +1,6 @@
 export type CoachStat = { lbl: string; value: string; accent?: string; cap: string };
-export type Match = { ts: string; stage: string; a: string; b: string; res: string };
+/** Un equipo pro por el que pasó el coach + su logo (sobre fondo oscuro). */
+export type TeamLogo = { name: string; logo: string };
 /** Screenshot de una conversación real con un alumno + el resultado que logró. */
 export type ResultProof = { img: string; who: string; result: string };
 export type Coach = {
@@ -17,8 +18,10 @@ export type Coach = {
   bio: string;
   accentTeam?: string;
   stats: CoachStat[];
-  matches?: Match[];
+  teams?: TeamLogo[];
   results?: ResultProof[];
+  /** Link de Calendly del coach (cuenta compartida adversinigionini). */
+  calendly?: string;
   socials: { twitch?: string; youtube?: string; x?: string };
 };
 
@@ -43,9 +46,14 @@ export const coaches: Coach[] = [
       { lbl: "ALUMNOS", value: "214", cap: "85% SUBIÓ DE RANGO" },
       { lbl: "VOD REVIEWED", value: "640", accent: "+", cap: "3,200 H DE ANÁLISIS" },
     ],
-    // Gio pidió sacar la sección de partidas — su prueba real son los resultados
-    // de alumnos (sección de abajo), no sus propios scores. Vacío = no se renderiza.
-    matches: [],
+    // Orgs reales de su carrera en la VCL LATAM Sur (Liquipedia + KRÜ Academy del
+    // ACE Masters 25). Reverse-cronológico: el más reconocible/reciente primero.
+    teams: [
+      { name: "KRÜ Academy", logo: "/teams/kru.png" },
+      { name: "OXEN", logo: "/teams/oxen.png" },
+      { name: "Furious Gaming", logo: "/teams/furious.png" },
+      { name: "Optix", logo: "/teams/optix.png" },
+    ],
     // Conversaciones reales con alumnos (capturas). Orden = de mayor a menor impacto.
     results: [
       { img: "/proof/gio-porsche.jpeg", who: "Porsche", result: "Diamante 3 → Radiant" },
@@ -59,6 +67,7 @@ export const coaches: Coach[] = [
       { img: "/proof/gio-kutral.jpeg", who: "kutral", result: "Más confianza, ganando harto" },
       { img: "/proof/gio-lowgravity.jpeg", who: "Lowgravity56", result: "«Me abriste los ojos»" },
     ],
+    calendly: "https://calendly.com/adversinigionini/gio",
     socials: { twitch: "https://www.twitch.tv/giovlr1", x: "https://x.com/giovlr1" },
   },
   {
@@ -81,12 +90,18 @@ export const coaches: Coach[] = [
       { lbl: "VCT AMERICAS", value: "2025", cap: "TIER 1 · C/ KRÜ" },
       { lbl: "PREMIOS", value: "$51K", accent: "+", cap: "EN CARRERA PRO" },
     ],
-    matches: [
-      { ts: "2022·06·26", stage: "VCT 22 LATAM · STAGE 2 (FINAL)", a: "Leviatán", b: "KRÜ", res: "3-0" },
-      { ts: "2024·06·26", stage: "VCL 24 LAS · SPLIT 2 (FINAL)", a: "All Knights", b: "9z Team", res: "3-1" },
-      { ts: "2022·07·18", stage: "MASTERS COPENHAGUE 2022", a: "Leviatán", b: "Fnatic", res: "1-2" },
-      { ts: "2022·09·11", stage: "VAL CHAMPIONS 2022 · ESTAMBUL", a: "Leviatán", b: "FunPlus Phoenix", res: "0-2" },
+    // Orgs reales de su carrera pro (Liquipedia), ordenados por peso/reconocimiento.
+    // Logos sobre fondo oscuro; FURIA va en versión blanca porque su pantera es negra.
+    teams: [
+      { name: "Leviatán", logo: "/teams/leviatan.png" },
+      { name: "KRÜ Esports", logo: "/teams/kru.png" },
+      { name: "FURIA", logo: "/teams/furia.png" },
+      { name: "All Knights", logo: "/teams/all-knights.png" },
+      { name: "00 Nation", logo: "/teams/00-nation.png" },
+      { name: "Australs", logo: "/teams/australs.png" },
+      { name: "ShindeN", logo: "/teams/shinden.png" },
     ],
+    calendly: "https://calendly.com/adversinigionini/adverso",
     socials: { twitch: "https://www.twitch.tv/adversogg", x: "https://x.com/adversogg" },
   },
 ];

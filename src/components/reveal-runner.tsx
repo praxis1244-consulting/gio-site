@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 const SELECTOR = [
   ".ehead",
   ".estat",
-  ".match",
+  ".team",
   ".estep",
   ".fight",
   ".equote",

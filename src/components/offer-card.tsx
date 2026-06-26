@@ -24,7 +24,7 @@ export function OfferCard({ offer, coach }: { offer: Offer; coach?: Coach }) {
       </ul>
 
       <div className="offer-card__cta">
-        <a href="/#reservar" className="btn btn-primary">
+        <a href={coach?.calendly ? "#agenda" : "/#reservar"} className="btn btn-primary">
           {coach ? `Agenda con ${coach.name} →` : "Agenda tu clase →"}
         </a>
       </div>

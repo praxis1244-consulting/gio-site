@@ -133,10 +133,23 @@ export default function Home() {
           <div className="reserva">
             <div className="reserva__copy">
               <span className="lbl" style={{ color: "var(--val-red)" }}>AGENDA TU CLASE</span>
-              <h2>Escríbenos y <em>coordinamos.</em></h2>
+              <h2>Reserva directo <em>con tu coach.</em></h2>
               <p>
-                Déjanos tu contacto y tu rango. El coach te escribe directo para cuadrar día, hora y lugar. Cupos limitados.
+                Elige tu coach, día y hora — recibes el link de Google Meet al confirmar. ¿Prefieres que te escribamos? Déjanos tu contacto al lado.
               </p>
+              <div className="reserva__coaches">
+                {coaches
+                  .filter((c) => c.calendly)
+                  .map((c, i) => (
+                    <a
+                      key={c.slug}
+                      className={`btn ${i === 0 ? "btn-primary" : "btn-ghost"}`}
+                      href={`/coaches/${c.slug}#agenda`}
+                    >
+                      Agenda con {c.name} →
+                    </a>
+                  ))}
+              </div>
             </div>
             <ContactForm />
           </div>

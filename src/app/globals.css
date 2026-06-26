@@ -470,36 +470,37 @@ button { font: inherit; }
 .guarantee__label { display: flex; align-items: center; gap: 14px; }
 .guarantee .val-lbl { letter-spacing: 0.18em; }
 
-/* Match grid - editorial */
-.matchgrid {
-  display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--val-rule); border: 1px solid var(--val-rule);
+/* Team wall — logo grid (muted at rest → full color on hover) */
+.teamwall {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  row-gap: 8px; margin-top: 8px;
 }
-.match {
-  background: var(--val-bg); padding: 24px 28px;
-  display: grid; grid-template-columns: 90px 1fr 90px; gap: 20px; align-items: center;
+.team {
+  flex: 0 0 25%;
+  display: flex; flex-direction: column; align-items: center; gap: 14px;
+  padding: 34px 20px;
 }
-.match .ts { font-family: var(--font-mono), ui-monospace, monospace; font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--val-ink-faint); }
-.match .ev {
-  font-family: var(--font-display), sans-serif; font-weight: 400; font-size: 1.05rem; letter-spacing: -0.02em;
-  color: var(--val-ink);
+.team__logo {
+  height: 58px; width: auto; max-width: 100%; object-fit: contain;
+  filter: grayscale(0.55) brightness(0.96);
+  opacity: 0.6;
+  transition: opacity 280ms var(--ease-expo), filter 280ms var(--ease-expo), transform 280ms var(--ease-expo);
 }
-.match .ev .stage { display: block; font-family: var(--font-mono), ui-monospace, monospace; font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--val-ink-faint); margin-bottom: 4px; }
-.match .ev .vs { color: var(--val-red); padding: 0 6px; }
-.match .res {
-  text-align: center;
-  font-family: var(--font-display), sans-serif; font-weight: 500; font-size: 1.4rem; letter-spacing: 0.04em;
-  color: var(--val-green);
-  border-left: 1px solid var(--val-rule);
-  padding-left: 20px;
-}
-.match .res.loss { color: var(--val-red); }
-.match-more {
-  margin-top: 16px; text-align: right;
-}
-.match-more a {
+.team__name {
   font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase;
-  color: var(--val-red);
+  font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--val-ink-faint);
+  opacity: 0; transition: opacity 280ms var(--ease-expo), color 280ms var(--ease-expo);
+}
+.team:hover .team__logo {
+  filter: none; opacity: 1; transform: translateY(-3px) scale(1.05);
+}
+.team:hover .team__name { opacity: 1; color: var(--val-ink); }
+
+/* Touch devices have no hover — show real brand colours + names by default */
+@media (hover: none) {
+  .team__logo { filter: none; opacity: 0.92; }
+  .team__name { opacity: 0.7; }
 }
 
 /* Testimonials — magazine quote */
@@ -563,6 +564,69 @@ button { font: inherit; }
   opacity: 0; transition: opacity 200ms ease; pointer-events: none;
 }
 .proof:hover::after { opacity: 1; }
+
+/* Lightbox — preview de capturas sin salir de la página */
+.lightbox {
+  position: fixed; inset: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: center;
+  padding: 64px 72px 56px;
+  background: rgba(6, 6, 7, 0.93);
+  animation: lb-fade 220ms var(--ease-expo);
+}
+.lightbox__stage {
+  margin: 0; display: flex; flex-direction: column; align-items: center; gap: 14px;
+  max-width: min(940px, 100%); max-height: 100%;
+  animation: lb-pop 320ms var(--ease-expo);
+}
+.lightbox__img {
+  display: block; max-width: 100%; max-height: calc(100vh - 184px); width: auto; height: auto;
+  object-fit: contain;
+  border: 1px solid var(--val-rule-hot);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+  background: var(--val-panel);
+}
+.lightbox__cap {
+  display: flex; align-items: baseline; gap: 14px;
+  border-left: 3px solid var(--val-green); padding-left: 12px;
+}
+.lightbox__result {
+  font-family: var(--font-display), sans-serif; font-weight: 600; font-size: 0.9rem;
+  color: var(--val-green);
+}
+.lightbox__who {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--val-ink-faint);
+}
+/* Botoncito de salir (X) */
+.lightbox__close {
+  position: absolute; top: 18px; right: 20px; z-index: 2;
+  width: 42px; height: 42px; padding: 0; cursor: pointer;
+  background: rgba(20, 20, 22, 0.72); border: 1px solid var(--val-rule);
+  display: grid; place-items: center;
+  transition: border-color 200ms var(--ease-quint), background 200ms var(--ease-quint);
+}
+.lightbox__close:hover { border-color: var(--val-red); background: rgba(34, 12, 14, 0.85); }
+.lightbox__close span {
+  grid-area: 1 / 1; width: 18px; height: 1.5px; background: var(--val-ink);
+}
+.lightbox__close span:first-child { transform: rotate(45deg); }
+.lightbox__close span:last-child { transform: rotate(-45deg); }
+/* Prev / next */
+.lightbox__nav {
+  position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
+  width: 46px; height: 46px; cursor: pointer;
+  font-family: var(--font-display), sans-serif; font-size: 1.7rem; line-height: 1;
+  color: var(--val-ink);
+  background: rgba(20, 20, 22, 0.6); border: 1px solid var(--val-rule);
+  display: grid; place-items: center;
+  transition: border-color 200ms var(--ease-quint), background 200ms var(--ease-quint), color 200ms;
+}
+.lightbox__nav:hover { border-color: var(--val-red); color: #fff; background: rgba(34, 12, 14, 0.85); }
+.lightbox__nav.prev { left: 18px; }
+.lightbox__nav.next { right: 18px; }
+
+@keyframes lb-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes lb-pop { from { opacity: 0; transform: scale(0.97); } to { opacity: 1; transform: scale(1); } }
 
 /* Lead magnet — editorial */
 .lead-b {
@@ -791,7 +855,7 @@ html { interpolate-size: allow-keywords; }
   /* ─── SCROLL REVEALS · IO-DRIVEN (.js-on gate, .is-in trigger) ── */
   .js-on .ehead,
   .js-on .estat,
-  .js-on .match,
+  .js-on .team,
   .js-on .estep,
   .js-on .fight,
   .js-on .equote,
@@ -813,7 +877,7 @@ html { interpolate-size: allow-keywords; }
     animation: hud-clip-x 900ms var(--ease-expo) forwards;
   }
   .estat.is-in,
-  .match.is-in,
+  .team.is-in,
   .estep.is-in,
   .fight.is-in,
   .equote.is-in,
@@ -861,7 +925,7 @@ html { interpolate-size: allow-keywords; }
   .estat:nth-child(-n+2) { border-bottom: 1px solid var(--val-rule); }
   .esteps { grid-template-columns: 1fr; }
   .fights { grid-template-columns: 1fr; }
-  .matchgrid { grid-template-columns: 1fr; }
+  .team { flex-basis: 33.333%; }
   .equotes { grid-template-columns: 1fr; }
   .proofwall { columns: 2; }
   .lead-b { grid-template-columns: 1fr; padding: 40px 24px; gap: 40px; }
@@ -1244,6 +1308,20 @@ html { interpolate-size: allow-keywords; }
 }
 .reserva__copy h2 em { font-family: var(--font-accent), sans-serif; font-style: italic; font-weight: 600; color: var(--val-red); }
 .reserva__copy p { color: var(--val-ink-dim); line-height: 1.55; max-width: 42ch; margin: 0; }
+.reserva__coaches { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+
+/* Calendly inline embed — agendamiento dentro del sitio.
+   Altura fija + iframe forzado a llenarla: no dependemos del auto-resize por
+   postMessage (que puede no completar tras adblockers o en algunos contextos). */
+.calendly-embed {
+  margin-top: 8px;
+  height: 740px;
+  border: 1px solid var(--val-rule);
+  background: var(--val-panel);
+  overflow: hidden;
+}
+.calendly-embed iframe { width: 100% !important; height: 100% !important; }
+.calendly-embed .calendly-spinner { display: none !important; }
 
 .reserva__form { display: flex; flex-direction: column; gap: 16px; }
 .reserva__row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
@@ -1441,14 +1519,19 @@ html { interpolate-size: allow-keywords; }
   .hero-vs__ctas { width: 100%; }
   .hero-vs__ctas .btn { flex: 1; justify-content: center; min-width: 0; }
 
-  /* drop the fixed 90px ts/res columns so the event cell gets full width on phones */
-  .match {
-    grid-template-columns: 1fr auto; gap: 12px 16px; padding: 18px 18px;
-  }
-  .match .ts { grid-column: 1 / -1; }
-  .match .res { border-left: 0; padding-left: 0; text-align: right; }
+  /* two logos per row on phones; tap = hover so the muted state already shows color via :active */
+  .team { flex-basis: 50%; padding: 26px 14px; }
+  .team__logo { height: 48px; }
 
   .proofwall { columns: 1; }
+
+  /* lightbox: menos padding y flechas más juntas en pantallas chicas */
+  .lightbox { padding: 54px 12px 46px; }
+  .lightbox__img { max-height: calc(100vh - 152px); }
+  .lightbox__nav { width: 40px; height: 40px; font-size: 1.5rem; }
+  .lightbox__nav.prev { left: 8px; }
+  .lightbox__nav.next { right: 8px; }
+  .lightbox__close { top: 12px; right: 12px; }
 
   .offer-card { padding: 24px 22px; }
   .feature { padding: 28px 24px 32px; }
@@ -1456,6 +1539,9 @@ html { interpolate-size: allow-keywords; }
   .community__perk { padding: 14px 18px; font-size: 0.88rem; }
   .reserva { padding: 30px 20px; }
   .reserva__row { grid-template-columns: 1fr; }
+  .reserva__coaches .btn { flex: 1; justify-content: center; min-width: 0; }
+  /* Calendly apila detalles + calendario en pantallas chicas → más alto */
+  .calendly-embed { height: 1060px; }
 }
 
 /* =====================================================================
