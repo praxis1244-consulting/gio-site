@@ -72,11 +72,11 @@ export const coaches: Coach[] = [
     role: "IGL · Iniciador",
     creds: "Ex-Leviatán · VAL Champions 2022",
     rank: "Radiant",
-    langs: ["ES", "EN"],
+    langs: ["ES", "EN", "PT"],
     photo: "/coaches/adverso.jpg",
     cutout: "/coaches/adverso-card.png",
     heroCutout: "/coaches/adverso-hero.png",
-    bio: "Benjamín «Adverso» Poblete: IGL chileno con 6 años de carrera pro. Jugó VALORANT Champions 2022 y Masters Copenhague con Leviatán, y VCT Americas con KRÜ Esports. Como in-game leader su trabajo nunca fue el aim — era leer la ronda, manejar la info con Sova y Fade, y tomar la decisión correcta cuando el round se rompe. Eso es lo que te enseña: a pensar como un pro, no solo a apuntar como uno. Clases en español e inglés.",
+    bio: "Benjamín «Adverso» Poblete: IGL chileno, 6 años pro. VALORANT Champions 2022 con Leviatán, VCT Americas con KRÜ. Su fuerte nunca fue el aim, sino leer la ronda y decidir bien cuando el round se rompe. Te enseña a ganar con la cabeza, no solo con la mano. Clases en español, inglés y portugués.",
     accentTeam: "LEVIATÁN",
     stats: [
       { lbl: "CARRERA PRO", value: "6", accent: "AÑOS", cap: "2020–2026 · IGL" },
