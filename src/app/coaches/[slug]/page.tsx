@@ -246,15 +246,7 @@ export default async function CoachPage({
           ¿Listo para entrenar con {coach.name}? <em>Empezamos cuando quieras.</em>
         </h2>
         <div className="outro__ctas">
-          <a
-            className="btn btn-primary"
-            href={site.discord.invite}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Unirse al Discord →
-          </a>
-          <a className="btn btn-ghost" href={coach.calendly ? "#agenda" : "/#reservar"}>
+          <a className="btn btn-primary" href={coach.calendly ? "#agenda" : "/#offers"}>
             Agenda tu clase →
           </a>
         </div>

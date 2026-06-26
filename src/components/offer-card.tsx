@@ -1,5 +1,6 @@
 import type { Offer } from "@/data/offers";
 import type { Coach } from "@/data/coaches";
+import { BookingCta } from "./booking-cta";
 
 export function OfferCard({ offer, coach }: { offer: Offer; coach?: Coach }) {
   return (
@@ -24,9 +25,13 @@ export function OfferCard({ offer, coach }: { offer: Offer; coach?: Coach }) {
       </ul>
 
       <div className="offer-card__cta">
-        <a href={coach?.calendly ? "#agenda" : "/#reservar"} className="btn btn-primary">
-          {coach ? `Agenda con ${coach.name} →` : "Agenda tu clase →"}
-        </a>
+        {coach?.calendly ? (
+          <a href="#agenda" className="btn btn-primary">
+            {`Agenda con ${coach.name} →`}
+          </a>
+        ) : (
+          <BookingCta label="Agenda tu clase →" />
+        )}
       </div>
     </article>
   );

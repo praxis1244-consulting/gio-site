@@ -1292,6 +1292,90 @@ html { interpolate-size: allow-keywords; }
 .offer-card__cta { margin-top: auto; padding-top: 4px; }
 .offer-card__cta .btn { width: 100%; justify-content: center; }
 
+/* ── Booking modal — pick a coach, then their Calendly ─────────────── */
+.booking {
+  position: fixed; inset: 0; z-index: 1000;
+  display: grid; place-items: center; padding: 20px;
+  background: rgba(3, 3, 4, 0.88);
+  animation: booking-in 220ms var(--ease-quint);
+}
+@keyframes booking-in { from { opacity: 0; } to { opacity: 1; } }
+
+.booking__panel {
+  position: relative;
+  width: min(820px, 96vw); max-height: 92vh;
+  display: flex; flex-direction: column; overflow: hidden;
+  background: var(--val-panel); border: 1px solid var(--val-rule-hot);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6);
+  animation: hud-slide-up 320ms var(--ease-expo) both;
+}
+.booking__panel--cal { width: min(940px, 96vw); height: min(880px, 92vh); }
+
+.booking__close {
+  position: absolute; top: 12px; right: 12px; z-index: 3;
+  width: 38px; height: 38px; display: grid; place-items: center;
+  background: rgba(0, 0, 0, 0.4); border: 1px solid var(--val-rule); cursor: pointer;
+  transition: border-color 200ms var(--ease-quint);
+}
+.booking__close span { position: absolute; width: 16px; height: 1.5px; background: var(--val-ink); }
+.booking__close span:first-child { transform: rotate(45deg); }
+.booking__close span:last-child { transform: rotate(-45deg); }
+.booking__close:hover { border-color: var(--val-red); }
+
+/* step 1 — choose coach */
+.booking__pick { padding: 40px clamp(20px, 4vw, 44px) 36px; }
+.booking__pick h3 {
+  font-family: var(--font-display), sans-serif; font-weight: 200;
+  font-size: clamp(1.6rem, 4vw, 2.4rem); letter-spacing: -0.03em; line-height: 1.05;
+  margin: 10px 0 6px; color: var(--val-ink);
+}
+.booking__pick h3 em {
+  font-family: var(--font-accent), sans-serif; font-style: italic; font-weight: 600; color: var(--val-red);
+}
+.booking__hint { color: var(--val-ink-faint); font-size: 0.9rem; margin-bottom: 24px; }
+.booking__coaches { display: grid; gap: 12px; }
+.booking__coach {
+  display: flex; align-items: center; gap: 16px; text-align: left; cursor: pointer;
+  padding: 14px 16px; background: var(--val-bg); border: 1px solid var(--val-rule);
+  transition: border-color 200ms var(--ease-quint), transform 200ms var(--ease-quint);
+}
+.booking__coach:hover { border-color: var(--val-red); transform: translateY(-2px); }
+.booking__coach-img {
+  width: 54px; height: 64px; flex-shrink: 0;
+  object-fit: cover; object-position: top center; background: #0a0a0b;
+}
+.booking__coach-meta { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
+.booking__coach-name {
+  font-family: var(--font-display), sans-serif; font-weight: 700; font-size: 1.3rem; color: var(--val-ink);
+}
+.booking__coach-role {
+  font-family: var(--font-mono), ui-monospace, monospace; font-size: 0.6rem;
+  letter-spacing: 0.18em; text-transform: uppercase; color: var(--val-red);
+}
+.booking__coach-creds { font-size: 0.8rem; color: var(--val-ink-faint); }
+.booking__coach-go { color: var(--val-red); font-size: 1.4rem; flex-shrink: 0; }
+
+/* step 2 — the picked coach's calendar */
+.booking__cal-wrap { display: flex; flex-direction: column; height: 100%; min-height: 0; }
+.booking__bar {
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  padding: 15px 56px 15px 20px; border-bottom: 1px solid var(--val-rule);
+}
+.booking__back {
+  background: none; border: 0; cursor: pointer; color: var(--val-ink); padding: 6px 0;
+  font-family: var(--font-mono), ui-monospace, monospace; font-size: 0.66rem;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  transition: color 200ms var(--ease-quint);
+}
+.booking__back:hover { color: var(--val-red); }
+.booking__bar-name {
+  font-family: var(--font-mono), ui-monospace, monospace; font-size: 0.66rem;
+  letter-spacing: 0.16em; text-transform: uppercase; color: var(--val-ink-faint);
+}
+.booking__bar-name b { color: var(--val-ink); }
+.booking__cal { flex: 1; min-height: 0; }
+.booking__cal .calendly-embed { height: 100%; margin: 0; border: 0; }
+
 /* ── Reserva · contact form ───────────────────────────────────────── */
 .reserva {
   border: 1px solid var(--val-rule);
@@ -1481,7 +1565,7 @@ html { interpolate-size: allow-keywords; }
   .hero-vs { padding: calc(40px + var(--nav-h, 70px)) 24px 48px; }
   /* collapse 3-col tale-of-the-tape: center first, posters side by side under it */
   .hero-vs__inner {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 24px;
   }
   .hero-vs__center {
@@ -1500,11 +1584,15 @@ html { interpolate-size: allow-keywords; }
 }
 
 @media (max-width: 760px) {
-  /* stack the two cutouts under the headline; straighten them (no inward lean) */
+  /* keep both coaches side by side under the headline (VS cards); just
+     straighten the inward lean and let each fill its half */
   .hero-vs { min-height: auto; }
-  .hero-vs__inner { grid-template-columns: 1fr; }
-  .hero-vs__coach { max-width: 360px; margin: 0 auto; width: 100%; align-self: center; }
+  /* top-align so both equal-height cutouts line up (metas below can differ) */
+  .hero-vs__coach { width: 100%; max-width: none; margin: 0; align-self: start; }
   .hero-vs__coach--a, .hero-vs__coach--b { transform: none; }
+  /* the giant faint name behind would overflow a half-width card → drop it */
+  .hero-vs__cutout::before { display: none; }
+  .hero-vs__cutout { aspect-ratio: 3 / 4.2; }
 }
 
 @media (max-width: 560px) {
@@ -1512,9 +1600,9 @@ html { interpolate-size: allow-keywords; }
   .discord-banner span:not(.dot) { white-space: normal; }
 
   .hero-vs { padding: calc(32px + var(--nav-h, 70px)) 18px 40px; }
-  /* single column: headline, then cutouts stacked */
-  .hero-vs__inner { grid-template-columns: 1fr; gap: 20px; }
-  .hero-vs__coach { max-width: 300px; }
+  /* headline on top, the two coaches as VS cards below (no single-column collapse) */
+  .hero-vs__inner { gap: 14px; }
+  .hero-vs__coach { max-width: none; }
   .hero-vs__title { font-size: clamp(1.9rem, 8.6vw, 2.7rem); }
   .hero-vs__ctas { width: 100%; }
   .hero-vs__ctas .btn { flex: 1; justify-content: center; min-width: 0; }
@@ -1673,10 +1761,10 @@ html { interpolate-size: allow-keywords; }
 }
 
 @media (max-width: 560px) {
-  /* shrink the stacked hero cutouts so the hero isn't three screens tall */
-  .hero-vs__coach { max-width: 230px; }
+  /* two coaches side by side as VS cards — each fills its half */
+  .hero-vs__coach { max-width: none; }
   .hero-vs__inner { gap: 12px; }
-  .hero-vs__coach-name { font-size: 1.5rem; }
+  .hero-vs__coach-name { font-size: clamp(1.25rem, 6.5vw, 1.6rem); }
 
   .nav-drawer__links a { font-size: 1.7rem; padding: 16px 4px; }
 

@@ -4,7 +4,6 @@ import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { CoachCard } from "@/components/coach-card";
 import { OfferCard } from "@/components/offer-card";
-import { ContactForm } from "@/components/contact-form";
 import { CommunityBand } from "@/components/community-band";
 import { site } from "@/data/site";
 import { coaches } from "@/data/coaches";
@@ -123,35 +122,6 @@ export default function Home() {
           </div>
           <div className="offers">
             <OfferCard offer={collectiveOffer} />
-          </div>
-        </div>
-      </section>
-
-      {/* RESERVA · contacto directo */}
-      <section className="section" id="reservar" style={{ paddingTop: 0 }}>
-        <div className="wrap">
-          <div className="reserva">
-            <div className="reserva__copy">
-              <span className="lbl" style={{ color: "var(--val-red)" }}>AGENDA TU CLASE</span>
-              <h2>Reserva directo <em>con tu coach.</em></h2>
-              <p>
-                Elige tu coach, día y hora — recibes el link de Google Meet al confirmar. ¿Prefieres que te escribamos? Déjanos tu contacto al lado.
-              </p>
-              <div className="reserva__coaches">
-                {coaches
-                  .filter((c) => c.calendly)
-                  .map((c, i) => (
-                    <a
-                      key={c.slug}
-                      className={`btn ${i === 0 ? "btn-primary" : "btn-ghost"}`}
-                      href={`/coaches/${c.slug}#agenda`}
-                    >
-                      Agenda con {c.name} →
-                    </a>
-                  ))}
-              </div>
-            </div>
-            <ContactForm />
           </div>
         </div>
       </section>

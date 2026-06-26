@@ -16,13 +16,13 @@ export function SiteFooter() {
           <div>
             <span className="h">Clases</span>
             <a href="#offers">Clases 1v1</a>
-            <a href="#reservar">Agenda tu clase</a>
+            <a href="#offers">Agenda tu clase</a>
             <a href="#comunidad">Comunidad</a>
           </div>
           <div>
             <span className="h">Comunidad</span>
             <a href={site.discord.invite} target="_blank" rel="noopener noreferrer">{site.discord.label}</a>
-            <a href="#reservar">Reservar</a>
+            <a href="#offers">Reservar</a>
             <a href="#faq">FAQ</a>
           </div>
           <div>
