@@ -1,11 +1,17 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
 import { DM_Sans, JetBrains_Mono, Tomorrow, Chakra_Petch } from "next/font/google";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { RevealRunner } from "@/components/reveal-runner";
-import { routing } from "@/i18n/routing";
+import { routing, type Locale } from "@/i18n/routing";
+import { SITE_URL, OG_LOCALE, alternateOgLocales, buildAlternates } from "@/lib/seo";
+import { JsonLd } from "@/components/json-ld";
+import { organizationSchema, websiteSchema } from "@/lib/json-ld";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import "../globals.css";
 
 // `js-on` se setea directo en el className del <html> (SSR, antes del paint, sin
@@ -45,11 +51,14 @@ const chakraPetch = Chakra_Petch({
   display: "swap",
 });
 
-const OG_LOCALE: Record<string, string> = { es: "es_CL", pt: "pt_BR", en: "en_US" };
-
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
+
+export const viewport: Viewport = {
+  themeColor: "#050505",
+  colorScheme: "dark",
+};
 
 export async function generateMetadata({
   params,
@@ -57,21 +66,34 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
+  const loc = locale as Locale;
   const t = await getTranslations({ locale, namespace: "Metadata" });
+  const alternates = buildAlternates("/", loc);
   return {
     title: t("title"),
     description: t("description"),
-    metadataBase: new URL("https://zero2hero.gg"),
-    alternates: {
-      canonical: locale === "es" ? "/" : `/${locale}`,
-      languages: { "es-CL": "/", "pt-BR": "/pt", "en-US": "/en" },
-    },
+    metadataBase: new URL(SITE_URL),
+    alternates,
     openGraph: {
       title: t("ogTitle"),
       description: t("ogDescription"),
-      locale: OG_LOCALE[locale],
+      url: alternates.canonical,
+      siteName: "Zero2Hero",
+      locale: OG_LOCALE[loc],
+      alternateLocale: alternateOgLocales(loc),
       type: "website",
     },
+    twitter: {
+      card: "summary_large_image",
+      title: t("ogTitle"),
+      description: t("ogDescription"),
+    },
+    appleWebApp: {
+      capable: true,
+      title: "Zero2Hero",
+      statusBarStyle: "black-translucent",
+    },
+    verification: { google: process.env.GOOGLE_SITE_VERIFICATION },
   };
 }
 
@@ -86,6 +108,7 @@ export default async function LocaleLayout({
   if (!hasLocale(routing.locales, locale)) notFound();
   // Required so the page can be statically rendered per locale.
   setRequestLocale(locale);
+  const tm = await getTranslations({ locale, namespace: "Metadata" });
 
   return (
     <html
@@ -95,8 +118,16 @@ export default async function LocaleLayout({
     >
       <body>
         <noscript dangerouslySetInnerHTML={{ __html: `<style>${NO_JS_REVEAL_FALLBACK}</style>` }} />
+        <JsonLd
+          data={[organizationSchema(tm("description")), websiteSchema(locale, tm("description"))]}
+        />
         <NextIntlClientProvider>{children}</NextIntlClientProvider>
         <RevealRunner />
+        <Analytics />
+        <SpeedInsights />
+        {process.env.NEXT_PUBLIC_GA_ID ? (
+          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
+        ) : null}
       </body>
     </html>
   );

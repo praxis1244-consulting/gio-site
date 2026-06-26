@@ -13,6 +13,7 @@ import { CalendlyInline } from "./calendly-inline";
  */
 export function BookingCta({ label, coaches }: { label: string; coaches: Coach[] }) {
   const t = useTranslations("Booking");
+  const ta = useTranslations("Alt");
   const [open, setOpen] = useState(false);
   const [picked, setPicked] = useState<Coach | null>(null);
 
@@ -83,7 +84,7 @@ export function BookingCta({ label, coaches }: { label: string; coaches: Coach[]
                       onClick={() => setPicked(c)}
                     >
                       {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img className="booking__coach-img" src={c.cutout} alt="" />
+                      <img className="booking__coach-img" src={c.cutout} alt={ta("coachPhoto", { name: c.name })} />
                       <span className="booking__coach-meta">
                         <span className="booking__coach-name">{c.name}</span>
                         <span className="booking__coach-role">{c.role}</span>

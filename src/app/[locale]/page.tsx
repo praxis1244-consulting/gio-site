@@ -14,6 +14,11 @@ import { getFeatures, getTestimonials, getFaqs } from "@/data/content";
 import { hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
+import { getPathname } from "@/i18n/navigation";
+import { SITE_URL } from "@/lib/seo";
+import { JsonLd } from "@/components/json-ld";
+import { faqSchema, serviceSchema } from "@/lib/json-ld";
+import { preconnect } from "react-dom";
 
 // Deterministic ember field for the hero aura (no Math.random → SSR-safe).
 const EMBERS = Array.from({ length: 18 }, (_, i) => i);
@@ -28,6 +33,7 @@ export default async function Home({
   setRequestLocale(locale);
   const t = await getTranslations("Home");
   const tc = await getTranslations("Common");
+  const ta = await getTranslations("Alt");
 
   const coaches = getCoaches(locale);
   const [gio, adverso] = coaches;
@@ -36,11 +42,28 @@ export default async function Home({
   const features = getFeatures(locale);
   const testimonials = getTestimonials(locale);
   const faqs = getFaqs(locale);
+  const homeUrl = SITE_URL + getPathname({ locale, href: "/" });
+
+  // Warm the Calendly connection ahead of the booking modal/widget.
+  preconnect("https://assets.calendly.com");
+  preconnect("https://calendly.com");
 
   return (
     <>
       <SiteNav />
 
+      <JsonLd
+        data={[
+          faqSchema(faqs),
+          serviceSchema({
+            name: collectiveOffer.title,
+            description: collectiveOffer.blurb,
+            url: homeUrl,
+          }),
+        ]}
+      />
+
+      <main>
       {/* HERO — TALE OF THE TAPE */}
       <header className="hero-vs" id="top">
         <div className="hero-vs__mark" aria-hidden />
@@ -65,7 +88,7 @@ export default async function Home({
           <figure className="hero-vs__coach hero-vs__coach--a">
             <div className="hero-vs__cutout" data-coach={gio.name.toUpperCase()}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img className="hero-vs__cutout-img" src={gio.heroCutout} alt={`${gio.name} — coach de Valorant`} />
+              <img className="hero-vs__cutout-img" src={gio.heroCutout} alt={ta("coachPhoto", { name: gio.name })} fetchPriority="high" decoding="async" />
             </div>
             <figcaption className="hero-vs__coach-meta">
               <span className="hero-vs__coach-name">{gio.name}</span>
@@ -93,7 +116,7 @@ export default async function Home({
           <figure className="hero-vs__coach hero-vs__coach--b">
             <div className="hero-vs__cutout" data-coach={adverso.name.toUpperCase()}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img className="hero-vs__cutout-img" src={adverso.heroCutout} alt={`${adverso.name} — coach de Valorant`} />
+              <img className="hero-vs__cutout-img" src={adverso.heroCutout} alt={ta("coachPhoto", { name: adverso.name })} fetchPriority="high" decoding="async" />
             </div>
             <figcaption className="hero-vs__coach-meta">
               <span className="hero-vs__coach-name">{adverso.name}</span>
@@ -254,6 +277,8 @@ export default async function Home({
           </a>
         </div>
       </section>
+
+      </main>
 
       <SiteFooter />
     </>

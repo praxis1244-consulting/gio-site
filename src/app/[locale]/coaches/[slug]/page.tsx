@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { setRequestLocale, getTranslations } from "next-intl/server";
-import { Link } from "@/i18n/navigation";
+import { Link, getPathname } from "@/i18n/navigation";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { OfferCard } from "@/components/offer-card";
@@ -13,6 +13,10 @@ import { CalendlyInline } from "@/components/calendly-inline";
 import { getCoach, coachSlugs } from "@/data/coaches";
 import { offersByCoach } from "@/data/offers";
 import { routing } from "@/i18n/routing";
+import { SITE_URL, buildAlternates, OG_LOCALE, alternateOgLocales } from "@/lib/seo";
+import { JsonLd } from "@/components/json-ld";
+import { personSchema, serviceSchema, breadcrumbSchema } from "@/lib/json-ld";
+import { preconnect } from "react-dom";
 
 export function generateStaticParams() {
   return routing.locales.flatMap((locale) =>
@@ -32,14 +36,32 @@ export async function generateMetadata({
   if (!coach) {
     return { title: t("notFoundTitle") };
   }
+  const title = t("metaTitle", { name: coach.name });
+  const description = t("metaDescription", {
+    tagline: coach.tagline,
+    role: coach.role,
+    creds: coach.creds,
+    name: coach.name,
+  });
+  const alternates = buildAlternates(`/coaches/${slug}`, locale);
   return {
-    title: t("metaTitle", { name: coach.name }),
-    description: t("metaDescription", {
-      tagline: coach.tagline,
-      role: coach.role,
-      creds: coach.creds,
-      name: coach.name,
-    }),
+    title,
+    description,
+    alternates,
+    openGraph: {
+      title,
+      description,
+      url: alternates.canonical,
+      siteName: "Zero2Hero",
+      locale: OG_LOCALE[locale],
+      alternateLocale: alternateOgLocales(locale),
+      type: "profile",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
   };
 }
 
@@ -55,7 +77,25 @@ export default async function CoachPage({
   if (!coach) notFound();
 
   const t = await getTranslations("CoachPage");
+  const ta = await getTranslations("Alt");
+  const tnav = await getTranslations("Nav");
   const offers = offersByCoach(locale, slug);
+  const coachUrl = SITE_URL + getPathname({ locale, href: `/coaches/${slug}` });
+  const person = personSchema(coach, locale);
+  const service = serviceSchema({
+    name: offers[0]?.title ?? `${coach.name} · Valorant coaching`,
+    description: offers[0]?.blurb ?? coach.bio,
+    url: coachUrl,
+    provider: { "@id": person["@id"] },
+  });
+  const breadcrumb = breadcrumbSchema(locale, coach, {
+    home: "Zero2Hero",
+    coaches: tnav("coaches"),
+  });
+
+  // Warm the Calendly connection ahead of the inline widget / booking.
+  preconnect("https://assets.calendly.com");
+  preconnect("https://calendly.com");
 
   // Sequential section numbers — sections appear conditionally per coach.
   const hasTeams = (coach.teams?.length ?? 0) > 0;
@@ -72,6 +112,9 @@ export default async function CoachPage({
     <>
       <SiteNav />
 
+      <JsonLd data={[person, service, breadcrumb]} />
+
+      <main>
       {/* HERO DEL COACH */}
       <header className="hero-b coach-hero">
         <div className="hero-b__inner">
@@ -100,7 +143,7 @@ export default async function CoachPage({
             style={{ "--poster-mark": `"${coach.name.toUpperCase()}"` } as CSSProperties}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img className="poster__img" src={coach.cutout} alt={`${coach.name} — coach de Valorant`} />
+            <img className="poster__img" src={coach.cutout} alt={ta("coachPhoto", { name: coach.name })} fetchPriority="high" decoding="async" />
             <div className="poster__shade" aria-hidden />
             <div className="poster__corner tl">● COACH</div>
             <div className="poster__corner tr">VAL · 2026</div>
@@ -164,7 +207,7 @@ export default async function CoachPage({
               {coach.teams.map((team, i) => (
                 <div className="team" key={team.name} style={{ "--i": i } as CSSProperties}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img className="team__logo" src={team.logo} alt={`${team.name} — equipo de ${coach.name}`} loading="lazy" />
+                  <img className="team__logo" src={team.logo} alt={ta("teamLogo", { team: team.name, name: coach.name })} loading="lazy" />
                   <span className="team__name">{team.name}</span>
                 </div>
               ))}
@@ -260,6 +303,8 @@ export default async function CoachPage({
           )}
         </div>
       </section>
+
+      </main>
 
       <SiteFooter />
     </>

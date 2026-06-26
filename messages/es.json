@@ -63,6 +63,10 @@
   "Coach": {
     "seeProfile": "Ver perfil →"
   },
+  "Alt": {
+    "coachPhoto": "{name} — coach de Valorant",
+    "teamLogo": "{team} — equipo de {name}"
+  },
   "CoachPage": {
     "metaTitle": "{name} · Coach de Valorant — Zero2Hero",
     "metaDescription": "{tagline} {role} · {creds}. Coaching de Valorant con {name} en Zero2Hero.",

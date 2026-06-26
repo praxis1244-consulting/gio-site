@@ -6,6 +6,9 @@ import { routing } from "./i18n/routing";
 export default createMiddleware(routing);
 
 export const config = {
-  // Match everything except API routes, Next internals and files with a dot.
-  matcher: "/((?!api|trpc|_next|_vercel|.*\\..*).*)",
+  // Match everything except API routes, Next internals, framework metadata image
+  // routes (their `/es/...` variant must resolve without an as-needed redirect
+  // hop, which some social scrapers don't follow) and files with a dot.
+  matcher:
+    "/((?!api|trpc|_next|_vercel|icon|apple-icon|.*(?:opengraph-image|twitter-image)|.*\\..*).*)",
 };

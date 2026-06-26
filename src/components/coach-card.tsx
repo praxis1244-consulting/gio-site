@@ -4,12 +4,13 @@ import type { Coach } from "@/data/coaches";
 
 export async function CoachCard({ coach }: { coach: Coach }) {
   const t = await getTranslations("Coach");
+  const ta = await getTranslations("Alt");
 
   return (
     <Link className="coach-card" href={`/coaches/${coach.slug}`}>
       <div className="coach-card__poster">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img className="coach-card__img" src={coach.cutout} alt={`${coach.name} — coach de Valorant`} />
+        <img className="coach-card__img" src={coach.cutout} alt={ta("coachPhoto", { name: coach.name })} />
         <div className="coach-card__shade" aria-hidden />
         <div className="coach-card__corner tl">● COACH</div>
         <div className="coach-card__corner tr">VAL · 2026</div>
