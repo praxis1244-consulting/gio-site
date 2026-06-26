@@ -323,13 +323,16 @@ button { font: inherit; }
   color: var(--val-ink);
   margin: 16px 0 8px;
   font-variant-numeric: tabular-nums;
+  /* el número (inline-block) y el acento (em) nunca se separan de línea: el acento
+     va siempre AL LADO del número, nunca debajo */
+  white-space: nowrap;
 }
 /* count-up: el ghost (valor final, invisible) reserva la caja; el número animado se
    dibuja encima en absolute → cero layout shift mientras cuenta (no "tirita" lo de abajo) */
 .count-up { position: relative; display: inline-block; }
 .count-up__ghost { visibility: hidden; }
 .count-up__live { position: absolute; left: 0; top: 0; white-space: nowrap; }
-.estat .v em { font-family: var(--font-accent), sans-serif; font-style: italic; font-weight: 600; color: var(--val-red); }
+.estat .v em { font-family: var(--font-accent), sans-serif; font-style: italic; font-weight: 600; color: var(--val-red); font-size: 0.56em; }
 .estat .cap { font-family: var(--font-mono), ui-monospace, monospace; font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--val-ink-faint); }
 
 /* Editorial section header */
@@ -1775,6 +1778,7 @@ html { interpolate-size: allow-keywords; }
     font-size: clamp(2.1rem, 10vw, 3.2rem);
     margin: 12px 0 6px;
     overflow-wrap: anywhere;
+    white-space: normal;
   }
   .estat .v em { font-size: 0.62em; }
 
