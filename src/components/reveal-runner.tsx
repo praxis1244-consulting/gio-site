@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 const SELECTOR = [
   ".ehead",
@@ -23,6 +24,11 @@ const SELECTOR = [
 ].join(", ");
 
 export function RevealRunner() {
+  // Re-run on every client-side navigation: the root layout (and this component)
+  // persists across route changes, so without a pathname dep the effect would only
+  // fire on the first hard load, leaving reveal-gated sections stuck at opacity:0.
+  const pathname = usePathname();
+
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
@@ -51,7 +57,7 @@ export function RevealRunner() {
     }
 
     return () => io.disconnect();
-  }, []);
+  }, [pathname]);
 
   return null;
 }
