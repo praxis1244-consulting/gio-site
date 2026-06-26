@@ -12,7 +12,6 @@ import { ProofGallery } from "@/components/proof-gallery";
 import { CalendlyInline } from "@/components/calendly-inline";
 import { getCoach, coachSlugs } from "@/data/coaches";
 import { offersByCoach } from "@/data/offers";
-import { site } from "@/data/site";
 import { routing } from "@/i18n/routing";
 
 export function generateStaticParams() {
@@ -56,7 +55,6 @@ export default async function CoachPage({
   if (!coach) notFound();
 
   const t = await getTranslations("CoachPage");
-  const tc = await getTranslations("Common");
   const offers = offersByCoach(locale, slug);
 
   // Sequential section numbers — sections appear conditionally per coach.
@@ -90,16 +88,8 @@ export default async function CoachPage({
             </p>
             <p className="hero-b__sub">{coach.bio}</p>
             <div className="hero-b__ctas">
-              <a className="btn btn-primary" href="#offers">
-                {t("seeOffers")}
-              </a>
-              <a
-                className="btn btn-ghost"
-                href={site.discord.invite}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {tc("joinDiscord")}
+              <a className="btn btn-primary" href="#agenda">
+                {t("bookClass")}
               </a>
               <span className="num">{coach.tagline}</span>
             </div>

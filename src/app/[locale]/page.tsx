@@ -5,6 +5,7 @@ import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { CoachCard } from "@/components/coach-card";
 import { OfferCard } from "@/components/offer-card";
+import { BookingCta } from "@/components/booking-cta";
 import { CommunityBand } from "@/components/community-band";
 import { site } from "@/data/site";
 import { getCoaches } from "@/data/coaches";
@@ -83,10 +84,8 @@ export default async function Home({
             <p className="hero-vs__sub">{t("heroSub")}</p>
             <div className="hero-vs__micro">{t("heroMicro")}</div>
             <div className="hero-vs__ctas">
-              <a className="btn btn-primary" href="#coaches">{t("seeCoaches")}</a>
-              <a className="btn btn-ghost" href={site.discord.invite} target="_blank" rel="noopener noreferrer">
-                {tc("joinDiscord")}
-              </a>
+              <BookingCta label={t("bookClass")} coaches={bookableCoaches} />
+              <a className="btn btn-ghost" href="#coaches">{t("seeCoaches")}</a>
             </div>
           </div>
 
