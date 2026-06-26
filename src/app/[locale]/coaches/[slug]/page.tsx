@@ -1,46 +1,63 @@
 import type { CSSProperties } from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { hasLocale } from "next-intl";
+import { setRequestLocale, getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { OfferCard } from "@/components/offer-card";
 import { CountUp } from "@/components/count-up";
 import { ProofGallery } from "@/components/proof-gallery";
 import { CalendlyInline } from "@/components/calendly-inline";
-import { coaches, getCoach } from "@/data/coaches";
+import { getCoach, coachSlugs } from "@/data/coaches";
 import { offersByCoach } from "@/data/offers";
 import { site } from "@/data/site";
+import { routing } from "@/i18n/routing";
 
 export function generateStaticParams() {
-  return coaches.map((c) => ({ slug: c.slug }));
+  return routing.locales.flatMap((locale) =>
+    coachSlugs.map((slug) => ({ locale, slug })),
+  );
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
-  const { slug } = await params;
-  const coach = getCoach(slug);
+  const { locale, slug } = await params;
+  if (!hasLocale(routing.locales, locale)) return { title: "Zero2Hero" };
+  const t = await getTranslations({ locale, namespace: "CoachPage" });
+  const coach = getCoach(locale, slug);
   if (!coach) {
-    return { title: "Coach no encontrado · Zero2Hero" };
+    return { title: t("notFoundTitle") };
   }
   return {
-    title: `${coach.name} · Coach de Valorant — Zero2Hero`,
-    description: `${coach.tagline} ${coach.role} · ${coach.creds}. Coaching de Valorant con ${coach.name} en Zero2Hero.`,
+    title: t("metaTitle", { name: coach.name }),
+    description: t("metaDescription", {
+      tagline: coach.tagline,
+      role: coach.role,
+      creds: coach.creds,
+      name: coach.name,
+    }),
   };
 }
 
 export default async function CoachPage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }) {
-  const { slug } = await params;
-  const coach = getCoach(slug);
+  const { locale, slug } = await params;
+  if (!hasLocale(routing.locales, locale)) notFound();
+  setRequestLocale(locale);
+  const coach = getCoach(locale, slug);
   if (!coach) notFound();
 
-  const offers = offersByCoach(slug);
+  const t = await getTranslations("CoachPage");
+  const tc = await getTranslations("Common");
+  const offers = offersByCoach(locale, slug);
 
   // Sequential section numbers — sections appear conditionally per coach.
   const hasTeams = (coach.teams?.length ?? 0) > 0;
@@ -62,7 +79,7 @@ export default async function CoachPage({
         <div className="hero-b__inner">
           <div className="hero-b__copy">
             <div className="hero-b__id">
-              COACH · <b>{coach.role}</b>
+              {t("heroIdPrefix")} · <b>{coach.role}</b>
             </div>
             <h1 className="hero-b__title">
               <span className="sans">{coach.name}</span><br />
@@ -74,7 +91,7 @@ export default async function CoachPage({
             <p className="hero-b__sub">{coach.bio}</p>
             <div className="hero-b__ctas">
               <a className="btn btn-primary" href="#offers">
-                Ver sus offers →
+                {t("seeOffers")}
               </a>
               <a
                 className="btn btn-ghost"
@@ -82,7 +99,7 @@ export default async function CoachPage({
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Unirse al Discord
+                {tc("joinDiscord")}
               </a>
               <span className="num">{coach.tagline}</span>
             </div>
@@ -116,10 +133,10 @@ export default async function CoachPage({
             <span className="num">{dossierNum}</span>
             <div>
               <span className="lbl" style={{ color: "var(--val-red)" }}>
-                DOSSIER · {coach.accentTeam ?? coach.creds}
+                {t("dossierPrefix")} · {coach.accentTeam ?? coach.creds}
               </span>
               <h2>
-                Quién es <em>{coach.name}.</em>
+                {t("dossierTitlePre")} <em>{coach.name}.</em>
               </h2>
             </div>
           </div>
@@ -146,19 +163,19 @@ export default async function CoachPage({
               <span className="num">{teamsNum}</span>
               <div>
                 <span className="lbl" style={{ color: "var(--val-red)" }}>
-                  EQUIPOS · CARRERA PRO
+                  {t("teamsLabel")}
                 </span>
                 <h2>
-                  Por dónde pasó <em>su carrera.</em>
+                  {t("teamsTitlePre")} <em>{t("teamsTitleEm")}</em>
                 </h2>
               </div>
             </div>
             <div className="teamwall">
-              {coach.teams.map((t, i) => (
-                <div className="team" key={t.name} style={{ "--i": i } as CSSProperties}>
+              {coach.teams.map((team, i) => (
+                <div className="team" key={team.name} style={{ "--i": i } as CSSProperties}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img className="team__logo" src={t.logo} alt={`${t.name} — equipo de ${coach.name}`} loading="lazy" />
-                  <span className="team__name">{t.name}</span>
+                  <img className="team__logo" src={team.logo} alt={`${team.name} — equipo de ${coach.name}`} loading="lazy" />
+                  <span className="team__name">{team.name}</span>
                 </div>
               ))}
             </div>
@@ -174,14 +191,12 @@ export default async function CoachPage({
               <span className="num">{resultsNum}</span>
               <div>
                 <span className="lbl" style={{ color: "var(--val-red)" }}>
-                  RESULTADOS · ALUMNOS REALES
+                  {t("resultsLabel")}
                 </span>
                 <h2>
-                  Lo que logran <em>sus alumnos.</em>
+                  {t("resultsTitlePre")} <em>{t("resultsTitleEm")}</em>
                 </h2>
-                <p className="lbl-side">
-                  Conversaciones reales, sin retoques. Del que recién sale de Platino al que llegó a Radiant.
-                </p>
+                <p className="lbl-side">{t("resultsDesc")}</p>
               </div>
             </div>
             <ProofGallery results={coach.results} coachName={coach.name} />
@@ -196,10 +211,10 @@ export default async function CoachPage({
             <span className="num">{offersNum}</span>
             <div>
               <span className="lbl" style={{ color: "var(--val-red)" }}>
-                CLASES · {coach.name.toUpperCase()}
+                {t("offersLabelPrefix")} · {coach.name.toUpperCase()}
               </span>
               <h2>
-                Su <em>clase 1v1.</em>
+                {t("offersTitlePre")} <em>{t("offersTitleEm")}</em>
               </h2>
             </div>
           </div>
@@ -212,7 +227,7 @@ export default async function CoachPage({
               ))}
             </div>
           ) : (
-            <p className="lbl-side">Offers en camino — pronto disponibles.</p>
+            <p className="lbl-side">{t("offersComing")}</p>
           )}
         </div>
       </section>
@@ -225,14 +240,12 @@ export default async function CoachPage({
               <span className="num">{agendaNum}</span>
               <div>
                 <span className="lbl" style={{ color: "var(--val-red)" }}>
-                  AGENDA · {coach.name.toUpperCase()}
+                  {t("agendaLabelPrefix")} · {coach.name.toUpperCase()}
                 </span>
                 <h2>
-                  Reserva tu clase <em>con {coach.name}.</em>
+                  {t("agendaTitlePre")} <em>{t("agendaTitleEm", { name: coach.name })}</em>
                 </h2>
-                <p className="lbl-side">
-                  Elige día y hora. Recibes el link de Google Meet al confirmar. Horario de Santiago.
-                </p>
+                <p className="lbl-side">{t("agendaDesc")}</p>
               </div>
             </div>
             <CalendlyInline url={coach.calendly} />
@@ -243,12 +256,18 @@ export default async function CoachPage({
       {/* OUTRO · CTA FINAL */}
       <section className="outro">
         <h2>
-          ¿Listo para entrenar con {coach.name}? <em>Empezamos cuando quieras.</em>
+          {t("outroTitle", { name: coach.name })} <em>{t("outroTitleEm")}</em>
         </h2>
         <div className="outro__ctas">
-          <a className="btn btn-primary" href={coach.calendly ? "#agenda" : "/#offers"}>
-            Agenda tu clase →
-          </a>
+          {coach.calendly ? (
+            <a className="btn btn-primary" href="#agenda">
+              {t("bookClass")}
+            </a>
+          ) : (
+            <Link className="btn btn-primary" href="/#offers">
+              {t("bookClass")}
+            </Link>
+          )}
         </div>
       </section>
 

@@ -1,23 +1,25 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 type Status =
   | { kind: "idle" }
   | { kind: "loading" }
   | { kind: "ok" }
-  | { kind: "err"; message: string };
-
-const ERROR_COPY: Record<string, string> = {
-  INVALID_EMAIL: "Email inválido. Revisa el formato.",
-  SEND_FAILED: "No pudimos enviarlo ahora. Intenta de nuevo en un minuto.",
-  NETWORK: "Sin conexión. Revisa tu internet.",
-};
+  | { kind: "err"; code: string };
 
 export function LeadForm() {
+  const t = useTranslations("Forms");
   const [status, setStatus] = useState<Status>({ kind: "idle" });
   const [email, setEmail] = useState("");
   const loading = status.kind === "loading";
+
+  const errorMessage = (code: string) => {
+    if (code === "INVALID_EMAIL") return t("errInvalidEmail");
+    if (code === "NETWORK") return t("errNetwork");
+    return t("errSendFailed");
+  };
 
   async function submit(value: string) {
     if (loading) return;
@@ -31,7 +33,7 @@ export function LeadForm() {
         body: JSON.stringify({ email: value }),
       });
     } catch {
-      setStatus({ kind: "err", message: ERROR_COPY.NETWORK });
+      setStatus({ kind: "err", code: "NETWORK" });
       return;
     }
 
@@ -40,8 +42,7 @@ export function LeadForm() {
       error?: string;
     };
     if (!response.ok || !data.ok) {
-      const code = data.error ?? "SEND_FAILED";
-      setStatus({ kind: "err", message: ERROR_COPY[code] ?? ERROR_COPY.SEND_FAILED });
+      setStatus({ kind: "err", code: data.error ?? "SEND_FAILED" });
       return;
     }
 
@@ -62,30 +63,30 @@ export function LeadForm() {
         <input
           type="email"
           name="email"
-          placeholder="tu@email.com"
+          placeholder={t("emailPlaceholder")}
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           disabled={loading}
-          aria-label="Correo electrónico"
+          aria-label={t("emailAria")}
         />
         <button className="btn btn-primary" type="submit" disabled={loading}>
-          {loading ? "Enviando…" : "Descargar PDF →"}
+          {loading ? t("submitting") : t("download")}
         </button>
       </form>
       <div className="lead-b__meta">
-        <span>· 28 páginas</span>
-        <span>· 9 mapas</span>
-        <span>· 0 spam</span>
+        <span>{t("metaPages")}</span>
+        <span>{t("metaMaps")}</span>
+        <span>{t("metaSpam")}</span>
       </div>
       {status.kind === "ok" && (
         <div className="lead-b__status ok" role="status">
-          Listo. Revisa tu correo en 1-2 minutos.
+          {t("leadSuccess")}
         </div>
       )}
       {status.kind === "err" && (
         <div className="lead-b__status err" role="alert">
-          {status.message}
+          {errorMessage(status.code)}
         </div>
       )}
     </>

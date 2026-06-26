@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import { LeadForm } from "@/components/lead-form";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
@@ -6,16 +7,35 @@ import { CoachCard } from "@/components/coach-card";
 import { OfferCard } from "@/components/offer-card";
 import { CommunityBand } from "@/components/community-band";
 import { site } from "@/data/site";
-import { coaches } from "@/data/coaches";
-import { collectiveOffer } from "@/data/offers";
-import { features, testimonials, faqs } from "@/data/content";
-
-const [gio, adverso] = coaches;
+import { getCoaches } from "@/data/coaches";
+import { getCollectiveOffer } from "@/data/offers";
+import { getFeatures, getTestimonials, getFaqs } from "@/data/content";
+import { hasLocale } from "next-intl";
+import { notFound } from "next/navigation";
+import { routing } from "@/i18n/routing";
 
 // Deterministic ember field for the hero aura (no Math.random → SSR-safe).
 const EMBERS = Array.from({ length: 18 }, (_, i) => i);
 
-export default function Home() {
+export default async function Home({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  if (!hasLocale(routing.locales, locale)) notFound();
+  setRequestLocale(locale);
+  const t = await getTranslations("Home");
+  const tc = await getTranslations("Common");
+
+  const coaches = getCoaches(locale);
+  const [gio, adverso] = coaches;
+  const collectiveOffer = getCollectiveOffer(locale);
+  const bookableCoaches = coaches.filter((c) => c.calendly);
+  const features = getFeatures(locale);
+  const testimonials = getTestimonials(locale);
+  const faqs = getFaqs(locale);
+
   return (
     <>
       <SiteNav />
@@ -54,20 +74,18 @@ export default function Home() {
 
           {/* Columna central — jerarquía: kicker → descriptor → punch → sub → micro */}
           <div className="hero-vs__center">
-            <div className="hero-vs__kicker">Colectivo de coaches pro</div>
-            <p className="hero-vs__descriptor">Coaching de Valorant con</p>
+            <div className="hero-vs__kicker">{t("heroKicker")}</div>
+            <p className="hero-vs__descriptor">{t("heroDescriptor")}</p>
             <h1 className="hero-vs__title">
-              <span className="red">Profesionales</span>
-              <span className="red">de LATAM</span>
+              <span className="red">{t("heroTitle1")}</span>
+              <span className="red">{t("heroTitle2")}</span>
             </h1>
-            <p className="hero-vs__sub">
-              Cursos y coaching de Valorant con jugadores pro. Mejora tu aim, tu mecánica y tu rendimiento en ranked — y sube de rango más rápido.
-            </p>
-            <div className="hero-vs__micro">Para todos los ranks · ES / EN / PT</div>
+            <p className="hero-vs__sub">{t("heroSub")}</p>
+            <div className="hero-vs__micro">{t("heroMicro")}</div>
             <div className="hero-vs__ctas">
-              <a className="btn btn-primary" href="#coaches">Ver coaches →</a>
+              <a className="btn btn-primary" href="#coaches">{t("seeCoaches")}</a>
               <a className="btn btn-ghost" href={site.discord.invite} target="_blank" rel="noopener noreferrer">
-                Unirse al Discord
+                {tc("joinDiscord")}
               </a>
             </div>
           </div>
@@ -92,11 +110,9 @@ export default function Home() {
           <div className="ehead">
             <span className="num">01</span>
             <div>
-              <span className="lbl" style={{ color: "var(--val-red)" }}>EL ROSTER</span>
-              <h2>Los coaches. <em>Pros de verdad.</em></h2>
-              <p className="lbl-side">
-                Cada uno con su rol, su estilo y sus offers. Elige con quién entrenar — o trabaja con los dos.
-              </p>
+              <span className="lbl" style={{ color: "var(--val-red)" }}>{t("rosterLabel")}</span>
+              <h2>{t("rosterTitle")} <em>{t("rosterTitleEm")}</em></h2>
+              <p className="lbl-side">{t("rosterDesc")}</p>
             </div>
           </div>
           <div className="roster">
@@ -113,15 +129,13 @@ export default function Home() {
           <div className="ehead">
             <span className="num">02</span>
             <div>
-              <span className="lbl" style={{ color: "var(--val-red)" }}>CLASES · 1V1</span>
-              <h2>Entrena <em>1 a 1.</em></h2>
-              <p className="lbl-side">
-                Una clase presencial 1 a 1 con el colectivo. Reservas una vez y te coordinamos con el coach disponible — sin checkout, sin pasos raros.
-              </p>
+              <span className="lbl" style={{ color: "var(--val-red)" }}>{t("offersLabel")}</span>
+              <h2>{t("offersTitle")} <em>{t("offersTitleEm")}</em></h2>
+              <p className="lbl-side">{t("offersDesc")}</p>
             </div>
           </div>
           <div className="offers">
-            <OfferCard offer={collectiveOffer} />
+            <OfferCard offer={collectiveOffer} bookableCoaches={bookableCoaches} />
           </div>
         </div>
       </section>
@@ -132,8 +146,8 @@ export default function Home() {
           <div className="ehead">
             <span className="num">03</span>
             <div>
-              <span className="lbl" style={{ color: "var(--val-red)" }}>QUÉ INCLUYE</span>
-              <h2>Todo lo que necesitas <em>para subir.</em></h2>
+              <span className="lbl" style={{ color: "var(--val-red)" }}>{t("includesLabel")}</span>
+              <h2>{t("includesTitle")} <em>{t("includesTitleEm")}</em></h2>
             </div>
           </div>
           <div className="features">
@@ -157,19 +171,19 @@ export default function Home() {
           <div className="ehead">
             <span className="num">04</span>
             <div>
-              <span className="lbl" style={{ color: "var(--val-red)" }}>TESTIMONIOS</span>
-              <h2>Lo que dicen <em>los alumnos.</em></h2>
+              <span className="lbl" style={{ color: "var(--val-red)" }}>{t("testimonialsLabel")}</span>
+              <h2>{t("testimonialsTitle")} <em>{t("testimonialsTitleEm")}</em></h2>
             </div>
           </div>
           <div className="equotes">
-            {testimonials.map((t, i) => (
-              <article className="equote" key={t.name} style={{ "--i": i } as CSSProperties}>
-                <p className="equote__q">«{t.quote}»</p>
+            {testimonials.map((tst, i) => (
+              <article className="equote" key={tst.name} style={{ "--i": i } as CSSProperties}>
+                <p className="equote__q">«{tst.quote}»</p>
                 <div className="equote__by">
                   <div className="n">
-                    {t.name}<span className="small">{t.progress}</span>
+                    {tst.name}<span className="small">{tst.progress}</span>
                   </div>
-                  <span className="equote__delta">{t.delta}</span>
+                  <span className="equote__delta">{tst.delta}</span>
                 </div>
               </article>
             ))}
@@ -182,16 +196,14 @@ export default function Home() {
         <div className="wrap">
           <div className="lead-b">
             <div>
-              <span className="eyebrow">Recurso · Gratis</span>
-              <h3>Smokes y flashes <em>de un Radiant.</em></h3>
-              <p>
-                PDF de 28 páginas: una página por mapa, lineups exactos, timings y por qué funcionan en LATAM (no en Pacific). Aprende a jugar mapas como un pro, sin pagar un peso.
-              </p>
+              <span className="eyebrow">{t("leadEyebrow")}</span>
+              <h3>{t("leadTitle")} <em>{t("leadTitleEm")}</em></h3>
+              <p>{t("leadBody")}</p>
               <LeadForm />
             </div>
             <div className="lead-b__cover" aria-hidden>
               <div className="num">28</div>
-              <div className="ttl">Smokes &amp; flashes <em>de un Radiant.</em></div>
+              <div className="ttl">{t("leadTitle")} <em>{t("leadTitleEm")}</em></div>
               <div className="maps">
                 <span>ASCENT</span>
                 <span>HAVEN</span>
@@ -214,8 +226,8 @@ export default function Home() {
           <div className="ehead">
             <span className="num">05</span>
             <div>
-              <span className="lbl" style={{ color: "var(--val-red)" }}>FAQ</span>
-              <h2>Lo que <em>siempre preguntan.</em></h2>
+              <span className="lbl" style={{ color: "var(--val-red)" }}>{t("faqLabel")}</span>
+              <h2>{t("faqTitle")} <em>{t("faqTitleEm")}</em></h2>
             </div>
           </div>
           <div className="faq-b">
@@ -235,11 +247,11 @@ export default function Home() {
 
       {/* OUTRO */}
       <section className="outro">
-        <h2>De Zero a Hero. <em>Empezamos cuando quieras.</em></h2>
+        <h2>{t("outroTitle")} <em>{t("outroTitleEm")}</em></h2>
         <div className="outro__ctas">
-          <a className="btn btn-primary" href="#coaches">Ver coaches →</a>
+          <a className="btn btn-primary" href="#coaches">{t("seeCoaches")}</a>
           <a className="btn btn-ghost" href={site.discord.invite} target="_blank" rel="noopener noreferrer">
-            Unirse al Discord
+            {tc("joinDiscord")}
           </a>
         </div>
       </section>

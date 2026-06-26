@@ -2,16 +2,17 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { coaches, type Coach } from "@/data/coaches";
+import { useTranslations } from "next-intl";
+import type { Coach } from "@/data/coaches";
 import { CalendlyInline } from "./calendly-inline";
-
-const BOOKABLE = coaches.filter((c) => c.calendly);
 
 /**
  * CTA de reserva del offer colectivo: abre un modal donde primero se elige
  * coach y enseguida aparece su calendario de Calendly, sin salir de la página.
+ * Recibe los coaches con Calendly resueltos por locale desde el server.
  */
-export function BookingCta({ label }: { label: string }) {
+export function BookingCta({ label, coaches }: { label: string; coaches: Coach[] }) {
+  const t = useTranslations("Booking");
   const [open, setOpen] = useState(false);
   const [picked, setPicked] = useState<Coach | null>(null);
 
@@ -54,27 +55,27 @@ export function BookingCta({ label }: { label: string }) {
           className="booking"
           role="dialog"
           aria-modal="true"
-          aria-label="Reservar tu clase"
+          aria-label={t("openAria")}
           onClick={close}
         >
           <div
             className={`booking__panel${picked ? " booking__panel--cal" : ""}`}
             onClick={(e) => e.stopPropagation()}
           >
-            <button type="button" className="booking__close" aria-label="Cerrar" onClick={close}>
+            <button type="button" className="booking__close" aria-label={t("closeAria")} onClick={close}>
               <span />
               <span />
             </button>
 
             {!picked ? (
               <div className="booking__pick">
-                <span className="lbl" style={{ color: "var(--val-red)" }}>AGENDA TU CLASE</span>
+                <span className="lbl" style={{ color: "var(--val-red)" }}>{t("label")}</span>
                 <h3>
-                  ¿Con quién quieres <em>entrenar?</em>
+                  {t("pickTitlePre")} <em>{t("pickTitleEm")}</em>
                 </h3>
-                <p className="booking__hint">Elige tu coach y enseguida eliges día y hora.</p>
+                <p className="booking__hint">{t("hint")}</p>
                 <div className="booking__coaches">
-                  {BOOKABLE.map((c) => (
+                  {coaches.map((c) => (
                     <button
                       type="button"
                       key={c.slug}
@@ -99,10 +100,10 @@ export function BookingCta({ label }: { label: string }) {
               <div className="booking__cal-wrap">
                 <div className="booking__bar">
                   <button type="button" className="booking__back" onClick={() => setPicked(null)}>
-                    ← Cambiar coach
+                    {t("back")}
                   </button>
                   <span className="booking__bar-name">
-                    Clase con <b>{picked.name}</b>
+                    {t("classWith")} <b>{picked.name}</b>
                   </span>
                 </div>
                 <div className="booking__cal">

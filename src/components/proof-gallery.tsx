@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import type { CSSProperties } from "react";
+import { useTranslations } from "next-intl";
 import type { ResultProof } from "@/data/coaches";
 
 /** Masonry de capturas + lightbox para verlas en grande sin salir de la página. */
@@ -12,6 +13,7 @@ export function ProofGallery({
   results: ResultProof[];
   coachName: string;
 }) {
+  const t = useTranslations("Proof");
   const [open, setOpen] = useState<number | null>(null);
   const isOpen = open !== null;
 
@@ -65,7 +67,7 @@ export function ProofGallery({
             <img
               className="proof__img"
               src={r.img}
-              alt={`Conversación con ${r.who}: ${r.result} — coaching de ${coachName}`}
+              alt={t("alt", { who: r.who, result: r.result, coach: coachName })}
               loading="lazy"
             />
           </a>
@@ -80,7 +82,7 @@ export function ProofGallery({
           aria-label={`${current.result} — ${current.who}`}
           onClick={close}
         >
-          <button type="button" className="lightbox__close" aria-label="Cerrar" onClick={close}>
+          <button type="button" className="lightbox__close" aria-label={t("closeAria")} onClick={close}>
             <span />
             <span />
           </button>
@@ -89,7 +91,7 @@ export function ProofGallery({
             <button
               type="button"
               className="lightbox__nav prev"
-              aria-label="Anterior"
+              aria-label={t("prevAria")}
               onClick={(e) => {
                 e.stopPropagation();
                 go(-1);
@@ -104,7 +106,7 @@ export function ProofGallery({
             <img
               className="lightbox__img"
               src={current.img}
-              alt={`Conversación con ${current.who}: ${current.result}`}
+              alt={t("alt", { who: current.who, result: current.result, coach: coachName })}
             />
             <figcaption className="lightbox__cap">
               <span className="lightbox__result">{current.result}</span>
@@ -116,7 +118,7 @@ export function ProofGallery({
             <button
               type="button"
               className="lightbox__nav next"
-              aria-label="Siguiente"
+              aria-label={t("nextAria")}
               onClick={(e) => {
                 e.stopPropagation();
                 go(1);

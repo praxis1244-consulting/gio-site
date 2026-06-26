@@ -1,13 +1,22 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import Link from "next/link";
+import { useLocale, useTranslations } from "next-intl";
+import { Link, usePathname, useRouter } from "@/i18n/navigation";
+import { routing, displayCode } from "@/i18n/routing";
+import { LangSwitcher } from "./lang-switcher";
 import { site } from "@/data/site";
 
 /** Keep in sync with the .nav-drawer.is-closing exit animation in globals.css. */
 const DRAWER_EXIT_MS = 430;
 
 export function SiteNav() {
+  const t = useTranslations("Nav");
+  const tl = useTranslations("LangSwitcher");
+  const locale = useLocale();
+  const pathname = usePathname();
+  const router = useRouter();
+
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [closing, setClosing] = useState(false);
@@ -33,6 +42,14 @@ export function SiteNav() {
       closeTimer.current = null;
     }, DRAWER_EXIT_MS);
   }, []);
+
+  const switchLocale = useCallback(
+    (next: string) => {
+      if (next !== locale) router.replace(pathname, { locale: next, scroll: false });
+      closeMenu();
+    },
+    [locale, pathname, router, closeMenu],
+  );
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -74,24 +91,27 @@ export function SiteNav() {
       {/* Thin Discord banner — goaching pattern */}
       <a className="discord-banner" href={site.discord.invite} target="_blank" rel="noopener noreferrer">
         <span className="dot live pulse-dot" />
-        <span>El aula vive en el Discord — reviews grupales, eventos y guías gratis.</span>
-        <em>Unirse →</em>
+        <span>{t("banner")}</span>
+        <em>{t("join")}</em>
       </a>
 
       <nav ref={navRef} className={`nav-b${scrolled ? " is-scrolled" : ""}`}>
         <Link className="mark" href="/">{site.brand.mark}<em>{site.brand.accent}</em></Link>
         <ul>
           {site.nav.map((item) => (
-            <li key={item.href}><a href={item.href}>{item.label}</a></li>
+            <li key={item.key}><Link href={item.href}>{t(item.key)}</Link></li>
           ))}
         </ul>
-        <a href={site.discord.invite} target="_blank" rel="noopener noreferrer" className="btn btn-primary nav-b__cta">
-          Unirse →
-        </a>
+        <div className="nav-b__right">
+          <LangSwitcher />
+          <a href={site.discord.invite} target="_blank" rel="noopener noreferrer" className="btn btn-primary nav-b__cta">
+            {t("join")}
+          </a>
+        </div>
         <button
           type="button"
           className="nav-b__burger"
-          aria-label="Abrir menú"
+          aria-label={t("openMenu")}
           aria-expanded={menuOpen}
           aria-controls="nav-drawer"
           onClick={openMenu}
@@ -113,7 +133,7 @@ export function SiteNav() {
           <button
             type="button"
             className="nav-drawer__close"
-            aria-label="Cerrar menú"
+            aria-label={t("closeMenu")}
             onClick={closeMenu}
           >
             <span /><span />
@@ -121,11 +141,25 @@ export function SiteNav() {
         </div>
         <ul className="nav-drawer__links">
           {site.nav.map((item) => (
-            <li key={item.href}>
-              <a href={item.href} onClick={closeMenu}>{item.label}</a>
+            <li key={item.key}>
+              <Link href={item.href} onClick={closeMenu}>{t(item.key)}</Link>
             </li>
           ))}
         </ul>
+        <div className="nav-drawer__lang" role="group" aria-label={tl("aria")}>
+          {routing.locales.map((l) => (
+            <button
+              type="button"
+              key={l}
+              className={`lang-seg${l === locale ? " is-active" : ""}`}
+              aria-current={l === locale}
+              onClick={() => switchLocale(l)}
+            >
+              <span className="lang-seg__code">{displayCode(l)}</span>
+              <span className="lang-seg__name">{tl(l)}</span>
+            </button>
+          ))}
+        </div>
         <a
           href={site.discord.invite}
           target="_blank"
@@ -133,7 +167,7 @@ export function SiteNav() {
           className="btn btn-primary nav-drawer__cta"
           onClick={closeMenu}
         >
-          Unirse al Discord →
+          {t("joinDiscordArrow")}
         </a>
       </div>
     </>

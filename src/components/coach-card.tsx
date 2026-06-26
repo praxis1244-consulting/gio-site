@@ -1,8 +1,12 @@
+import { getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 import type { Coach } from "@/data/coaches";
 
-export function CoachCard({ coach }: { coach: Coach }) {
+export async function CoachCard({ coach }: { coach: Coach }) {
+  const t = await getTranslations("Coach");
+
   return (
-    <a className="coach-card" href={`/coaches/${coach.slug}`}>
+    <Link className="coach-card" href={`/coaches/${coach.slug}`}>
       <div className="coach-card__poster">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img className="coach-card__img" src={coach.cutout} alt={`${coach.name} — coach de Valorant`} />
@@ -21,8 +25,8 @@ export function CoachCard({ coach }: { coach: Coach }) {
           <span className="coach-card__rank">{coach.rank}</span>
           <span className="coach-card__langs">{coach.langs.join(" · ")}</span>
         </div>
-        <span className="coach-card__cta">Ver perfil →</span>
+        <span className="coach-card__cta">{t("seeProfile")}</span>
       </div>
-    </a>
+    </Link>
   );
 }

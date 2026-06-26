@@ -1,13 +1,25 @@
+import { getTranslations } from "next-intl/server";
 import type { Offer } from "@/data/offers";
 import type { Coach } from "@/data/coaches";
 import { BookingCta } from "./booking-cta";
 
-export function OfferCard({ offer, coach }: { offer: Offer; coach?: Coach }) {
+export async function OfferCard({
+  offer,
+  coach,
+  bookableCoaches,
+}: {
+  offer: Offer;
+  coach?: Coach;
+  /** Coaches con Calendly, para el modal de reserva del offer colectivo. */
+  bookableCoaches?: Coach[];
+}) {
+  const t = await getTranslations("CoachPage");
+
   return (
     <article className={`offer-card${offer.featured ? " featured" : ""}`}>
       <div className="offer-card__top">
         {offer.badge ? <span className="offer-card__badge">{offer.badge}</span> : null}
-        {coach ? <span className="offer-card__by">por {coach.name}</span> : null}
+        {coach ? <span className="offer-card__by">{t("offerBy")} {coach.name}</span> : null}
       </div>
 
       <h3 className="offer-card__title">{offer.title}</h3>
@@ -27,10 +39,10 @@ export function OfferCard({ offer, coach }: { offer: Offer; coach?: Coach }) {
       <div className="offer-card__cta">
         {coach?.calendly ? (
           <a href="#agenda" className="btn btn-primary">
-            {`Agenda con ${coach.name} →`}
+            {t("bookWith", { name: coach.name })}
           </a>
         ) : (
-          <BookingCta label="Agenda tu clase →" />
+          <BookingCta label={t("bookClass")} coaches={bookableCoaches ?? []} />
         )}
       </div>
     </article>

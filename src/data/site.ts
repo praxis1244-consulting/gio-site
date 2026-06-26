@@ -6,11 +6,12 @@ export const site = {
     domain: "zero2hero.gg",
     tagline: "De Zero a Hero.",
   },
+  // Etiquetas vía i18n (Nav.<key>); el href se localiza con el Link de @/i18n/navigation.
   nav: [
-    { label: "Coaches", href: "/#coaches" },
-    { label: "Offers", href: "/#offers" },
-    { label: "Comunidad", href: "/#comunidad" },
-    { label: "FAQ", href: "/#faq" },
+    { key: "coaches", href: "/#coaches" },
+    { key: "offers", href: "/#offers" },
+    { key: "community", href: "/#comunidad" },
+    { key: "faq", href: "/#faq" },
   ],
   // TODO: pegar invite real de Discord
   discord: { invite: "https://discord.gg/REEMPLAZAR", label: "Discord" },

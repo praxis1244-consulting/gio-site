@@ -1,13 +1,19 @@
+import { getLocale, getTranslations } from "next-intl/server";
 import { site } from "@/data/site";
-import { community } from "@/data/content";
+import { getCommunity } from "@/data/content";
+import type { Locale } from "@/i18n/routing";
 
-export function CommunityBand() {
+export async function CommunityBand() {
+  const locale = (await getLocale()) as Locale;
+  const t = await getTranslations("Home");
+  const community = getCommunity(locale);
+
   return (
     <section className="section" id="comunidad">
       <div className="wrap">
         <div className="community">
           <div className="community__copy">
-            <span className="eyebrow">Comunidad · {site.discord.label}</span>
+            <span className="eyebrow">{t("communityEyebrow")} · {site.discord.label}</span>
             <h2 className="community__title">{community.title}</h2>
             <p className="community__body">{community.body}</p>
             <div className="community__ctas">
