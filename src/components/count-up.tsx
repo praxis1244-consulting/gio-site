@@ -69,5 +69,12 @@ export function CountUp({ value, delay = 0 }: { value: string; delay?: number })
     };
   }, [value, delay]);
 
-  return <span ref={ref}>{display}</span>;
+  // El "ghost" (valor final, invisible) reserva la caja; el número animado se dibuja
+  // encima en absolute, así el tamaño nunca cambia mientras cuenta y no hay layout shift.
+  return (
+    <span ref={ref} className="count-up">
+      <span className="count-up__ghost" aria-hidden="true">{value}</span>
+      <span className="count-up__live">{display}</span>
+    </span>
+  );
 }

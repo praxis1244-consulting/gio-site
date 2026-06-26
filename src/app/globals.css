@@ -322,7 +322,13 @@ button { font: inherit; }
   letter-spacing: -0.06em; line-height: 0.95;
   color: var(--val-ink);
   margin: 16px 0 8px;
+  font-variant-numeric: tabular-nums;
 }
+/* count-up: el ghost (valor final, invisible) reserva la caja; el número animado se
+   dibuja encima en absolute → cero layout shift mientras cuenta (no "tirita" lo de abajo) */
+.count-up { position: relative; display: inline-block; }
+.count-up__ghost { visibility: hidden; }
+.count-up__live { position: absolute; left: 0; top: 0; white-space: nowrap; }
 .estat .v em { font-family: var(--font-accent), sans-serif; font-style: italic; font-weight: 600; color: var(--val-red); }
 .estat .cap { font-family: var(--font-mono), ui-monospace, monospace; font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--val-ink-faint); }
 
