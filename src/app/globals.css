@@ -1165,8 +1165,8 @@ html { interpolate-size: allow-keywords; }
 }
 .offer-grid > div { display: flex; }
 .offer-grid > div > .offer-card { width: 100%; }
-/* Home: solo 2 clases 1v1 — centra el par en vez de pegarlas a la izquierda. */
-.offers { grid-template-columns: repeat(2, minmax(0, 380px)); justify-content: center; }
+/* Home: una sola clase 1v1 centralizada — centra el card único. */
+.offers { grid-template-columns: minmax(0, 440px); justify-content: center; }
 /* Coach page: una sola clase por coach — centra el card en vez de pegarlo a la izquierda. */
 .offer-grid { grid-template-columns: minmax(0, 440px); justify-content: center; }
 .offer-card {

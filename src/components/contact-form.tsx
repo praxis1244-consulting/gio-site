@@ -24,7 +24,6 @@ export function ContactForm() {
   const [name, setName] = useState("");
   const [contact, setContact] = useState("");
   const [rank, setRank] = useState("");
-  const [coach, setCoach] = useState("cualquiera");
   const [message, setMessage] = useState("");
   const loading = status.kind === "loading";
 
@@ -41,7 +40,7 @@ export function ContactForm() {
       response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, contact, rank, coach, message }),
+        body: JSON.stringify({ name, contact, rank, message }),
       });
     } catch {
       setStatus({ kind: "err", message: ERROR_COPY.NETWORK });
@@ -56,7 +55,7 @@ export function ContactForm() {
     }
 
     setStatus({ kind: "ok" });
-    setName(""); setContact(""); setRank(""); setCoach("cualquiera"); setMessage("");
+    setName(""); setContact(""); setRank(""); setMessage("");
   }
 
   if (status.kind === "ok") {
@@ -91,24 +90,14 @@ export function ContactForm() {
         </label>
       </div>
 
-      <div className="reserva__row">
-        <label className="reserva__field">
-          <span>Rango actual</span>
-          <select value={rank} onChange={(e) => setRank(e.target.value)} disabled={loading}>
-            <option value="">Elige tu rango</option>
-            {RANKS.map((r) => <option key={r} value={r}>{r}</option>)}
-            <option value="Sin rank">No sé / sin rank</option>
-          </select>
-        </label>
-        <label className="reserva__field">
-          <span>¿Con quién?</span>
-          <select value={coach} onChange={(e) => setCoach(e.target.value)} disabled={loading}>
-            <option value="cualquiera">Cualquiera</option>
-            <option value="Gio">Gio</option>
-            <option value="Adverso">Adverso</option>
-          </select>
-        </label>
-      </div>
+      <label className="reserva__field">
+        <span>Rango actual</span>
+        <select value={rank} onChange={(e) => setRank(e.target.value)} disabled={loading}>
+          <option value="">Elige tu rango</option>
+          {RANKS.map((r) => <option key={r} value={r}>{r}</option>)}
+          <option value="Sin rank">No sé / sin rank</option>
+        </select>
+      </label>
 
       <label className="reserva__field">
         <span>Mensaje (opcional)</span>

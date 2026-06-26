@@ -18,7 +18,6 @@ export async function POST(request: Request) {
   const name = clean(b.name, 120);
   const contact = clean(b.contact, 160);
   const rank = clean(b.rank, 40);
-  const coach = clean(b.coach, 40);
   const message = clean(b.message, 1000);
 
   if (!name || contact.length < 3) {
@@ -33,7 +32,6 @@ export async function POST(request: Request) {
   const fields = [
     { name: "Contacto", value: contact, inline: true },
     { name: "Rango", value: rank || "—", inline: true },
-    { name: "Coach", value: coach || "Cualquiera", inline: true },
   ];
   if (message) fields.push({ name: "Mensaje", value: message, inline: false });
 

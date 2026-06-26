@@ -7,8 +7,8 @@ import { OfferCard } from "@/components/offer-card";
 import { ContactForm } from "@/components/contact-form";
 import { CommunityBand } from "@/components/community-band";
 import { site } from "@/data/site";
-import { coaches, getCoach } from "@/data/coaches";
-import { featuredOffers } from "@/data/offers";
+import { coaches } from "@/data/coaches";
+import { collectiveOffer } from "@/data/offers";
 import { features, testimonials, faqs } from "@/data/content";
 
 const [gio, adverso] = coaches;
@@ -117,14 +117,12 @@ export default function Home() {
               <span className="lbl" style={{ color: "var(--val-red)" }}>CLASES · 1V1</span>
               <h2>Entrena <em>1 a 1.</em></h2>
               <p className="lbl-side">
-                Clases presenciales con Gio y Adverso. Agenda directo con tu coach: sin checkout, sin pasos raros.
+                Una clase presencial 1 a 1 con el colectivo. Reservas una vez y te coordinamos con el coach disponible — sin checkout, sin pasos raros.
               </p>
             </div>
           </div>
           <div className="offers">
-            {featuredOffers.map((offer) => (
-              <OfferCard key={offer.id} offer={offer} coach={getCoach(offer.coachSlug)} />
-            ))}
+            <OfferCard offer={collectiveOffer} />
           </div>
         </div>
       </section>

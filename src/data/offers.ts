@@ -1,6 +1,7 @@
 export type Offer = {
   id: string;
-  coachSlug: string;
+  /** Coach dueño de la oferta. Vacío en la oferta unificada del colectivo. */
+  coachSlug?: string;
   title: string;
   /** Modalidad, p.ej. "Presencial". */
   mode: string;
@@ -8,6 +9,25 @@ export type Offer = {
   bullets: { text: string; muted?: boolean }[];
   badge?: string;
   featured?: boolean;
+};
+
+// Oferta centralizada de la home: una sola clase 1v1 del colectivo, sin elegir
+// coach. El alumno agenda una vez y el equipo lo coordina con quien esté disponible.
+export const collectiveOffer: Offer = {
+  id: "clase-1v1",
+  title: "Clase 1v1",
+  mode: "Presencial",
+  blurb:
+    "Clase presencial 1 a 1 con un coach del colectivo. Revisamos tu juego frame por frame, salimos con tus leaks claros y un plan a tu medida para subir de rango.",
+  bullets: [
+    { text: "Sesión presencial 1 a 1 con un coach pro" },
+    { text: "Revisión de tu VOD frame por frame" },
+    { text: "Tus leaks claros + plan a tu rango" },
+    { text: "Lectura de ronda, utilidad e info" },
+    { text: "Recomendación de agente y mapas" },
+  ],
+  badge: "Best seller",
+  featured: true,
 };
 
 // Hoy el colectivo da clases 1v1 presenciales. Sin precio en el sitio:
@@ -48,5 +68,3 @@ export const offers: Offer[] = [
 export function offersByCoach(slug: string): Offer[] {
   return offers.filter((o) => o.coachSlug === slug);
 }
-
-export const featuredOffers: Offer[] = offers.filter((o) => o.featured === true);
