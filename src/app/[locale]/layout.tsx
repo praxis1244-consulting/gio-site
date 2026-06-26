@@ -8,7 +8,12 @@ import { RevealRunner } from "@/components/reveal-runner";
 import { routing } from "@/i18n/routing";
 import "../globals.css";
 
-const NO_FLASH_SCRIPT = `try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('js-on')}}catch(e){}`;
+// `js-on` se setea directo en el className del <html> (SSR, antes del paint, sin
+// script inline que React 19 rompa en el soft-nav de idioma). El ocultamiento de
+// reveals ya está gateado por `prefers-reduced-motion: no-preference`, así que
+// reduced-motion no se afecta. Para no-JS, este fallback los deja visibles.
+const NO_JS_REVEAL_FALLBACK =
+  ".ehead,.estat,.team,.estep,.fight,.equote,.proof,.lead-b,.faq-b details,.guarantee,.outro h2,.outro__ctas,.foot-b__inner,.coach-card,.offer-card,.feature,.community{opacity:1!important;transform:none!important}";
 
 const dmSans = DM_Sans({
   variable: "--font-sans",
@@ -86,11 +91,10 @@ export default async function LocaleLayout({
     <html
       lang={locale}
       suppressHydrationWarning
-      className={`${dmSans.variable} ${jetbrainsMono.variable} ${tomorrow.variable} ${chakraPetch.variable}`}
+      className={`js-on ${dmSans.variable} ${jetbrainsMono.variable} ${tomorrow.variable} ${chakraPetch.variable}`}
     >
       <body>
-        {/* Blocking inline script: adds .js-on before paint so reveals don't flash. */}
-        <script dangerouslySetInnerHTML={{ __html: NO_FLASH_SCRIPT }} />
+        <noscript dangerouslySetInnerHTML={{ __html: `<style>${NO_JS_REVEAL_FALLBACK}</style>` }} />
         <NextIntlClientProvider>{children}</NextIntlClientProvider>
         <RevealRunner />
       </body>
