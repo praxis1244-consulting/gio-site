@@ -36,7 +36,7 @@ const features: Record<Locale, Feature[]> = {
     {
       tag: "DISCORD",
       title: "Comunidad Discord",
-      body: "El aula del colectivo. Rol de alumno automático vía Whop, reviews grupales, eventos, customs con los coaches y guías gratis.",
+      body: "El aula del colectivo. Rol de alumno automático, reviews grupales, eventos, customs con los coaches y guías gratis.",
     },
   ],
   pt: [
@@ -58,7 +58,7 @@ const features: Record<Locale, Feature[]> = {
     {
       tag: "DISCORD",
       title: "Comunidade Discord",
-      body: "A sala de aula do coletivo. Cargo de aluno automático via Whop, reviews em grupo, eventos, customs com os coaches e guias grátis.",
+      body: "A sala de aula do coletivo. Cargo de aluno automático, reviews em grupo, eventos, customs com os coaches e guias grátis.",
     },
   ],
   en: [
@@ -80,7 +80,7 @@ const features: Record<Locale, Feature[]> = {
     {
       tag: "DISCORD",
       title: "Discord community",
-      body: "The collective's classroom. Automatic student role via Whop, group reviews, events, customs with the coaches and free guides.",
+      body: "The collective's classroom. Automatic student role, group reviews, events, customs with the coaches and free guides.",
     },
   ],
 };
@@ -222,18 +222,6 @@ const faqs: Record<Locale, Faq[]> = {
       a: "Sí. La metodología cambia según tu rank: en Hierro/Bronce el 80% del trabajo es aim, crosshair placement y settings. No te vamos a explicar rotaciones avanzadas si todavía no ganas peeks. El coach empieza donde estás.",
     },
     {
-      q: "¿Cómo funciona el pago con Whop?",
-      a: "Whop es nuestra tienda y checkout. Eliges tu offer, pagas en su página segura y Whop te da acceso automático: te asigna el rol en el Discord o te entrega el curso. No manejamos tu tarjeta nosotros; todo el cobro y el acceso lo gestiona Whop.",
-    },
-    {
-      q: "¿Puedo pagar desde mi país de LATAM?",
-      a: "Sí. Whop acepta tarjetas de toda LATAM y conversión a tu moneda local. Los precios se muestran en USD como referencia y se cobran al tipo de cambio del día.",
-    },
-    {
-      q: "¿Aceptan Pix desde Brasil?",
-      a: "Sí. Desde Brasil puedes pagar con Pix además de tarjeta. El acceso al Discord o al curso se libera igual de rápido una vez confirmado el pago.",
-    },
-    {
       q: "¿Qué incluye el Discord de la comunidad?",
       a: "Es el aula del colectivo. Con la membresía obtienes rol de alumno automático, reviews grupales semanales, eventos y customs con los coaches, canales por mapa y rol, guías gratis y respuesta directa entre clases. Es donde vive el día a día de Zero2Hero.",
     },
@@ -254,14 +242,6 @@ const faqs: Record<Locale, Faq[]> = {
     {
       q: "Funciona se eu sou Ferro ou Bronze?",
       a: "Sim. A metodologia muda conforme seu elo: no Ferro/Bronze, 80% do trabalho é mira, crosshair placement e settings. A gente não vai te explicar rotações avançadas se você ainda não ganha os peeks. O coach começa onde você está.",
-    },
-    {
-      q: "Como funciona o pagamento com Whop?",
-      a: "O Whop é nossa loja e checkout. Você escolhe sua offer, paga na página segura deles e o Whop te dá acesso automático: atribui o cargo no Discord ou entrega o curso. A gente não mexe no seu cartão; toda a cobrança e o acesso são gerenciados pelo Whop.",
-    },
-    {
-      q: "Posso pagar do meu país na América Latina?",
-      a: "Sim. O Whop aceita cartões de toda a América Latina e conversão pra sua moeda local. Os preços aparecem em USD como referência e são cobrados pelo câmbio do dia.",
     },
     {
       q: "Aceitam Pix do Brasil?",
@@ -290,18 +270,6 @@ const faqs: Record<Locale, Faq[]> = {
       a: "Yes. The method changes with your rank: in Iron/Bronze, 80% of the work is aim, crosshair placement and settings. We won't explain advanced rotations if you're still losing your peeks. The coach starts where you are.",
     },
     {
-      q: "How does paying with Whop work?",
-      a: "Whop is our store and checkout. You pick your offer, pay on their secure page and Whop grants access automatically: it assigns your Discord role or hands over the course. We never handle your card; Whop manages all billing and access.",
-    },
-    {
-      q: "Can I pay from my LATAM country?",
-      a: "Yes. Whop accepts cards from all of LATAM and converts to your local currency. Prices show in USD as a reference and are charged at the day's exchange rate.",
-    },
-    {
-      q: "Do you accept Pix from Brazil?",
-      a: "Yes. From Brazil you can pay with Pix as well as card. Access to the Discord or course is released just as fast once payment is confirmed.",
-    },
-    {
       q: "What's in the community Discord?",
       a: "It's the collective's classroom. With the membership you get an automatic student role, weekly group reviews, events and customs with the coaches, channels by map and role, free guides and direct answers between classes. It's where Zero2Hero's day-to-day lives.",
     },
@@ -323,7 +291,7 @@ const faqs: Record<Locale, Faq[]> = {
 const community: Record<Locale, Community> = {
   es: {
     title: "El Discord es el aula.",
-    body: "La membresía de Zero2Hero te mete al colectivo: rol de alumno automático vía Whop, reviews grupales con los coaches, eventos, customs y todas las guías gratis. Aquí progresas entre clase y clase, no solo en la sesión.",
+    body: "La membresía de Zero2Hero te mete al colectivo: rol de alumno automático, reviews grupales con los coaches, eventos, customs y todas las guías gratis. Aquí progresas entre clase y clase, no solo en la sesión.",
     perks: [
       "Rol de alumno automático",
       "Reviews grupales semanales",
@@ -336,7 +304,7 @@ const community: Record<Locale, Community> = {
   },
   pt: {
     title: "O Discord é a sala de aula.",
-    body: "A assinatura da Zero2Hero te coloca no coletivo: cargo de aluno automático via Whop, reviews em grupo com os coaches, eventos, customs e todos os guias grátis. Aqui você progride entre uma aula e outra, não só na sessão.",
+    body: "A assinatura da Zero2Hero te coloca no coletivo: cargo de aluno automático, reviews em grupo com os coaches, eventos, customs e todos os guias grátis. Aqui você progride entre uma aula e outra, não só na sessão.",
     perks: [
       "Cargo de aluno automático",
       "Reviews em grupo semanais",
@@ -349,7 +317,7 @@ const community: Record<Locale, Community> = {
   },
   en: {
     title: "The Discord is the classroom.",
-    body: "The Zero2Hero membership drops you into the collective: automatic student role via Whop, group reviews with the coaches, events, customs and all the free guides. This is where you improve between classes, not just in the session.",
+    body: "The Zero2Hero membership drops you into the collective: automatic student role, group reviews with the coaches, events, customs and all the free guides. This is where you improve between classes, not just in the session.",
     perks: [
       "Automatic student role",
       "Weekly group reviews",
