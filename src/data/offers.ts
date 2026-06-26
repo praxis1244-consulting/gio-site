@@ -15,7 +15,7 @@ export type Offer = {
 // coach. El alumno agenda una vez y el equipo lo coordina con quien esté disponible.
 export const collectiveOffer: Offer = {
   id: "clase-1v1",
-  title: "Clase 1v1",
+  title: "Clase 1 a 1",
   mode: "Presencial",
   blurb:
     "Clase presencial 1 a 1 con un coach del colectivo. Revisamos tu juego frame por frame, salimos con tus leaks claros y un plan a tu medida para subir de rango.",
@@ -36,7 +36,7 @@ export const offers: Offer[] = [
   {
     id: "gio-1v1",
     coachSlug: "gio",
-    title: "Clase 1v1",
+    title: "Clase 1 a 1",
     mode: "Presencial",
     blurb: "Clase presencial 1 a 1 con Gio: revisamos tu juego frame por frame y salimos con tus 3 leaks claros y un plan a mano para tu rango.",
     bullets: [
@@ -52,7 +52,7 @@ export const offers: Offer[] = [
   {
     id: "adverso-1v1",
     coachSlug: "adverso",
-    title: "Clase 1v1",
+    title: "Clase 1 a 1",
     mode: "Presencial",
     blurb: "Clase presencial 1 a 1 con Adverso: lectura de ronda, uso de utilidad e info y decisiones de mid-round. Cómo dejar de jugar a ciegas.",
     bullets: [

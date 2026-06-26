@@ -38,7 +38,7 @@ export const coaches: Coach[] = [
     photo: "/coaches/gio.jpg",
     cutout: "/coaches/gio-card-arm-fixed.png",
     heroCutout: "/coaches/gio-hero-arm-fixed.png",
-    bio: "Giovani «Gio» Lainati Ruz: IGL y controller (Smoker) chileno. Compite en la VCL LATAM Sur desde 2021 — pasó por Optix y Furious Gaming, y en 2025 jugó en KRÜ Academy. Radiant, cinco años jugando y enseñando: te diagnostico los 3 leaks que te frenan, te armo un plan a mano para tu rank y te acompaño hasta que subas. Frame por frame, cero humo. Clases en español, inglés y portugués.",
+    bio: "Giovani «Gio» Lainati Ruz: IGL y controller (Smoker) chileno, Radiant. Compite en la VCL LATAM Sur desde 2021 — Optix, Furious Gaming y KRÜ Academy. Te diagnostica los leaks que te frenan y te arma un plan para tu rank. Frame por frame, cero humo. Clases en español, inglés y portugués.",
     accentTeam: "KRÜ ACADEMY",
     stats: [
       { lbl: "VCL LATAM SUR", value: "2°", accent: "LUGAR", cap: "ACE MASTERS 25 · KRÜ ACAD." },
@@ -82,7 +82,7 @@ export const coaches: Coach[] = [
     photo: "/coaches/adverso.jpg",
     cutout: "/coaches/adverso-card.png",
     heroCutout: "/coaches/adverso-hero.png",
-    bio: "Benjamín «Adverso» Poblete: IGL chileno, 6 años pro. VALORANT Champions 2022 con Leviatán, VCT Americas con KRÜ. Su fuerte nunca fue el aim, sino leer la ronda y decidir bien cuando el round se rompe. Te enseña a ganar con la cabeza, no solo con la mano. Clases en español, inglés y portugués.",
+    bio: "Benjamín «Adverso» Poblete: IGL chileno, 6 años pro. VALORANT Champions 2022 con Leviatán y VCT Americas con KRÜ. Te enseña a ganar con la cabeza: leer la ronda y decidir bien cuando el round se rompe. Clases en español, inglés y portugués.",
     accentTeam: "LEVIATÁN",
     stats: [
       { lbl: "CARRERA PRO", value: "6", accent: "AÑOS", cap: "2020–2026 · IGL" },
