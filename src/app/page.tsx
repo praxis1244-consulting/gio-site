@@ -4,6 +4,7 @@ import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { CoachCard } from "@/components/coach-card";
 import { OfferCard } from "@/components/offer-card";
+import { ContactForm } from "@/components/contact-form";
 import { CommunityBand } from "@/components/community-band";
 import { site } from "@/data/site";
 import { coaches, getCoach } from "@/data/coaches";
@@ -113,10 +114,10 @@ export default function Home() {
           <div className="ehead">
             <span className="num">02</span>
             <div>
-              <span className="lbl" style={{ color: "var(--val-red)" }}>FIGHT CARD · OFFERS</span>
-              <h2>Elige tu <em>offer.</em></h2>
+              <span className="lbl" style={{ color: "var(--val-red)" }}>CLASES · 1V1</span>
+              <h2>Entrena <em>1 a 1.</em></h2>
               <p className="lbl-side">
-                Sesiones 1v1 en vivo, cursos autoguiados y la membresía de la comunidad. Checkout seguro vía Whop.
+                Clases presenciales con Gio y Adverso. Agenda directo con tu coach: sin checkout, sin pasos raros.
               </p>
             </div>
           </div>
@@ -124,6 +125,22 @@ export default function Home() {
             {featuredOffers.map((offer) => (
               <OfferCard key={offer.id} offer={offer} coach={getCoach(offer.coachSlug)} />
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* RESERVA · contacto directo */}
+      <section className="section" id="reservar" style={{ paddingTop: 0 }}>
+        <div className="wrap">
+          <div className="reserva">
+            <div className="reserva__copy">
+              <span className="lbl" style={{ color: "var(--val-red)" }}>AGENDA TU CLASE</span>
+              <h2>Escríbenos y <em>coordinamos.</em></h2>
+              <p>
+                Déjanos tu contacto y tu rango. El coach te escribe directo para cuadrar día, hora y lugar. Cupos limitados.
+              </p>
+            </div>
+            <ContactForm />
           </div>
         </div>
       </section>

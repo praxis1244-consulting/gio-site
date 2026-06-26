@@ -222,10 +222,10 @@ export default async function CoachPage({
             <span className="num">{offersNum}</span>
             <div>
               <span className="lbl" style={{ color: "var(--val-red)" }}>
-                CATÁLOGO · {coach.name.toUpperCase()}
+                CLASES · {coach.name.toUpperCase()}
               </span>
               <h2>
-                Sus <em>offers.</em>
+                Su <em>clase 1v1.</em>
               </h2>
             </div>
           </div>
@@ -257,13 +257,8 @@ export default async function CoachPage({
           >
             Unirse al Discord →
           </a>
-          <a
-            className="btn btn-ghost"
-            href={site.whop.base}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Ver tienda
+          <a className="btn btn-ghost" href="/#reservar">
+            Agenda tu clase →
           </a>
         </div>
       </section>

@@ -12,9 +12,9 @@ export function OfferCard({ offer, coach }: { offer: Offer; coach?: Coach }) {
       <h3 className="offer-card__title">{offer.title}</h3>
       <p className="offer-card__blurb">{offer.blurb}</p>
 
-      <div className="offer-card__price">
-        <span className="v">{offer.price.v}</span>
-        <span className="u">{offer.price.u}</span>
+      <div className="offer-card__mode">
+        <span className="dot" aria-hidden />
+        {offer.mode}
       </div>
 
       <ul className="offer-card__list">
@@ -24,13 +24,8 @@ export function OfferCard({ offer, coach }: { offer: Offer; coach?: Coach }) {
       </ul>
 
       <div className="offer-card__cta">
-        <a
-          href={offer.whopUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={`btn btn-${offer.cta.variant}`}
-        >
-          {offer.cta.label}
+        <a href="/#reservar" className="btn btn-primary">
+          {coach ? `Agenda con ${coach.name} →` : "Agenda tu clase →"}
         </a>
       </div>
     </article>

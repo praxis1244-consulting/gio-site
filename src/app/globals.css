@@ -1165,6 +1165,10 @@ html { interpolate-size: allow-keywords; }
 }
 .offer-grid > div { display: flex; }
 .offer-grid > div > .offer-card { width: 100%; }
+/* Home: solo 2 clases 1v1 — centra el par en vez de pegarlas a la izquierda. */
+.offers { grid-template-columns: repeat(2, minmax(0, 380px)); justify-content: center; }
+/* Coach page: una sola clase por coach — centra el card en vez de pegarlo a la izquierda. */
+.offer-grid { grid-template-columns: minmax(0, 440px); justify-content: center; }
 .offer-card {
   display: flex; flex-direction: column;
   border: 1px solid var(--val-rule);
@@ -1203,17 +1207,15 @@ html { interpolate-size: allow-keywords; }
 .offer-card__blurb {
   color: var(--val-ink-dim); font-size: 0.92rem; line-height: 1.5; margin: 0 0 20px;
 }
-.offer-card__price {
-  display: flex; flex-direction: column; gap: 4px;
+.offer-card__mode {
+  display: flex; align-items: center; gap: 9px;
   padding-bottom: 20px; margin-bottom: 4px; border-bottom: 1px solid var(--val-rule);
-}
-.offer-card__price .v {
-  font-family: var(--font-display), sans-serif; font-weight: 300;
-  font-size: 2.6rem; letter-spacing: -0.05em; line-height: 1; color: var(--val-ink);
-}
-.offer-card__price .u {
   font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 0.64rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--val-ink-faint);
+  font-size: 0.66rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--val-ink-dim);
+}
+.offer-card__mode .dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--val-red); box-shadow: 0 0 8px 1px var(--val-red-glow);
 }
 .offer-card__list {
   list-style: none; padding: 22px 0 24px; margin: 0;
@@ -1225,6 +1227,68 @@ html { interpolate-size: allow-keywords; }
 .offer-card__list li.muted::before { content: "—"; }
 .offer-card__cta { margin-top: auto; padding-top: 4px; }
 .offer-card__cta .btn { width: 100%; justify-content: center; }
+
+/* ── Reserva · contact form ───────────────────────────────────────── */
+.reserva {
+  border: 1px solid var(--val-rule);
+  background:
+    radial-gradient(ellipse at 10% 0%, rgba(255,70,85,0.16), transparent 56%),
+    var(--val-panel);
+  padding: 56px;
+  display: grid; grid-template-columns: 0.82fr 1.18fr; gap: 56px; align-items: start;
+}
+.reserva__copy h2 {
+  font-family: var(--font-display), sans-serif; font-weight: 300;
+  font-size: clamp(2rem, 3.4vw, 2.9rem); letter-spacing: -0.04em; line-height: 1.02;
+  margin: 14px 0 16px;
+}
+.reserva__copy h2 em { font-family: var(--font-accent), sans-serif; font-style: italic; font-weight: 600; color: var(--val-red); }
+.reserva__copy p { color: var(--val-ink-dim); line-height: 1.55; max-width: 42ch; margin: 0; }
+
+.reserva__form { display: flex; flex-direction: column; gap: 16px; }
+.reserva__row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.reserva__field { display: flex; flex-direction: column; gap: 7px; }
+.reserva__field > span {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--val-ink-faint);
+}
+.reserva__field input,
+.reserva__field select,
+.reserva__field textarea {
+  background: rgba(5, 5, 5, 0.7); border: 1px solid var(--val-rule-hot); color: var(--val-ink);
+  padding: 13px 14px; font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 16px; /* ≥16px stops iOS auto-zoom on focus */
+  outline: none; width: 100%; border-radius: 0; appearance: none; -webkit-appearance: none;
+}
+.reserva__field textarea { resize: vertical; min-height: 84px; font-family: var(--font-sans), sans-serif; line-height: 1.5; }
+.reserva__field input::placeholder,
+.reserva__field textarea::placeholder { color: var(--val-ink-faint); }
+.reserva__field input:focus,
+.reserva__field select:focus,
+.reserva__field textarea:focus { border-color: var(--val-red); }
+.reserva__field select {
+  cursor: pointer; padding-right: 36px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none' stroke='%23ff4655' stroke-width='1.5'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 13px center; background-size: 11px;
+}
+.reserva__field select option { background: #0a0708; color: var(--val-ink); }
+.reserva__submit { margin-top: 6px; width: 100%; justify-content: center; padding: 16px; }
+.reserva__submit:disabled { opacity: 0.5; cursor: not-allowed; }
+.reserva__status.err {
+  color: var(--val-red); font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.74rem; letter-spacing: 0.06em; margin: 0;
+}
+.reserva__done {
+  grid-column: 1 / -1;
+  display: flex; align-items: center; gap: 18px;
+  padding: 28px 32px; border: 1px solid var(--val-rule-hot); background: rgba(255,70,85,0.06);
+}
+.reserva__done-mark {
+  flex: none; width: 40px; height: 40px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: rgba(120,210,140,0.12); color: var(--val-green); font-size: 1.2rem;
+}
+.reserva__done p { color: var(--val-ink); line-height: 1.5; margin: 0; }
 
 /* ─── FEATURES · "qué incluye" ──────────────────────────────────── */
 .features {
@@ -1354,6 +1418,7 @@ html { interpolate-size: allow-keywords; }
   .offers, .offer-grid { grid-template-columns: 1fr; }
   .features { grid-template-columns: 1fr; }
   .community { grid-template-columns: 1fr; gap: 36px; padding: 40px 28px; }
+  .reserva { grid-template-columns: 1fr; gap: 32px; padding: 36px 28px; }
 }
 
 @media (max-width: 760px) {
@@ -1389,6 +1454,8 @@ html { interpolate-size: allow-keywords; }
   .feature { padding: 28px 24px 32px; }
   .community { padding: 32px 20px; }
   .community__perk { padding: 14px 18px; font-size: 0.88rem; }
+  .reserva { padding: 30px 20px; }
+  .reserva__row { grid-template-columns: 1fr; }
 }
 
 /* =====================================================================

@@ -14,15 +14,15 @@ export function SiteFooter() {
             <a href="#coaches">Ver roster</a>
           </div>
           <div>
-            <span className="h">Offers</span>
-            <a href="#offers">Sesiones 1v1</a>
-            <a href="#offers">Cursos · VOD packs</a>
+            <span className="h">Clases</span>
+            <a href="#offers">Clases 1v1</a>
+            <a href="#reservar">Agenda tu clase</a>
             <a href="#comunidad">Comunidad</a>
           </div>
           <div>
             <span className="h">Comunidad</span>
             <a href={site.discord.invite} target="_blank" rel="noopener noreferrer">{site.discord.label}</a>
-            <a href={site.whop.base} target="_blank" rel="noopener noreferrer">Tienda Whop</a>
+            <a href="#reservar">Reservar</a>
             <a href="#faq">FAQ</a>
           </div>
           <div>

@@ -14,8 +14,6 @@ export const site = {
   ],
   // TODO: pegar invite real de Discord
   discord: { invite: "https://discord.gg/REEMPLAZAR", label: "Discord" },
-  // TODO: pegar tienda Whop real
-  whop: { base: "https://whop.com/zero2hero" },
   // TODO: número real
   whatsapp: "https://wa.me/56000000000",
   socials: { x: "#", twitch: "#", youtube: "#" },

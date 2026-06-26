@@ -29,26 +29,23 @@ export const coaches: Coach[] = [
     handle: "@giovlr1",
     tagline: "Tu próximo rank no es suerte. Es método.",
     role: "IGL · Smoker",
-    creds: "Ex-OXEN (KRÜ) · VCL LATAM Sur",
+    creds: "Ex-KRÜ Academy · VCL LATAM Sur",
     rank: "Radiant",
     langs: ["ES", "EN", "PT"],
     photo: "/coaches/gio.jpg",
     cutout: "/coaches/gio-card-arm-fixed.png",
     heroCutout: "/coaches/gio-hero-arm-fixed.png",
-    bio: "Giovani «Gio» Lainati Ruz: IGL y controller (Smoker) chileno. Compite en la VCL LATAM Sur desde 2021 — pasó por Optix y Furious Gaming, y en 2025 jugó en OXEN, el equipo afiliado a KRÜ Esports. Radiant, cinco años jugando y enseñando: te diagnostico los 3 leaks que te frenan, te armo un plan a mano para tu rank y te acompaño hasta que subas. Frame por frame, cero humo. Clases en español, inglés y portugués.",
-    accentTeam: "OXEN",
+    bio: "Giovani «Gio» Lainati Ruz: IGL y controller (Smoker) chileno. Compite en la VCL LATAM Sur desde 2021 — pasó por Optix y Furious Gaming, y en 2025 jugó en KRÜ Academy. Radiant, cinco años jugando y enseñando: te diagnostico los 3 leaks que te frenan, te armo un plan a mano para tu rank y te acompaño hasta que subas. Frame por frame, cero humo. Clases en español, inglés y portugués.",
+    accentTeam: "KRÜ ACADEMY",
     stats: [
-      { lbl: "RANK · PEAK", value: "#412", accent: "Radiant", cap: "ACT 25 · EP 9" },
+      { lbl: "VCL LATAM SUR", value: "2°", accent: "LUGAR", cap: "ACE MASTERS 25 · KRÜ ACAD." },
       { lbl: "EXPERIENCIA", value: "5", accent: "+", cap: "AÑOS · DESDE 2021" },
       { lbl: "ALUMNOS", value: "214", cap: "85% SUBIÓ DE RANGO" },
       { lbl: "VOD REVIEWED", value: "640", accent: "+", cap: "3,200 H DE ANÁLISIS" },
     ],
-    matches: [
-      { ts: "2025·05·20", stage: "VCL 25 LAS · STAGE 2", a: "OXEN", b: "9z Globant", res: "2-0" },
-      { ts: "2025·05·15", stage: "VCL 25 LAS · STAGE 2", a: "OXEN", b: "Rebirth", res: "2-1" },
-      { ts: "2025·04·02", stage: "VCL 25 LAS · STAGE 1", a: "OXEN", b: "Las Cabras", res: "2-0" },
-      { ts: "2025·03·14", stage: "VCL 25 LAS · STAGE 1", a: "OXEN", b: "Leviatán Acad.", res: "2-1" },
-    ],
+    // Gio pidió sacar la sección de partidas — su prueba real son los resultados
+    // de alumnos (sección de abajo), no sus propios scores. Vacío = no se renderiza.
+    matches: [],
     // Conversaciones reales con alumnos (capturas). Orden = de mayor a menor impacto.
     results: [
       { img: "/proof/gio-porsche.jpeg", who: "Porsche", result: "Diamante 3 → Radiant" },
