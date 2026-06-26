@@ -920,7 +920,7 @@ html { interpolate-size: allow-keywords; }
   .hero-b { padding: 56px 24px 0; }
   .hero-b__inner { grid-template-columns: 1fr; gap: 40px; }
   .hero-b__copy { padding-bottom: 24px; }
-  .estats { grid-template-columns: repeat(2, 1fr); }
+  .estats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .estat:nth-child(2) { border-right: 0; }
   .estat:nth-child(-n+2) { border-bottom: 1px solid var(--val-rule); }
   .esteps { grid-template-columns: 1fr; }
@@ -1653,8 +1653,18 @@ html { interpolate-size: allow-keywords; }
   }
   .lead-b__form .btn { width: 100%; justify-content: center; }
 
-  /* ── Coach dossier stats: stop a long value from blowing the track ─ */
+  /* ── Coach dossier stats: stop a long value from blowing the track ─
+     minmax(0,1fr) lets the track shrink; but the value text (clamp-min 4rem)
+     was ~64px and overflowed a ~105px column into its neighbour. Tighten
+     padding, drop the size to fit, shrink the accent word, and let it wrap. */
   .estats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .estat { padding: 26px 18px; min-width: 0; }
+  .estat .v {
+    font-size: clamp(2.1rem, 10vw, 3.2rem);
+    margin: 12px 0 6px;
+    overflow-wrap: anywhere;
+  }
+  .estat .v em { font-size: 0.62em; }
 
   /* ── Footer: clamp the wordmark + stack the columns (both overflowed) ─ */
   .foot-b { padding: 48px 24px 28px; }
