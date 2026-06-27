@@ -1123,8 +1123,16 @@ html { interpolate-size: allow-keywords; }
   color: var(--val-ink-faint); margin-top: 22px;
 }
 .hero-vs__ctas {
-  display: flex; gap: 14px; flex-wrap: wrap; align-items: center; justify-content: center;
-  margin-top: 26px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  width: min(100%, 28rem);
+  margin: 26px auto 0;
+}
+.hero-vs__ctas .btn {
+  justify-content: center;
+  white-space: nowrap;
+  min-width: 0;
 }
 
 /* ─── ROSTER · COACH CARDS ──────────────────────────────────────── */
@@ -1631,7 +1639,6 @@ html { interpolate-size: allow-keywords; }
   .hero-vs__coach { max-width: none; }
   .hero-vs__title { font-size: clamp(1.9rem, 8.6vw, 2.7rem); }
   .hero-vs__ctas { width: 100%; }
-  .hero-vs__ctas .btn { flex: 1; justify-content: center; min-width: 0; }
 
   /* two logos per row on phones; tap = hover so the muted state already shows color via :active */
   .team { flex-basis: 50%; padding: 26px 14px; }
