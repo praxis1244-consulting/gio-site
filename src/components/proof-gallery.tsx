@@ -1,9 +1,10 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 import { useTranslations } from "next-intl";
 import type { ResultProof } from "@/data/coaches";
+import { useFocusTrap } from "@/lib/focus-trap";
 
 /** Masonry de capturas + lightbox para verlas en grande sin salir de la página. */
 export function ProofGallery({
@@ -16,6 +17,9 @@ export function ProofGallery({
   const t = useTranslations("Proof");
   const [open, setOpen] = useState<number | null>(null);
   const isOpen = open !== null;
+  const dialogRef = useRef<HTMLDivElement>(null);
+
+  useFocusTrap(dialogRef, isOpen);
 
   const close = useCallback(() => setOpen(null), []);
   const go = useCallback(
@@ -76,6 +80,7 @@ export function ProofGallery({
 
       {current ? (
         <div
+          ref={dialogRef}
           className="lightbox"
           role="dialog"
           aria-modal="true"

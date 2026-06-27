@@ -116,7 +116,7 @@ export default async function CoachPage({
 
       <main>
       {/* HERO DEL COACH */}
-      <header className="hero-b coach-hero">
+      <header className="hero-b coach-hero" id="top">
         <div className="hero-b__inner">
           <div className="hero-b__copy">
             <div className="hero-b__id">

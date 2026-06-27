@@ -16,7 +16,7 @@
   --val-card:      #111112;
   --val-ink:       #ece4d8;       /* warm bone, slightly off-white */
   --val-ink-dim:   rgba(236, 228, 216, 0.62);
-  --val-ink-faint: rgba(236, 228, 216, 0.36);
+  --val-ink-faint: rgba(236, 228, 216, 0.58);
   --val-ink-mute:  rgba(236, 228, 216, 0.18);
   --val-rule:      rgba(236, 228, 216, 0.08);
   --val-rule-hot:  rgba(236, 228, 216, 0.22);
@@ -58,6 +58,23 @@ body {
 a { color: inherit; text-decoration: none; }
 img { max-width: 100%; display: block; }
 button { font: inherit; }
+
+/* Keyboard focus — a single HUD ring, never the browser default.
+   `:focus-visible` fires only for keyboard focus, so mouse clicks stay clean. */
+:focus-visible { outline: 2px solid var(--val-red); outline-offset: 2px; }
+
+/* Skip link — keyboard users jump past the nav to the hero. Hidden until focused. */
+.skip-link {
+  position: absolute; left: 50%; top: 0;
+  transform: translate(-50%, -150%);
+  z-index: 100;
+  padding: 12px 18px;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase;
+  background: var(--val-red); color: #fff;
+  transition: transform 220ms var(--ease-quint);
+}
+.skip-link:focus { transform: translate(-50%, 12px); }
 
 /* ─── HUD ATOMS ───────────────────────────────────────────────── */
 .mono { font-family: var(--font-mono), ui-monospace, monospace; }
@@ -509,7 +526,9 @@ button { font: inherit; }
 /* Touch devices have no hover — show real brand colours + names by default */
 @media (hover: none) {
   .team__logo { filter: none; opacity: 0.92; }
-  .team__name { opacity: 0.7; }
+  /* Full opacity (was 0.7): the touch state has no hover, so the team name shows
+     at the faint color's full contrast instead of an unreadable double-dim. */
+  .team__name { opacity: 1; }
 }
 
 /* Testimonials — magazine quote */
@@ -552,7 +571,6 @@ button { font: inherit; }
 .proof__tag {
   display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
   padding: 13px 16px; border-bottom: 1px solid var(--val-rule);
-  border-left: 3px solid var(--val-green);
 }
 .proof__result {
   font-family: var(--font-display), sans-serif; font-weight: 600; font-size: 0.82rem;
@@ -596,7 +614,6 @@ button { font: inherit; }
 }
 .lightbox__cap {
   display: flex; align-items: baseline; gap: 14px;
-  border-left: 3px solid var(--val-green); padding-left: 12px;
 }
 .lightbox__result {
   font-family: var(--font-display), sans-serif; font-weight: 600; font-size: 0.9rem;

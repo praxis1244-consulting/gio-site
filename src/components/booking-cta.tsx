@@ -1,10 +1,11 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useTranslations } from "next-intl";
 import type { Coach } from "@/data/coaches";
 import { CalendlyInline } from "./calendly-inline";
+import { useFocusTrap } from "@/lib/focus-trap";
 
 /**
  * CTA de reserva del offer colectivo: abre un modal donde primero se elige
@@ -16,8 +17,13 @@ export function BookingCta({ label, coaches }: { label: string; coaches: Coach[]
   const ta = useTranslations("Alt");
   const [open, setOpen] = useState(false);
   const [picked, setPicked] = useState<Coach | null>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const backRef = useRef<HTMLButtonElement>(null);
 
-  const close = useCallback(() => setOpen(false), []);
+  const close = useCallback(() => {
+    setOpen(false);
+    setPicked(null);
+  }, []);
 
   // Bloquea el scroll del body y mapea Esc (vuelve al selector o cierra).
   useEffect(() => {
@@ -36,10 +42,13 @@ export function BookingCta({ label, coaches }: { label: string; coaches: Coach[]
     };
   }, [open, picked, close]);
 
-  // Al cerrar, vuelve al paso de selección para la próxima apertura.
+  // Trap focus inside the modal while it's open.
+  useFocusTrap(dialogRef, open);
+  // When the calendar step mounts, move focus to the back button so the user
+  // isn't dropped onto the body after the coach-picker buttons unmount.
   useEffect(() => {
-    if (!open) setPicked(null);
-  }, [open]);
+    if (open && picked) backRef.current?.focus({ preventScroll: true });
+  }, [open, picked]);
 
   return (
     <>
@@ -53,6 +62,7 @@ export function BookingCta({ label, coaches }: { label: string; coaches: Coach[]
           // the card instead of the viewport.
           createPortal(
         <div
+          ref={dialogRef}
           className="booking"
           role="dialog"
           aria-modal="true"
@@ -100,7 +110,7 @@ export function BookingCta({ label, coaches }: { label: string; coaches: Coach[]
             ) : (
               <div className="booking__cal-wrap">
                 <div className="booking__bar">
-                  <button type="button" className="booking__back" onClick={() => setPicked(null)}>
+                  <button ref={backRef} type="button" className="booking__back" onClick={() => setPicked(null)}>
                     {t("back")}
                   </button>
                   <span className="booking__bar-name">

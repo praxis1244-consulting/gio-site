@@ -6,6 +6,7 @@ import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { routing, displayCode } from "@/i18n/routing";
 import { LangSwitcher } from "./lang-switcher";
 import { site } from "@/data/site";
+import { useFocusTrap } from "@/lib/focus-trap";
 
 /** Keep in sync with the .nav-drawer.is-closing exit animation in globals.css. */
 const DRAWER_EXIT_MS = 430;
@@ -21,6 +22,7 @@ export function SiteNav() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [closing, setClosing] = useState(false);
   const navRef = useRef<HTMLElement>(null);
+  const drawerRef = useRef<HTMLDivElement>(null);
   const closeTimer = useRef<number | null>(null);
 
   const openMenu = useCallback(() => {
@@ -86,8 +88,13 @@ export function SiteNav() {
     };
   }, [menuOpen, closeMenu]);
 
+  // Trap keyboard focus inside the drawer while it's open (not while closing).
+  useFocusTrap(drawerRef, menuOpen && !closing);
+
   return (
     <>
+      <a href="#top" className="skip-link">{t("skip")}</a>
+
       {/* Thin Discord banner — goaching pattern */}
       <a className="discord-banner" href={site.discord.invite} target="_blank" rel="noopener noreferrer">
         <span className="dot live pulse-dot" />
@@ -123,8 +130,11 @@ export function SiteNav() {
       {/* Full-screen mobile drawer */}
       <div
         id="nav-drawer"
+        ref={drawerRef}
         className={`nav-drawer${menuOpen && !closing ? " is-open" : ""}${closing ? " is-closing" : ""}`}
         aria-hidden={!menuOpen || closing}
+        role={menuOpen && !closing ? "dialog" : undefined}
+        aria-modal={menuOpen && !closing ? "true" : undefined}
       >
         <div className="nav-drawer__head">
           <Link className="mark" href="/" onClick={closeMenu}>

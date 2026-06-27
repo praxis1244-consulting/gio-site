@@ -18,7 +18,8 @@
     "join": "Entrar →",
     "joinDiscordArrow": "Entrar no Discord →",
     "openMenu": "Abrir menu",
-    "closeMenu": "Fechar menu"
+    "closeMenu": "Fechar menu",
+    "skip": "Pular para o conteúdo"
   },
   "LangSwitcher": {
     "aria": "Mudar idioma",
