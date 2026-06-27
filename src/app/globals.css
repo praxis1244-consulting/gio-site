@@ -1416,8 +1416,12 @@ html { interpolate-size: allow-keywords; }
   border: 1px solid var(--val-rule);
   background: var(--val-panel);
   overflow: hidden;
+  /* El sitio declara color-scheme: dark (viewport); el iframe de Calendly lo
+     hereda y, bajo ese esquema, pinta su canvas blanco. Lo sacamos del esquema
+     dark para que respete el tema oscuro que ya le pasamos por params. */
+  color-scheme: light;
 }
-.calendly-embed iframe { width: 100% !important; height: 100% !important; }
+.calendly-embed iframe { width: 100% !important; height: 100% !important; color-scheme: light; }
 .calendly-embed .calendly-spinner { display: none !important; }
 
 .reserva__form { display: flex; flex-direction: column; gap: 16px; }
