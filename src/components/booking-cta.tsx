@@ -119,6 +119,13 @@ export function BookingCta({ label, coaches }: { label: string; coaches: Coach[]
                   <button ref={backRef} type="button" className="booking__back" onClick={() => setPicked(null)}>
                     {t("back")}
                   </button>
+                  <Image
+                    className="booking__bar-img"
+                    src={picked.cutout}
+                    alt=""
+                    width={36}
+                    height={44}
+                  />
                   <span className="booking__bar-name">
                     {t("classWith")} <b>{picked.name}</b>
                   </span>

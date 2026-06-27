@@ -107,6 +107,10 @@
     "back": "← Change coach",
     "classWith": "Class with"
   },
+  "Calendly": {
+    "loading": "Loading calendar…",
+    "ariaLabel": "Booking calendar"
+  },
   "Proof": {
     "closeAria": "Close",
     "prevAria": "Previous",

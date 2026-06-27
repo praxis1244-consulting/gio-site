@@ -94,8 +94,8 @@ export function ContactForm() {
         <span>Rango actual</span>
         <select value={rank} onChange={(e) => setRank(e.target.value)} disabled={loading}>
           <option value="">Elige tu rango</option>
-          {RANKS.map((r) => <option key={r} value={r}>{r}</option>)}
           <option value="Sin rank">No sé / sin rank</option>
+          {RANKS.map((r) => <option key={r} value={r}>{r}</option>)}
         </select>
       </label>
 

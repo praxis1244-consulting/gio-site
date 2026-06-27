@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 
 const SCRIPT_SRC = "https://assets.calendly.com/assets/external/widget.js";
 
@@ -14,14 +15,28 @@ declare global {
   }
 }
 
-/** Widget de agendamiento de Calendly embebido, robusto ante navegación client-side. */
+/** Widget de agendamiento de Calendly embebido, robusto ante navegación client-side.
+ *  Muestra un placeholder HUD ("CARGANDO AGENDA…") hasta que el iframe pinta. */
 export function CalendlyInline({ url }: { url: string }) {
+  const t = useTranslations("Calendly");
   const ref = useRef<HTMLDivElement>(null);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     const target = ref.current;
     if (!target) return;
+    setLoaded(false);
     const full = `${url}${url.includes("?") ? "&" : "?"}${THEME}`;
+
+    // Esconde el overlay de carga cuando el iframe de Calendly termina de cargar.
+    const observer = new MutationObserver(() => {
+      const iframe = target.querySelector("iframe");
+      if (iframe) {
+        iframe.addEventListener("load", () => setLoaded(true), { once: true });
+        observer.disconnect();
+      }
+    });
+    observer.observe(target, { childList: true, subtree: true });
 
     const render = () => {
       if (!window.Calendly || !ref.current) return;
@@ -31,19 +46,29 @@ export function CalendlyInline({ url }: { url: string }) {
 
     if (window.Calendly) {
       render();
-      return;
+    } else {
+      let script = document.querySelector<HTMLScriptElement>(`script[src="${SCRIPT_SRC}"]`);
+      if (!script) {
+        script = document.createElement("script");
+        script.src = SCRIPT_SRC;
+        script.async = true;
+        document.body.appendChild(script);
+      }
+      script.addEventListener("load", render, { once: true });
     }
 
-    let script = document.querySelector<HTMLScriptElement>(`script[src="${SCRIPT_SRC}"]`);
-    if (!script) {
-      script = document.createElement("script");
-      script.src = SCRIPT_SRC;
-      script.async = true;
-      document.body.appendChild(script);
-    }
-    script.addEventListener("load", render, { once: true });
-    return () => script?.removeEventListener("load", render);
+    return () => observer.disconnect();
   }, [url]);
 
-  return <div ref={ref} className="calendly-embed" aria-label="Calendario de reserva" />;
+  return (
+    <div className="calendly-wrap">
+      {!loaded && (
+        <div className="calendly-loading" aria-hidden>
+          <span className="dot pulse-dot" />
+          <span>{t("loading")}</span>
+        </div>
+      )}
+      <div ref={ref} className="calendly-embed" aria-label={t("ariaLabel")} />
+    </div>
+  );
 }

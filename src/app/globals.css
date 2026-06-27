@@ -1371,6 +1371,7 @@ html { interpolate-size: allow-keywords; }
   display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
   padding: 15px 56px 15px 20px; border-bottom: 1px solid var(--val-rule);
 }
+.booking__bar-img { width: 36px; height: 44px; flex: none; object-fit: cover; object-position: top center; border: 1px solid var(--val-rule); }
 .booking__back {
   background: none; border: 0; cursor: pointer; color: var(--val-ink); padding: 6px 0;
   font-family: var(--font-mono), ui-monospace, monospace; font-size: 0.66rem;
@@ -1384,6 +1385,7 @@ html { interpolate-size: allow-keywords; }
 }
 .booking__bar-name b { color: var(--val-ink); }
 .booking__cal { flex: 1; min-height: 0; }
+.booking__cal .calendly-wrap { margin: 0; height: 100%; }
 .booking__cal .calendly-embed { height: 100%; margin: 0; border: 0; }
 
 /* ── Reserva · contact form ───────────────────────────────────────── */
@@ -1407,8 +1409,17 @@ html { interpolate-size: allow-keywords; }
 /* Calendly inline embed — agendamiento dentro del sitio.
    Altura fija + iframe forzado a llenarla: no dependemos del auto-resize por
    postMessage (que puede no completar tras adblockers o en algunos contextos). */
+.calendly-wrap { position: relative; margin-top: 8px; }
+.calendly-loading {
+  position: absolute; inset: 0; z-index: 2;
+  display: grid; place-items: center; gap: 14px;
+  pointer-events: none;
+  color: var(--val-ink-faint);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase;
+}
+.calendly-loading .dot { background: var(--val-red); }
 .calendly-embed {
-  margin-top: 8px;
   height: 740px;
   border: 1px solid var(--val-rule);
   background: var(--val-panel);

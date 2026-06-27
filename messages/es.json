@@ -107,6 +107,10 @@
     "back": "← Cambiar coach",
     "classWith": "Clase con"
   },
+  "Calendly": {
+    "loading": "Cargando agenda…",
+    "ariaLabel": "Calendario de reserva"
+  },
   "Proof": {
     "closeAria": "Cerrar",
     "prevAria": "Anterior",
