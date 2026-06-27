@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import type { Coach } from "@/data/coaches";
 import { CalendlyInline } from "./calendly-inline";
@@ -93,8 +94,13 @@ export function BookingCta({ label, coaches }: { label: string; coaches: Coach[]
                       className="booking__coach"
                       onClick={() => setPicked(c)}
                     >
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img className="booking__coach-img" src={c.cutout} alt={ta("coachPhoto", { name: c.name })} />
+                      <Image
+                        className="booking__coach-img"
+                        src={c.cutout}
+                        alt={ta("coachPhoto", { name: c.name })}
+                        width={54}
+                        height={64}
+                      />
                       <span className="booking__coach-meta">
                         <span className="booking__coach-name">{c.name}</span>
                         <span className="booking__coach-role">{c.role}</span>

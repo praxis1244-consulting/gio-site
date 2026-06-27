@@ -313,20 +313,7 @@ button { font: inherit; }
   display: none;
 }
 
-/* Marquee under hero */
-.marquee-wrap {
-  overflow: hidden; border-top: 1px solid var(--val-rule); border-bottom: 1px solid var(--val-rule);
-  padding: 18px 0; background: var(--val-panel);
-  margin-top: 48px;
-}
-.marquee {
-  display: flex; gap: 56px; white-space: nowrap;
-  animation: marquee 28s linear infinite;
-  font-family: var(--font-display), sans-serif; font-weight: 700; font-size: 1.6rem; letter-spacing: 0.08em; text-transform: uppercase;
-  color: var(--val-ink);
-}
-.marquee em { font-family: var(--font-accent), sans-serif; font-style: italic; font-weight: 600; color: var(--val-red); letter-spacing: -0.02em; padding: 0 4px; }
-@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+/* Marquee — removed (was never rendered on home or coach page). */
 
 /* Stats — editorial */
 .estats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
@@ -869,7 +856,6 @@ html { interpolate-size: allow-keywords; }
   .hero-b__sub    { animation: hud-slide-up    680ms var(--ease-expo) 720ms both; }
   .hero-b__ctas   { animation: hud-slide-up    680ms var(--ease-expo) 900ms both; }
   .poster         { animation: hud-poster-in  1100ms var(--ease-expo) 360ms both; }
-  .marquee-wrap   { animation: hud-clip-x      900ms var(--ease-expo) 1100ms both; }
   .nav-b          { animation: hud-slide-up    520ms var(--ease-expo)    0ms both; }
   .poster__corner.tl,
   .poster__corner.tr,
@@ -893,7 +879,6 @@ html { interpolate-size: allow-keywords; }
   .js-on .outro__ctas,
   .js-on .foot-b__inner {
     opacity: 0;
-    will-change: opacity, transform, clip-path;
   }
 
   .ehead.is-in {
@@ -1499,11 +1484,12 @@ html { interpolate-size: allow-keywords; }
   transition: background 240ms var(--ease-quint);
 }
 .feature::before {
-  content: ""; position: absolute; top: 0; left: 0; width: 0; height: 2px;
-  background: var(--val-red); transition: width 320ms var(--ease-quint);
+  content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
+  background: var(--val-red); transform: scaleX(0); transform-origin: left;
+  transition: transform 320ms var(--ease-quint);
 }
 .feature:hover { background: var(--val-panel); }
-.feature:hover::before { width: 100%; }
+.feature:hover::before { transform: scaleX(1); }
 .feature__tag {
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 0.64rem; letter-spacing: 0.24em; text-transform: uppercase;
@@ -1576,7 +1562,6 @@ html { interpolate-size: allow-keywords; }
   .js-on .feature,
   .js-on .community {
     opacity: 0;
-    will-change: opacity, transform, clip-path;
   }
   .coach-card.is-in,
   .offer-card.is-in,

@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import Image from "next/image";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { LeadForm } from "@/components/lead-form";
 import { SiteNav } from "@/components/site-nav";
@@ -87,8 +88,14 @@ export default async function Home({
           {/* Cutout izquierdo — Gio (PNG fondo transparente). */}
           <figure className="hero-vs__coach hero-vs__coach--a">
             <div className="hero-vs__cutout" data-coach={gio.name.toUpperCase()}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img className="hero-vs__cutout-img" src={gio.heroCutout} alt={ta("coachPhoto", { name: gio.name })} fetchPriority="high" decoding="async" />
+              <Image
+                className="hero-vs__cutout-img"
+                src={gio.heroCutout}
+                alt={ta("coachPhoto", { name: gio.name })}
+                fill
+                priority
+                sizes="(max-width: 560px) 45vw, (max-width: 1000px) 45vw, 380px"
+              />
             </div>
             <figcaption className="hero-vs__coach-meta">
               <span className="hero-vs__coach-name">{gio.name}</span>
@@ -115,8 +122,14 @@ export default async function Home({
           {/* Cutout derecho — Adverso (PNG fondo transparente). */}
           <figure className="hero-vs__coach hero-vs__coach--b">
             <div className="hero-vs__cutout" data-coach={adverso.name.toUpperCase()}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img className="hero-vs__cutout-img" src={adverso.heroCutout} alt={ta("coachPhoto", { name: adverso.name })} fetchPriority="high" decoding="async" />
+              <Image
+                className="hero-vs__cutout-img"
+                src={adverso.heroCutout}
+                alt={ta("coachPhoto", { name: adverso.name })}
+                fill
+                priority
+                sizes="(max-width: 560px) 45vw, (max-width: 1000px) 45vw, 380px"
+              />
             </div>
             <figcaption className="hero-vs__coach-meta">
               <span className="hero-vs__coach-name">{adverso.name}</span>

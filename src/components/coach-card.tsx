@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import type { Coach } from "@/data/coaches";
@@ -9,8 +10,13 @@ export async function CoachCard({ coach }: { coach: Coach }) {
   return (
     <Link className="coach-card" href={`/coaches/${coach.slug}`}>
       <div className="coach-card__poster">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img className="coach-card__img" src={coach.cutout} alt={ta("coachPhoto", { name: coach.name })} />
+        <Image
+          className="coach-card__img"
+          src={coach.cutout}
+          alt={ta("coachPhoto", { name: coach.name })}
+          fill
+          sizes="(max-width: 1000px) 100vw, 640px"
+        />
         <div className="coach-card__shade" aria-hidden />
         <div className="coach-card__corner tl">● COACH</div>
         <div className="coach-card__corner tr">VAL · 2026</div>

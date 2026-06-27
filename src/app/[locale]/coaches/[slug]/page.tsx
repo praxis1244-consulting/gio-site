@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import Image from "next/image";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
@@ -142,8 +143,14 @@ export default async function CoachPage({
             className="poster"
             style={{ "--poster-mark": `"${coach.name.toUpperCase()}"` } as CSSProperties}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img className="poster__img" src={coach.cutout} alt={ta("coachPhoto", { name: coach.name })} fetchPriority="high" decoding="async" />
+            <Image
+              className="poster__img"
+              src={coach.cutout}
+              alt={ta("coachPhoto", { name: coach.name })}
+              fill
+              priority
+              sizes="(max-width: 1000px) 100vw, 680px"
+            />
             <div className="poster__shade" aria-hidden />
             <div className="poster__corner tl">● COACH</div>
             <div className="poster__corner tr">VAL · 2026</div>
