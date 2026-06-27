@@ -1,9 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useLocale, useTranslations } from "next-intl";
-import { Link, usePathname, useRouter } from "@/i18n/navigation";
-import { routing, displayCode } from "@/i18n/routing";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { LangSwitcher } from "./lang-switcher";
 import { site } from "@/data/site";
 import { useFocusTrap } from "@/lib/focus-trap";
@@ -13,10 +12,6 @@ const DRAWER_EXIT_MS = 430;
 
 export function SiteNav() {
   const t = useTranslations("Nav");
-  const tl = useTranslations("LangSwitcher");
-  const locale = useLocale();
-  const pathname = usePathname();
-  const router = useRouter();
 
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -44,14 +39,6 @@ export function SiteNav() {
       closeTimer.current = null;
     }, DRAWER_EXIT_MS);
   }, []);
-
-  const switchLocale = useCallback(
-    (next: string) => {
-      if (next !== locale) router.replace(pathname, { locale: next, scroll: false });
-      closeMenu();
-    },
-    [locale, pathname, router, closeMenu],
-  );
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -140,14 +127,17 @@ export function SiteNav() {
           <Link className="mark" href="/" onClick={closeMenu}>
             {site.brand.mark}<em>{site.brand.accent}</em>
           </Link>
-          <button
-            type="button"
-            className="nav-drawer__close"
-            aria-label={t("closeMenu")}
-            onClick={closeMenu}
-          >
-            <span /><span />
-          </button>
+          <div className="nav-drawer__head-right">
+            <LangSwitcher />
+            <button
+              type="button"
+              className="nav-drawer__close"
+              aria-label={t("closeMenu")}
+              onClick={closeMenu}
+            >
+              <span /><span />
+            </button>
+          </div>
         </div>
         <ul className="nav-drawer__links">
           {site.nav.map((item) => (
@@ -156,20 +146,6 @@ export function SiteNav() {
             </li>
           ))}
         </ul>
-        <div className="nav-drawer__lang" role="group" aria-label={tl("aria")}>
-          {routing.locales.map((l) => (
-            <button
-              type="button"
-              key={l}
-              className={`lang-seg${l === locale ? " is-active" : ""}`}
-              aria-current={l === locale}
-              onClick={() => switchLocale(l)}
-            >
-              <span className="lang-seg__code">{displayCode(l)}</span>
-              <span className="lang-seg__name">{tl(l)}</span>
-            </button>
-          ))}
-        </div>
         <a
           href={site.discord.invite}
           target="_blank"

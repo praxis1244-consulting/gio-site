@@ -1730,7 +1730,7 @@ html { interpolate-size: allow-keywords; }
     mix-blend-mode: screen;
   }
 
-  .nav-drawer__head { display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 2; }
+  .nav-drawer__head { display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 4; }
   /* drawer logo — same wordmark treatment as the nav (it's outside .nav-b) */
   .nav-drawer .mark {
     font-family: var(--font-display), sans-serif; font-weight: 700;
@@ -1945,26 +1945,10 @@ html { interpolate-size: allow-keywords; }
 .lang-switch .lang-switch__menu li { display: block; }
 
 /* Mobile: el switcher de la barra se oculta; el idioma vive en el drawer
-   como control segmentado, con la misma entrada escalonada del drawer. */
+   como el mismo dropdown de desktop (LangSwitcher en el header del drawer). */
 @media (max-width: 1000px) {
   .nav-b__right .lang-switch { display: none; }
-  .nav-drawer__lang {
-    display: flex; gap: 10px; margin-top: 26px;
-    position: relative; z-index: 2;
-  }
-  .lang-seg {
-    flex: 1; display: flex; flex-direction: column; gap: 3px; align-items: center;
-    padding: 13px 8px; background: transparent; border: 1px solid var(--val-rule);
-    color: var(--val-ink-dim); cursor: pointer;
-    font-family: var(--font-mono), ui-monospace, monospace;
-    transition: border-color 200ms var(--ease-quint), color 200ms var(--ease-quint);
-  }
-  .lang-seg__code { font-size: 0.9rem; letter-spacing: 0.16em; }
-  .lang-seg__name { font-size: 0.62rem; letter-spacing: 0.08em; color: var(--val-ink-faint); }
-  .lang-seg.is-active { border-color: var(--val-red); color: var(--val-red); }
-  .lang-seg.is-active .lang-seg__name { color: var(--val-red); }
-  .nav-drawer.is-open .nav-drawer__lang { animation: drawer-cta 660ms var(--ease-expo) 400ms both; }
-  .nav-drawer.is-closing .nav-drawer__lang { animation: drawer-fade-out 200ms var(--ease-quint) forwards; }
+  .nav-drawer__head-right { display: flex; align-items: center; gap: 12px; }
 }
 
 /* Reduced motion: el dropdown aparece sin clip/slide/stagger. */
