@@ -14,6 +14,9 @@
   --val-panel:     #0c0c0d;       /* HUD panel */
   --val-panel-2:   #15171c;       /* elevated */
   --val-card:      #111112;
+  --val-bg-deep:   #030303;       /* deeper than void — footer */
+  --val-bg-warm:   #070406;       /* warm near-black — drawer, dropdown */
+  --val-warm-deep: #1c1015;       /* warm-red-black — poster/cover gradient endpoint */
   --val-ink:       #ece4d8;       /* warm bone, slightly off-white */
   --val-ink-dim:   rgba(236, 228, 216, 0.62);
   --val-ink-faint: rgba(236, 228, 216, 0.58);
@@ -269,7 +272,7 @@ button { font: inherit; }
   background:
     linear-gradient(180deg, rgba(255,70,85,0) 0%, rgba(255,70,85,0.18) 60%, rgba(255,70,85,0) 100%),
     radial-gradient(ellipse at 50% 30%, rgba(255,70,85,0.32) 0%, transparent 55%),
-    linear-gradient(135deg, #1c1015 0%, #050505 100%);
+    linear-gradient(135deg, var(--val-warm-deep) 0%, var(--val-bg) 100%);
   border: 1px solid var(--val-rule-hot);
   overflow: hidden;
 }
@@ -682,7 +685,7 @@ button { font: inherit; }
 
 .lead-b__cover {
   aspect-ratio: 3 / 4; border: 1px solid var(--val-rule-hot);
-  background: linear-gradient(135deg, #1c1015 0%, #050505 100%);
+  background: linear-gradient(135deg, var(--val-warm-deep) 0%, var(--val-bg) 100%);
   padding: 40px 32px;
   display: flex; flex-direction: column; gap: 20px;
   transform: rotate(-3deg); position: relative; overflow: hidden;
@@ -787,7 +790,7 @@ html { interpolate-size: allow-keywords; }
 .outro__ctas { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 
 /* Footer */
-.foot-b { padding: 56px 40px 32px; border-top: 1px solid var(--val-rule); background: #030303; }
+.foot-b { padding: 56px 40px 32px; border-top: 1px solid var(--val-rule); background: var(--val-bg-deep); }
 .foot-b__inner { max-width: 1320px; margin: 0 auto; display: flex; justify-content: space-between; align-items: end; gap: 48px; flex-wrap: wrap; }
 .foot-b__mark { font-family: var(--font-display), sans-serif; font-weight: 800; font-size: 3rem; letter-spacing: 0.04em; color: var(--val-ink); }
 .foot-b__mark em { font-family: var(--font-accent), sans-serif; font-style: italic; font-weight: 600; color: var(--val-red); letter-spacing: -0.02em; }
@@ -1158,7 +1161,7 @@ html { interpolate-size: allow-keywords; }
   background:
     linear-gradient(180deg, rgba(255,70,85,0) 0%, rgba(255,70,85,0.14) 65%, rgba(255,70,85,0) 100%),
     radial-gradient(ellipse at 50% 30%, rgba(255,70,85,0.28) 0%, transparent 55%),
-    linear-gradient(135deg, #1c1015 0%, #050505 100%);
+    linear-gradient(135deg, var(--val-warm-deep) 0%, var(--val-bg) 100%);
   border-bottom: 1px solid var(--val-rule-hot);
   overflow: hidden;
 }
@@ -1349,7 +1352,7 @@ html { interpolate-size: allow-keywords; }
 .booking__coach:hover { border-color: var(--val-red); transform: translateY(-2px); }
 .booking__coach-img {
   width: 54px; height: 64px; flex-shrink: 0;
-  object-fit: cover; object-position: top center; background: #0a0a0b;
+  object-fit: cover; object-position: top center; background: var(--val-panel);
 }
 .booking__coach-meta { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
 .booking__coach-name {
@@ -1444,7 +1447,7 @@ html { interpolate-size: allow-keywords; }
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none' stroke='%23ff4655' stroke-width='1.5'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5'/%3E%3C/svg%3E");
   background-repeat: no-repeat; background-position: right 13px center; background-size: 11px;
 }
-.reserva__field select option { background: #0a0708; color: var(--val-ink); }
+.reserva__field select option { background: var(--val-bg-warm); color: var(--val-ink); }
 .reserva__submit { margin-top: 6px; width: 100%; justify-content: center; padding: 16px; }
 .reserva__submit:disabled { opacity: 0.5; cursor: not-allowed; }
 .reserva__status.err {
@@ -1686,7 +1689,7 @@ html { interpolate-size: allow-keywords; }
     display: flex; flex-direction: column;
     position: fixed; inset: 0; z-index: 60;
     padding: 18px 24px calc(28px + env(safe-area-inset-bottom));
-    background: #070406;
+    background: var(--val-bg-warm);
     background-image:
       radial-gradient(ellipse 90% 50% at 50% 0%, rgba(255,70,85,0.16), transparent 70%),
       linear-gradient(rgba(236,228,216,0.02) 1px, transparent 1px),

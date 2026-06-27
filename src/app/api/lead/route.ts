@@ -28,6 +28,10 @@ export async function POST(request: Request) {
   }
 
   const resend = new Resend(apiKey);
+  // Email hardcodes the brand palette (email clients don't run CSS vars).
+  // Source of truth: src/app/globals.css :root tokens.
+  //   #050505 = --val-bg · #ece4d8 = --val-ink · #ff4655 = --val-red
+  //   #9c958a ≈ --val-ink-dim (solid) · #5e564d ≈ --val-ink-faint (solid)
   const downloadLine = PDF_URL
     ? `<p style="margin:24px 0 0;"><a href="${PDF_URL}" style="background:#ff4655;color:#fff;padding:14px 22px;font-family:'JetBrains Mono',monospace;font-size:0.74rem;font-weight:500;text-transform:uppercase;letter-spacing:0.22em;text-decoration:none;display:inline-block;">Descargar PDF →</a></p>`
     : `<p style="margin:24px 0 0;color:#9c958a;">El PDF estará disponible en breve. Te llegará un correo con el enlace.</p>`;
