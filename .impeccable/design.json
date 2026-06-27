@@ -1,0 +1,170 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-06-27T01:20:00Z",
+  "title": "Design System: Zero2Hero",
+  "extensions": {
+    "colorMeta": {
+      "signal-red": {
+        "role": "primary",
+        "displayName": "Valorant Signal Red",
+        "canonical": "#ff4655",
+        "tonalRamp": ["#2a0d10", "#5a151b", "#8a1f28", "#b8273a", "#ff4655", "#ff6b78", "#ff96a0", "#ffc2c8"]
+      },
+      "warm-bone": {
+        "role": "neutral",
+        "displayName": "Warm Bone",
+        "canonical": "#ece4d8",
+        "tonalRamp": ["#1c1a17", "#3a352f", "#5e564d", "#8a857a", "#b8b0a3", "#d4ccbf", "#ece4d8", "#f6f1e9"]
+      },
+      "deep-void": {
+        "role": "neutral",
+        "displayName": "Deep Void",
+        "canonical": "#050505",
+        "tonalRamp": ["#000000", "#050505", "#0a0a0b", "#15171c", "#2a2c33", "#454852", "#6b6f7a", "#9c958a"]
+      },
+      "hud-panel": {
+        "role": "neutral",
+        "displayName": "HUD Panel",
+        "canonical": "#0c0c0d",
+        "tonalRamp": ["#000000", "#050505", "#0c0c0d", "#15171c", "#1f2128", "#2a2c33", "#454852", "#6b6f7a"]
+      },
+      "ember-black": {
+        "role": "neutral",
+        "displayName": "Ember Black",
+        "canonical": "#1c1015",
+        "tonalRamp": ["#0a0508", "#1c1015", "#2e1a20", "#45252e", "#5e3338", "#7a4448", "#9c5858", "#c07570"]
+      },
+      "live-green": {
+        "role": "status",
+        "displayName": "Live Green",
+        "canonical": "#5fe39a",
+        "tonalRamp": ["#0a1f15", "#143020", "#1f4530", "#2e5a42", "#5fe39a", "#7fe8b0", "#a0edc8", "#c2f2dc"]
+      },
+      "warn-amber": {
+        "role": "status",
+        "displayName": "Warn Amber",
+        "canonical": "#f5a623",
+        "tonalRamp": ["#2a1a05", "#452e0a", "#5e4410", "#7a5a18", "#f5a623", "#f7b849", "#f9ca6e", "#fbdc93"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Tomorrow Display", "purpose": "Hero h1, section h2, outro, big dossier numbers." },
+      "headline": { "displayName": "Tomorrow Headline", "purpose": "Card titles — coach name, offer title, feature title." },
+      "body": { "displayName": "DM Sans Body", "purpose": "Bios, blurbs, FAQ answers. Weight 300 default." },
+      "label": { "displayName": "JetBrains Mono Label", "purpose": "Kickers, stat labels, button text, nav links, captions. Uppercase, 0.22em tracking." }
+    },
+    "shadows": [
+      { "name": "hover-lift-red", "value": "0 8px 28px rgba(255,70,85,0.35)", "purpose": "Primary button hover glow." },
+      { "name": "hover-lift-card", "value": "0 18px 48px rgba(0,0,0,0.45)", "purpose": "Coach card hover elevation." },
+      { "name": "modal", "value": "0 30px 90px rgba(0,0,0,0.6)", "purpose": "Booking modal + lightbox — the only large shadows." },
+      { "name": "cutout", "value": "drop-shadow(0 22px 38px rgba(0,0,0,0.55))", "purpose": "Poster cutout PNGs — physical weight against the void." },
+      { "name": "cover-stack", "value": "0 30px 60px rgba(0,0,0,0.6), 0 0 0 6px rgba(0,0,0,0.5), 0 0 0 7px rgba(236,228,216,0.22)", "purpose": "Lead-magnet cover layered shadow + ring. Signature." }
+    ],
+    "motion": [
+      { "name": "ease-quint", "value": "cubic-bezier(0.22, 1, 0.36, 1)", "purpose": "Default easing — state transitions, hover lifts." },
+      { "name": "ease-expo", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Entrance reveals, drawer deploy, menu animations." },
+      { "name": "hud-slide-up", "value": "from { opacity:0; transform: translate3d(0,42px,0) skewY(1.5deg) } to { opacity:1; transform: none }", "purpose": "Scroll-reveal entrance for cards, stats, sections. 820ms ease-expo." },
+      { "name": "hud-clip-x", "value": "from { opacity:0; clip-path: inset(0 100% 0 0) } to { opacity:1; clip-path: inset(0 0 0 0) }", "purpose": "Left-to-right wipe reveal for section headers." },
+      { "name": "count-up", "value": "rAF + easeOutExpo over 1200ms, ghost span reserves final box", "purpose": "Dossier stat numbers count 0→value on scroll-in. No CLS." }
+    ],
+    "breakpoints": [
+      { "name": "desktop", "value": "1001px+" },
+      { "name": "tablet", "value": "max-width: 1000px" },
+      { "name": "phone", "value": "max-width: 760px" },
+      { "name": "small-phone", "value": "max-width: 560px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The CTA. Signal Red, sharp corners, mono uppercase. Hover lifts + red glow.",
+      "html": "<button class=\"ds-btn-primary\">RESERVAR CLASE →</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; gap: 0.6em; padding: 14px 22px; background: #ff4655; color: #fff; border: 1px solid #ff4655; border-radius: 0; cursor: pointer; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 0.74rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.22em; transition: all 220ms cubic-bezier(0.22,1,0.36,1); } .ds-btn-primary:hover { background: #d22a3c; border-color: #d22a3c; transform: translateY(-1px); box-shadow: 0 8px 28px rgba(255,70,85,0.35); } .ds-btn-primary:focus-visible { outline: 2px solid #ff4655; outline-offset: 2px; }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Secondary CTA. Transparent, hairline border, ink text. Hover: border + text go red.",
+      "html": "<button class=\"ds-btn-ghost\">VER COACHES</button>",
+      "css": ".ds-btn-ghost { display: inline-flex; align-items: center; gap: 0.6em; padding: 14px 22px; background: transparent; color: #ece4d8; border: 1px solid rgba(236,228,216,0.22); border-radius: 0; cursor: pointer; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 0.74rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.22em; transition: all 220ms cubic-bezier(0.22,1,0.36,1); } .ds-btn-ghost:hover { border-color: #ff4655; color: #ff4655; } .ds-btn-ghost:focus-visible { outline: 2px solid #ff4655; outline-offset: 2px; }"
+    },
+    {
+      "name": "HUD Panel",
+      "kind": "card",
+      "refersTo": "hud-panel",
+      "description": "Tactical data container. 2px radius, hairline border, four Signal Red L-bracket corners.",
+      "html": "<div class=\"ds-hud\"><span class=\"ds-hud-br-tl\"></span><span class=\"ds-hud-br-tr\"></span><span class=\"ds-hud-br-bl\"></span><span class=\"ds-hud-br-br\"></span><div class=\"ds-hud-label\">VCL LATAM SUR</div><div class=\"ds-hud-value\">2°</div></div>",
+      "css": ".ds-hud { position: relative; background: #0c0c0d; border: 1px solid rgba(236,228,216,0.08); border-radius: 2px; padding: 40px 32px; } .ds-hud-br-tl, .ds-hud-br-tr, .ds-hud-br-bl, .ds-hud-br-br { position: absolute; width: 14px; height: 14px; border: 1.5px solid #ff4655; } .ds-hud-br-tl { top: -1px; left: -1px; border-right: 0; border-bottom: 0; } .ds-hud-br-tr { top: -1px; right: -1px; border-left: 0; border-bottom: 0; } .ds-hud-br-bl { bottom: -1px; left: -1px; border-right: 0; border-top: 0; } .ds-hud-br-br { bottom: -1px; right: -1px; border-left: 0; border-top: 0; } .ds-hud-label { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase; color: #ff4655; } .ds-hud-value { font-family: 'Tomorrow', sans-serif; font-weight: 200; font-size: clamp(4rem,7vw,6.4rem); letter-spacing: -0.06em; line-height: 0.95; color: #ece4d8; font-variant-numeric: tabular-nums; }"
+    },
+    {
+      "name": "Offer Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Sharp-cornered card, panel bg + faint top red wash, hairline border. Featured variant: red border + stronger wash.",
+      "html": "<article class=\"ds-card ds-card--featured\"><div class=\"ds-card-top\"><span class=\"ds-card-badge\">BEST SELLER</span></div><h3 class=\"ds-card-title\">Clase 1 a 1</h3><p class=\"ds-card-blurb\">Revisamos tu juego frame por frame.</p><button class=\"ds-btn-primary\">RESERVAR →</button></article>",
+      "css": ".ds-card { display: flex; flex-direction: column; gap: 16px; padding: 28px; background: linear-gradient(180deg, rgba(255,70,85,0.04) 0%, transparent 30%), #0c0c0d; border: 1px solid rgba(236,228,216,0.08); border-radius: 0; transition: border-color 240ms cubic-bezier(0.22,1,0.36,1), transform 240ms cubic-bezier(0.22,1,0.36,1); } .ds-card:hover { border-color: rgba(236,228,216,0.22); transform: translateY(-3px); } .ds-card--featured { border-color: #ff4655; background: linear-gradient(180deg, rgba(255,70,85,0.12) 0%, transparent 35%), #0c0c0d; } .ds-card-top { display: flex; justify-content: space-between; } .ds-card-badge { font-family: 'JetBrains Mono', monospace; font-size: 0.58rem; letter-spacing: 0.24em; text-transform: uppercase; color: #fff; padding: 5px 10px; background: #ff4655; border: 1px solid #ff4655; } .ds-card-title { font-family: 'Tomorrow', sans-serif; font-weight: 400; font-size: 1.6rem; letter-spacing: -0.025em; color: #ece4d8; margin: 0; } .ds-card-blurb { color: rgba(236,228,216,0.62); font-size: 0.92rem; line-height: 1.5; margin: 0; }"
+    },
+    {
+      "name": "Mono Input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Deep-void bg at 0.7 opacity, hairline border, mono 16px. Focus: border goes red + focus-visible ring. 16px floor stops iOS zoom.",
+      "html": "<input class=\"ds-input\" type=\"email\" placeholder=\"TU EMAIL\" />",
+      "css": ".ds-input { background: rgba(5,5,5,0.7); border: 1px solid rgba(236,228,216,0.22); border-radius: 0; color: #ece4d8; padding: 16px 18px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 16px; outline: none; width: 100%; } .ds-input::placeholder { color: rgba(236,228,216,0.58); letter-spacing: 0.18em; text-transform: uppercase; font-size: 0.74rem; } .ds-input:focus { border-color: #ff4655; } .ds-input:focus-visible { outline: 2px solid #ff4655; outline-offset: 2px; }"
+    },
+    {
+      "name": "Nav Link",
+      "kind": "nav",
+      "refersTo": "button-ghost",
+      "description": "Desktop nav link. Mono uppercase, Ink Dim → Signal Red on hover.",
+      "html": "<a class=\"ds-nav-link\" href=\"#coaches\">COACHES</a>",
+      "css": ".ds-nav-link { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(236,228,216,0.62); text-decoration: none; transition: color 220ms cubic-bezier(0.22,1,0.36,1); } .ds-nav-link:hover { color: #ff4655; } .ds-nav-link:focus-visible { outline: 2px solid #ff4655; outline-offset: 2px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Broadcast HUD",
+    "overview": "This system borrows the visual language of the Valorant esports broadcast — the HUD graphics players already trust during a VCT stream — and pulls it over an editorial fight-card structure. The audience lives inside this aesthetic every time they watch a match; using it on a coaching site signals 'we live in your world' before a single word is read. The deep-void background is not a dark-mode convenience, it is the canvas the broadcast paints on. Valorant Signal Red is the only saturated color; it is rare, loud, and carries every call to action.\n\nThe density is atmospheric, not decorative. Scan lines, L-bracket corners, mono micro-labels, ember fields, and tactical chevrons are the texture of the arena. They sit at low opacity and never compete with information. The information design itself is minimal: one headline, one kicker, one body line, one CTA per section. The fight-card editorial structure (tale-of-the-tape hero, poster-style coach cards, dossier stats with tabular numerals) gives the page the feel of a weigh-in program, not a SaaS landing.\n\nThis system explicitly rejects: the 2026 cream/sand warm-neutral editorial default; generic SaaS coaching landings; gamer pastiche; faceless booster-site vibes; corporate e-learning sterility; glassmorphism as default; gradient text; the hero-metric template; identical card grids; numbered scaffolding markers on every section; side-stripe accent borders.",
+    "keyCharacteristics": [
+      "Deep-void canvas (#050505) with warm-bone ink (#ece4d8) — never pure white on pure black.",
+      "One saturated accent (Valorant Signal Red #ff4655), used on ≤10% of any screen.",
+      "Four-font system: Tomorrow (display), DM Sans (body), JetBrains Mono (labels), Chakra Petch italic (red emphasis).",
+      "Sharp corners (0 radius) everywhere except HUD panels (2px) and status dots (50%).",
+      "Motion is gated behind prefers-reduced-motion with a no-JS fallback — non-negotiable.",
+      "Every credibility claim lands with evidence on the same screen."
+    ],
+    "rules": [
+      { "name": "The One Voice Rule", "body": "Signal Red is used on ≤10% of any screen. If two red elements compete, one is wrong. Red is the CTA color, the kicker color, and the accent-italic color — it is not a fill, a background, or a gradient body.", "section": "colors" },
+      { "name": "The No-Cream Rule", "body": "The body background is the deep void. Never warm-tint the background toward cream, sand, paper, or parchment. Warmth lives in the ink and the ember-black gradient endpoints, never in the canvas.", "section": "colors" },
+      { "name": "The Mono-Label Rule", "body": "Every section has a JetBrains Mono uppercase kicker in Signal Red. It carries the section's real name, not a generic 'ABOUT' or 'PROCESS'. The kicker is voice; an ordinal number above it is grammar and is prohibited.", "section": "typography" },
+      { "name": "The 65ch Rule", "body": "Body line length caps at 44–50ch (the blurbs are intentionally narrow). Never let a body block exceed 75ch. The editorial narrowness is the point.", "section": "typography" },
+      { "name": "The Flat-At-Rest Rule", "body": "Surfaces are flat at rest. A shadow at rest means the element is modally elevated (dialog, lightbox) or it is wrong. Cards use hairline borders + tonal panel bg, not shadows.", "section": "elevation" },
+      { "name": "The Hairline Rule", "body": "Borders are 1px and low-opacity (--val-rule 0.08, --val-rule-hot 0.22). Never a 2px+ solid border as a frame. The only thick borders are the 1.5px Signal Red L-brackets on HUD panels, and those are corner accents, not frames.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do use Valorant Signal Red (#ff4655) on ≤10% of any screen — CTAs, one kicker per section, the accent-italic word, HUD L-brackets.",
+      "Do use the four-font system on its contrast axis: Tomorrow (display) + DM Sans (body) + JetBrains Mono (labels) + Chakra Petch italic (red emphasis).",
+      "Do cap body line length at 44–50ch; the editorial narrowness is the point.",
+      "Do gate every animation behind prefers-reduced-motion: no-preference with a <noscript> fallback that forces reveal content visible.",
+      "Do trap focus in every dialog (booking modal, lightbox, nav drawer) — move focus in on open, wrap Tab, restore to the trigger on close.",
+      "Do pair status dots (red/amber/green) with a text label — never color-only.",
+      "Do back every credibility claim with evidence on the same screen (team logos, stats, result screenshots).",
+      "Do use next/image for the large coach PNGs — they are the LCP and benefit most from avif/webp + responsive srcset."
+    ],
+    "donts": [
+      "Don't warm-tint the body background toward cream, sand, paper, or parchment. The canvas is the deep void.",
+      "Don't use background-clip: text with a gradient. Emphasis is via weight, size, or the Chakra Petch red italic — never gradient text.",
+      "Don't use backdrop-filter blur as default decoration. The only glass is the sticky nav when scrolled.",
+      "Don't ship the hero-metric template. Stats live in the dossier section.",
+      "Don't put a numbered ordinal marker (01/02/03) above every section. The red mono kicker is the section marker.",
+      "Don't use border-left or border-right greater than 1px as a colored accent stripe. Use a full hairline border, a leading dot, or a tint background.",
+      "Don't use bounce or elastic easing. ease-out-quint and ease-out-expo only.",
+      "Don't use pure #fff for body text. Body text is Warm Bone #ece4d8.",
+      "Don't animate width, height, top, left, or margin. Use transform and opacity.",
+      "Don't ship an animation that doesn't degrade for reduced motion or no-JS.",
+      "Don't sound like a marketer. The voice is 'cero humo' — a Radiant IGL briefing a teammate."
+    ]
+  }
+}
