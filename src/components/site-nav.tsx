@@ -80,8 +80,6 @@ export function SiteNav() {
 
   return (
     <>
-      <a href="#top" className="skip-link">{t("skip")}</a>
-
       {/* Thin Discord banner — goaching pattern */}
       <a className="discord-banner" href={site.discord.invite} target="_blank" rel="noopener noreferrer">
         <span className="dot live pulse-dot" />
