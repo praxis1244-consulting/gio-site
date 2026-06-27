@@ -98,17 +98,6 @@ export default async function CoachPage({
   preconnect("https://assets.calendly.com");
   preconnect("https://calendly.com");
 
-  // Sequential section numbers — sections appear conditionally per coach.
-  const hasTeams = (coach.teams?.length ?? 0) > 0;
-  const hasResults = (coach.results?.length ?? 0) > 0;
-  let sectionCount = 0;
-  const nextNum = () => String(++sectionCount).padStart(2, "0");
-  const dossierNum = nextNum();
-  const teamsNum = hasTeams ? nextNum() : null;
-  const resultsNum = hasResults ? nextNum() : null;
-  const offersNum = nextNum();
-  const agendaNum = coach.calendly ? nextNum() : null;
-
   return (
     <>
       <SiteNav />
@@ -170,7 +159,6 @@ export default async function CoachPage({
       <section className="section coach-page__dossier" id="dossier">
         <div className="wrap">
           <div className="ehead">
-            <span className="num">{dossierNum}</span>
             <div>
               <span className="lbl" style={{ color: "var(--val-red)" }}>
                 {t("dossierPrefix")} · {coach.accentTeam ?? coach.creds}
@@ -200,7 +188,6 @@ export default async function CoachPage({
         <section className="section coach-page__teams" style={{ paddingTop: 0 }}>
           <div className="wrap">
             <div className="ehead">
-              <span className="num">{teamsNum}</span>
               <div>
                 <span className="lbl" style={{ color: "var(--val-red)" }}>
                   {t("teamsLabel")}
@@ -228,7 +215,6 @@ export default async function CoachPage({
         <section className="section coach-page__proof" id="resultados">
           <div className="wrap">
             <div className="ehead">
-              <span className="num">{resultsNum}</span>
               <div>
                 <span className="lbl" style={{ color: "var(--val-red)" }}>
                   {t("resultsLabel")}
@@ -247,11 +233,10 @@ export default async function CoachPage({
       {/* SUS OFFERS */}
       <section className="section coach-page__offers" id="offers">
         <div className="wrap">
-          <div className="ehead">
-            <span className="num">{offersNum}</span>
-            <div>
-              <span className="lbl" style={{ color: "var(--val-red)" }}>
-                {t("offersLabelPrefix")} · {coach.name.toUpperCase()}
+            <div className="ehead">
+              <div>
+                <span className="lbl" style={{ color: "var(--val-red)" }}>
+                  {t("offersLabelPrefix")} · {coach.name.toUpperCase()}
               </span>
               <h2>
                 {t("offersTitlePre")} <em>{t("offersTitleEm")}</em>
@@ -277,7 +262,6 @@ export default async function CoachPage({
         <section className="section coach-page__agenda" id="agenda" style={{ paddingTop: 0 }}>
           <div className="wrap">
             <div className="ehead">
-              <span className="num">{agendaNum}</span>
               <div>
                 <span className="lbl" style={{ color: "var(--val-red)" }}>
                   {t("agendaLabelPrefix")} · {coach.name.toUpperCase()}

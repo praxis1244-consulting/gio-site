@@ -143,7 +143,6 @@ export default async function Home({
       <section className="section" id="coaches">
         <div className="wrap">
           <div className="ehead">
-            <span className="num">01</span>
             <div>
               <span className="lbl" style={{ color: "var(--val-red)" }}>{t("rosterLabel")}</span>
               <h2>{t("rosterTitle")} <em>{t("rosterTitleEm")}</em></h2>
@@ -162,7 +161,6 @@ export default async function Home({
       <section className="section" id="offers" style={{ paddingTop: 0 }}>
         <div className="wrap">
           <div className="ehead">
-            <span className="num">02</span>
             <div>
               <span className="lbl" style={{ color: "var(--val-red)" }}>{t("offersLabel")}</span>
               <h2>{t("offersTitle")} <em>{t("offersTitleEm")}</em></h2>
@@ -179,7 +177,6 @@ export default async function Home({
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="wrap">
           <div className="ehead">
-            <span className="num">03</span>
             <div>
               <span className="lbl" style={{ color: "var(--val-red)" }}>{t("includesLabel")}</span>
               <h2>{t("includesTitle")} <em>{t("includesTitleEm")}</em></h2>
@@ -204,7 +201,6 @@ export default async function Home({
       <section className="section" id="testimonios">
         <div className="wrap">
           <div className="ehead">
-            <span className="num">04</span>
             <div>
               <span className="lbl" style={{ color: "var(--val-red)" }}>{t("testimonialsLabel")}</span>
               <h2>{t("testimonialsTitle")} <em>{t("testimonialsTitleEm")}</em></h2>
@@ -259,7 +255,6 @@ export default async function Home({
       <section className="section" id="faq">
         <div className="wrap">
           <div className="ehead">
-            <span className="num">05</span>
             <div>
               <span className="lbl" style={{ color: "var(--val-red)" }}>{t("faqLabel")}</span>
               <h2>{t("faqTitle")} <em>{t("faqTitleEm")}</em></h2>

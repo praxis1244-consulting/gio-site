@@ -340,13 +340,7 @@ button { font: inherit; }
 .estat .cap { font-family: var(--font-mono), ui-monospace, monospace; font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--val-ink-faint); }
 
 /* Editorial section header */
-.ehead { display: grid; grid-template-columns: auto 1fr; gap: 56px; align-items: end; margin-bottom: 64px; padding-bottom: 24px; border-bottom: 1px solid var(--val-rule); }
-.ehead .num {
-  font-family: var(--font-display), sans-serif; font-weight: 200;
-  font-size: clamp(4rem, 8vw, 7rem);
-  letter-spacing: -0.06em; line-height: 0.9;
-  color: var(--val-red);
-}
+.ehead { margin-bottom: 64px; padding-bottom: 24px; border-bottom: 1px solid var(--val-rule); }
 .ehead h2 {
   font-family: var(--font-display), sans-serif; font-weight: 300;
   font-size: clamp(2rem, 4vw, 3.4rem);
@@ -356,7 +350,7 @@ button { font: inherit; }
 }
 .ehead h2 em { font-family: var(--font-accent), sans-serif; font-style: italic; font-weight: 600; color: var(--val-red); }
 .ehead .lbl-side {
-  grid-column: 2; max-width: 44ch;
+  max-width: 44ch;
   color: var(--val-ink-dim); margin-top: 24px; line-height: 1.55;
   font-family: var(--font-sans), sans-serif; font-size: 1rem;
 }
@@ -941,8 +935,6 @@ html { interpolate-size: allow-keywords; }
   .proofwall { columns: 2; }
   .lead-b { grid-template-columns: 1fr; padding: 40px 24px; gap: 40px; }
   .lead-b__cover { transform: rotate(0); max-width: 360px; margin: 0 auto; }
-  .ehead { grid-template-columns: 1fr; gap: 16px; }
-  .ehead .lbl-side { grid-column: 1; }
   .section { padding: 64px 24px; }
   .faq-b summary { grid-template-columns: 60px 1fr 40px; gap: 16px; font-size: 1.15rem; }
   .faq-b__body { padding-left: 76px; }
