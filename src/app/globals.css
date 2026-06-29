@@ -1613,6 +1613,19 @@ html { interpolate-size: allow-keywords; }
   .features { grid-template-columns: 1fr; }
   .community { grid-template-columns: 1fr; gap: 36px; padding: 40px 28px; }
   .reserva { grid-template-columns: 1fr; gap: 32px; padding: 36px 28px; }
+
+  /* Coach hero: the poster is a sibling of the copy, so on a single column it
+     fell to the very bottom (orphaned under the CTA). display:contents flattens
+     the copy's children into the inner grid so the poster can drop between the
+     name/handle and the creds — the face lands with the identity, not the footer. */
+  .coach-hero .hero-b__inner { row-gap: 0; }
+  .coach-hero .hero-b__copy { display: contents; }
+  .coach-hero .hero-b__id        { order: 1; }
+  .coach-hero .hero-b__title     { order: 2; }
+  .coach-hero .poster            { order: 3; margin: 4px 0 26px; }
+  .coach-hero .coach-hero__creds { order: 4; }
+  .coach-hero .hero-b__sub       { order: 5; }
+  .coach-hero .hero-b__ctas      { order: 6; }
 }
 
 @media (max-width: 760px) {
