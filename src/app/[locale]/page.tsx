@@ -157,18 +157,20 @@ export default async function Home({
         </div>
       </section>
 
-      {/* CATÁLOGO — ELIGE TU OFFER */}
+      {/* CATÁLOGO — ELIGE TU OFFER · editorial 2-col: copy izq / card der */}
       <section className="section" id="offers" style={{ paddingTop: 0 }}>
         <div className="wrap">
-          <div className="ehead">
-            <div>
-              <span className="lbl" style={{ color: "var(--val-red)" }}>{t("offersLabel")}</span>
-              <h2>{t("offersTitle")} <em>{t("offersTitleEm")}</em></h2>
-              <p className="lbl-side">{t("offersDesc")}</p>
+          <div className="offers-2col">
+            <div className="ehead offers-2col__copy">
+              <div>
+                <span className="lbl" style={{ color: "var(--val-red)" }}>{t("offersLabel")}</span>
+                <h2>{t("offersTitle")} <em>{t("offersTitleEm")}</em></h2>
+                <p className="lbl-side">{t("offersDesc")}</p>
+              </div>
             </div>
-          </div>
-          <div className="offers">
-            <OfferCard offer={collectiveOffer} bookableCoaches={bookableCoaches} />
+            <div className="offers-2col__card">
+              <OfferCard offer={collectiveOffer} bookableCoaches={bookableCoaches} />
+            </div>
           </div>
         </div>
       </section>

@@ -1228,14 +1228,12 @@ html { interpolate-size: allow-keywords; }
 .coach-card:hover .coach-card__cta { letter-spacing: 0.3em; }
 
 /* ─── OFFER CARDS · catalog + coach page ────────────────────────── */
-.offers, .offer-grid {
+.offer-grid {
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
   align-items: stretch;
 }
 .offer-grid > div { display: flex; }
 .offer-grid > div > .offer-card { width: 100%; }
-/* Home: una sola clase 1v1 centralizada — centra el card único. */
-.offers { grid-template-columns: minmax(0, 440px); justify-content: center; }
 /* Coach page: una sola clase por coach — centra el card en vez de pegarlo a la izquierda. */
 .offer-grid { grid-template-columns: minmax(0, 440px); justify-content: center; }
 .offer-card {
@@ -1296,6 +1294,18 @@ html { interpolate-size: allow-keywords; }
 .offer-card__list li.muted::before { content: "—"; }
 .offer-card__cta { margin-top: auto; padding-top: 4px; }
 .offer-card__cta .btn { width: 100%; justify-content: center; }
+
+/* Home Offers — editorial 2-col: copy left, single 1v1 card right.
+   Mirrors the lead-magnet rhythm so the lone card isn't centered in a void. */
+.offers-2col {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 440px);
+  gap: 56px; align-items: center;
+}
+/* the section header lives in the left column now — drop its full-width bottom rule */
+.offers-2col .ehead { margin-bottom: 0; padding-bottom: 0; border-bottom: 0; }
+.offers-2col__card { display: flex; }
+.offers-2col__card > .offer-card { width: 100%; }
 
 /* ── Booking modal — pick a coach, then their Calendly ─────────────── */
 .booking {
@@ -1597,7 +1607,9 @@ html { interpolate-size: allow-keywords; }
   .hero-vs__sub { max-width: 60ch; }
 
   .roster { grid-template-columns: 1fr; }
-  .offers, .offer-grid { grid-template-columns: 1fr; }
+  .offer-grid { grid-template-columns: 1fr; }
+  /* stack the editorial offers: copy on top, card full-width below */
+  .offers-2col { grid-template-columns: 1fr; gap: 32px; }
   .features { grid-template-columns: 1fr; }
   .community { grid-template-columns: 1fr; gap: 36px; padding: 40px 28px; }
   .reserva { grid-template-columns: 1fr; gap: 32px; padding: 36px 28px; }
